@@ -14,34 +14,64 @@
 	var initESW = function(gslbBaseURL) {
 		embedded_svc.settings.displayHelpButton = true; //Or false
 		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+		// testing
+		// var shouldChatDisable = true;
+
+		// embedded_svc.addEventHandler("onAgentRichMessage", function(data) {
+		
+		//     var chasitorText = document.querySelector('.chasitorText');
+		
+		//     if(chasitorText && shouldChatDisable) {
+		
+		//         chasitorText.hidden = true;
+		
+		//         shouldChatDisable = false;
+		
+		//     }
+		
+		// });
+		
+		// embedded_svc.addEventHandler("onChatTransferInitiated", function(data) {
+		
+		//     var chasitorText = document.querySelector('.chasitorText');
+		
+		//     if(chasitorText) {
+		
+		//         chasitorText.hidden = false;
+		
+		//     }
+		
+		// });
+
 		var shouldChatDisable = true;
 
-embedded_svc.addEventHandler("onAgentRichMessage", function(data) {
-
-    var chasitorText = document.querySelector('.chasitorText');
-
-    if(chasitorText && shouldChatDisable) {
-
-        chasitorText.hidden = true;
-
-        shouldChatDisable = false;
-
-    }
-
-});
-
-embedded_svc.addEventHandler("onChatTransferInitiated", function(data) {
-
-    var chasitorText = document.querySelector('.chasitorText');
-
-    if(chasitorText) {
-
-        chasitorText.hidden = false;
-
-    }
-
-});
-		// });
+		embedded_svc.addEventHandler("onAgentJoinedConference", function(data) {
+		    // When an agent joins, show the input and set the flag to false.
+		    var chasitorText = document.querySelector('.chasitorText');
+		    if (chasitorText) {
+		        chasitorText.hidden = false;
+		        shouldChatDisable = false;
+		    }
+		});
+		
+		embedded_svc.addEventHandler("onAgentLeftConference", function(data) {
+		    // When the agent leaves, hide the input and set the flag back to true.
+		    var chasitorText = document.querySelector('.chasitorText');
+		    if (chasitorText) {
+		        chasitorText.hidden = true;
+		        shouldChatDisable = true;
+		    }
+		});
+		
+		embedded_svc.addEventHandler("onChatTransferInitiated", function(data) {
+		    // This event is also useful for hiding the input during a transfer.
+		    var chasitorText = document.querySelector('.chasitorText');
+		    if (chasitorText) {
+		        chasitorText.hidden = true;
+		        shouldChatDisable = true;
+		    }
+		});
+		
 		//embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
 		//embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
 
