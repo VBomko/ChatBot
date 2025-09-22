@@ -15,69 +15,34 @@
 		embedded_svc.settings.displayHelpButton = true; //Or false
 		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
 		// testing
-		// var shouldChatDisable = true;
+		var shouldChatDisable = true;
 
-		// embedded_svc.addEventHandler("onAgentRichMessage", function(data) {
+		embedded_svc.addEventHandler("onAgentRichMessage", function(data) {
 		
-		//     var chasitorText = document.querySelector('.chasitorText');
+		    var chasitorText = document.querySelector('.chasitorText');
 		
-		//     if(chasitorText && shouldChatDisable) {
+		    if(chasitorText && shouldChatDisable) {
 		
-		//         chasitorText.hidden = true;
+		        chasitorText.hidden = true;
 		
-		//         shouldChatDisable = false;
+		        shouldChatDisable = false;
 		
-		//     }
+		    }
 		
-		// });
+		});
 		
-		// embedded_svc.addEventHandler("onChatTransferInitiated", function(data) {
+		embedded_svc.addEventHandler("onChatTransferInitiated", function(data) {
 		
-		//     var chasitorText = document.querySelector('.chasitorText');
+		    var chasitorText = document.querySelector('.chasitorText');
 		
-		//     if(chasitorText) {
+		    if(chasitorText) {
 		
-		//         chasitorText.hidden = false;
+		        chasitorText.hidden = false;
 		
-		//     }
+		    }
 		
-		// });
+		});
 
-var shouldChatDisable = true;
-
-// Hide the input field as soon as the embedded service is ready.
-// The `onChatEstablished` event is a good place for this.
-embedded_svc.addEventHandler("onChatEstablished", function(data) {
-    var chasitorText = document.querySelector('.chasitorText');
-    if (chasitorText) {
-        chasitorText.hidden = true;
-    }
-});
-
-// The rest of your event handlers
-embedded_svc.addEventHandler("onAgentJoinedConference", function(data) {
-    var chasitorText = document.querySelector('.chasitorText');
-    if (chasitorText) {
-        chasitorText.hidden = false;
-        shouldChatDisable = false;
-    }
-});
-
-embedded_svc.addEventHandler("onAgentLeftConference", function(data) {
-    var chasitorText = document.querySelector('.chasitorText');
-    if (chasitorText) {
-        chasitorText.hidden = true;
-        shouldChatDisable = true;
-    }
-});
-
-embedded_svc.addEventHandler("onChatTransferInitiated", function(data) {
-    var chasitorText = document.querySelector('.chasitorText');
-    if (chasitorText) {
-        chasitorText.hidden = true;
-        shouldChatDisable = true;
-    }
-});
 		
 		//embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
 		//embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
