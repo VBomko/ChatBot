@@ -14,38 +14,33 @@
 	var initESW = function(gslbBaseURL) {
 		embedded_svc.settings.displayHelpButton = true; //Or false
 		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
-		var chasitorText = document.querySelector('.chasitorText');
-		if(chasitorText) {
-			chasitorText.hidden = false;
-		}
 		
+	
+		var shouldChatDisable = true;
 		
+		embedded_svc.addEventHandler("onAgentRichMessage", function(data) {
 		
-		// var shouldChatDisable = true;
+		    var chasitorText = document.querySelector('.chasitorText');
 		
-		// embedded_svc.addEventHandler("onAgentRichMessage", function(data) {
+		    if(chasitorText && shouldChatDisable) {
 		
-		//     var chasitorText = document.querySelector('.chasitorText');
+		        chasitorText.hidden = true;
 		
-		//     if(chasitorText && shouldChatDisable) {
+		        shouldChatDisable = false;
 		
-		//         chasitorText.hidden = true;
+		    }
 		
-		//         shouldChatDisable = false;
+		});
 		
-		//     }
+		embedded_svc.addEventHandler("onChatTransferInitiated", function(data) {
 		
-		// });
+		    var chasitorText = document.querySelector('.chasitorText');
 		
-		// embedded_svc.addEventHandler("onChatTransferInitiated", function(data) {
+		    if(chasitorText) {
 		
-		//     var chasitorText = document.querySelector('.chasitorText');
+		        chasitorText.hidden = false;
 		
-		//     if(chasitorText) {
-		
-		//         chasitorText.hidden = false;
-		
-		//     }
+		    }
 		
 		// });
 		//embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
