@@ -7,6 +7,9 @@
 	.embeddedServiceHelpButton .helpButton .uiButton:focus {
 		outline: 1px solid #005290;
 	}
+	.chasitorText {
+        display: none !important;
+    }
 </style>
 
 <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
@@ -15,19 +18,12 @@
 		embedded_svc.settings.displayHelpButton = true; //Or false
 		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
 		// testing
-// Initially hide input box until a live agent connects
-document.addEventListener("DOMContentLoaded", function() {
-    var chasitorText = document.querySelector('.chasitorText');
-    if (chasitorText) {
-        chasitorText.hidden = true;
-    }
-});
 
 embedded_svc.addEventHandler("onChatEstablished", function(data) {
     // Live agent connected → show input
     var chasitorText = document.querySelector('.chasitorText');
     if (chasitorText) {
-        chasitorText.hidden = false;
+        chasitorText.style.display = "block";
     }
 });
 
@@ -35,7 +31,7 @@ embedded_svc.addEventHandler("onChatEnded", function(data) {
     // Chat ended → hide input
     var chasitorText = document.querySelector('.chasitorText');
     if (chasitorText) {
-        chasitorText.hidden = true;
+        chasitorText.style.display = "none";
     }
 });
 
