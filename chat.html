@@ -11,9 +11,32 @@
         display: none !important;
     }
 
-	.footerMenuWrapper {
-        display: none !important;
-    }
+	  /* Default (desktop) */
+	.embeddedServiceSidebar {
+	    width: 400px !important;
+	    height: 600px !important;
+	}
+	
+	/* Tablet */
+	@media (max-width: 1024px) {
+	    .embeddedServiceSidebar {
+	        width: 320px !important;
+	        height: 500px !important;
+	    }
+	}
+	
+	/* Mobile */
+	@media (max-width: 600px) {
+	    .embeddedServiceSidebar {
+	        width: 100% !important;
+	        height: 100% !important;
+	        bottom: 0 !important;
+	        right: 0 !important;
+	        border-radius: 0 !important; /* make it full screen */
+	    }
+	}
+
+
 
 </style>
 
