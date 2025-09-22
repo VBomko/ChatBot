@@ -15,33 +15,39 @@
 		embedded_svc.settings.displayHelpButton = true; //Or false
 		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
 		// testing
-		var shouldChatDisable = true;
+		// var shouldChatDisable = true;
 
-		embedded_svc.addEventHandler("onAgentRichMessage", function(data) {
+		// embedded_svc.addEventHandler("onAgentRichMessage", function(data) {
 		
-		    var chasitorText = document.querySelector('.chasitorText');
+		//     var chasitorText = document.querySelector('.chasitorText');
 		
-		    if(chasitorText && shouldChatDisable) {
+		//     if(chasitorText && shouldChatDisable) {
 		
-		        chasitorText.hidden = true;
+		//         chasitorText.hidden = true;
 		
-		        shouldChatDisable = false;
+		//         shouldChatDisable = false;
 		
-		    }
+		//     }
 		
-		});
+		// });
 		
-		embedded_svc.addEventHandler("onChatTransferInitiated", function(data) {
+		// embedded_svc.addEventHandler("onChatTransferInitiated", function(data) {
 		
-		    var chasitorText = document.querySelector('.chasitorText');
+		//     var chasitorText = document.querySelector('.chasitorText');
 		
-		    if(chasitorText) {
+		//     if(chasitorText) {
 		
-		        chasitorText.hidden = false;
+		//         chasitorText.hidden = false;
 		
-		    }
+		//     }
 		
-		});
+		// });
+
+
+		var chasitorText = document.querySelector('.chasitorText');
+		if(chasitorText && shouldChatDisable) {
+		    chasitorText.hidden = true;	
+		}
 
 		
 		//embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
