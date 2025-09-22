@@ -14,33 +14,40 @@
 	var initESW = function(gslbBaseURL) {
 		embedded_svc.settings.displayHelpButton = true; //Or false
 		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
-		var shouldChatDisable = true;
+		var chasitorText = document.querySelector('.chasitorText');
+		if(chasitorText) {
+			chasitorText.hidden = false;
+		}
 		
-		embedded_svc.addEventHandler("onAgentRichMessage", function(data) {
 		
-		    var chasitorText = document.querySelector('.chasitorText');
 		
-		    if(chasitorText && shouldChatDisable) {
+		// var shouldChatDisable = true;
 		
-		        chasitorText.hidden = true;
+		// embedded_svc.addEventHandler("onAgentRichMessage", function(data) {
 		
-		        shouldChatDisable = false;
+		//     var chasitorText = document.querySelector('.chasitorText');
 		
-		    }
+		//     if(chasitorText && shouldChatDisable) {
 		
-		});
+		//         chasitorText.hidden = true;
 		
-		embedded_svc.addEventHandler("onChatTransferInitiated", function(data) {
+		//         shouldChatDisable = false;
 		
-		    var chasitorText = document.querySelector('.chasitorText');
+		//     }
 		
-		    if(chasitorText) {
+		// });
 		
-		        chasitorText.hidden = false;
+		// embedded_svc.addEventHandler("onChatTransferInitiated", function(data) {
 		
-		    }
+		//     var chasitorText = document.querySelector('.chasitorText');
 		
-		});
+		//     if(chasitorText) {
+		
+		//         chasitorText.hidden = false;
+		
+		//     }
+		
+		// });
 		//embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
 		//embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
 
