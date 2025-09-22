@@ -15,33 +15,33 @@
 		embedded_svc.settings.displayHelpButton = true; //Or false
 		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
 		// testing
-		// var shouldChatDisable = true;
+var shouldChatDisable = true;
 
-		// embedded_svc.addEventHandler("onAgentRichMessage", function(data) {
-		
-		//     var chasitorText = document.querySelector('.chasitorText');
-		
-		//     if(chasitorText && shouldChatDisable) {
-		
-		//         chasitorText.hidden = true;
-		
-		//         shouldChatDisable = false;
-		
-		//     }
-		
-		// });
-		
-		embedded_svc.addEventHandler("onChatTransferInitiated", function(data) {
-		
-		    var chasitorText = document.querySelector('.chasitorText');
-			console.log(' var chasitorText' , chasitorText);
-		    if(chasitorText) {
-		
-		        chasitorText.hidden = true;
-		
-		    }
-		
-		});
+embedded_svc.addEventHandler("onAgentRichMessage", function(data) {
+
+    var chasitorText = document.querySelector('.chasitorText');
+
+    if(chasitorText && shouldChatDisable) {
+
+        chasitorText.hidden = true;
+
+        shouldChatDisable = false;
+
+    }
+
+});
+
+embedded_svc.addEventHandler("onChatTransferInitiated", function(data) {
+
+    var chasitorText = document.querySelector('.chasitorText');
+
+    if(chasitorText) {
+
+        chasitorText.hidden = false;
+
+    }
+
+});
 
 
 
