@@ -11,33 +11,6 @@
         display: none !important;
     }
 
-	  /* Default (desktop) */
-	.embeddedServiceSidebar {
-	    width: 400px !important;
-	    height: 600px !important;
-	}
-	
-	/* Tablet */
-	@media (max-width: 1024px) {
-	    .embeddedServiceSidebar {
-	        width: 320px !important;
-	        height: 500px !important;
-	    }
-	}
-	
-	/* Mobile */
-	@media (max-width: 600px) {
-	    .embeddedServiceSidebar {
-	        width: 100% !important;
-	        height: 100% !important;
-	        bottom: 0 !important;
-	        right: 0 !important;
-	        border-radius: 0 !important; /* make it full screen */
-	    }
-	}
-
-
-
 </style>
 
 <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
@@ -47,24 +20,35 @@
 		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
 		// testing
 
-embedded_svc.addEventHandler("onChatEstablished", function(data) {
-    // Live agent connected → show input
-    var chasitorText = document.querySelector('.chasitorText');
-    if (chasitorText) {
-        chasitorText.style.display = "block";
-    }
-});
+		embedded_svc.addEventHandler("onChatEstablished", function(data) {
+		    // Live agent connected → show input
+		    var chasitorText = document.querySelector('.chasitorText');
+		    if (chasitorText) {
+		        chasitorText.style.display = "block";
+		    }
+		});
+		
+		embedded_svc.addEventHandler("onChatEnded", function(data) {
+		    // Chat ended → hide input
+		    var chasitorText = document.querySelector('.chasitorText');
+		    if (chasitorText) {
+		        chasitorText.style.display = "none";
+		    }
+		});
 
-embedded_svc.addEventHandler("onChatEnded", function(data) {
-    // Chat ended → hide input
-    var chasitorText = document.querySelector('.chasitorText');
-    if (chasitorText) {
-        chasitorText.style.display = "none";
-    }
-});
 
-
-
+	    // Default desktop size
+	    embedded_svc.settings.widgetWidth = '400px';
+	    embedded_svc.settings.widgetHeight = '600px';
+	
+	    // Adjust size depending on viewport
+	    if (window.innerWidth <= 600) { // Mobile
+	        embedded_svc.settings.widgetWidth = '100%';
+	        embedded_svc.settings.widgetHeight = '100%';
+	    } else if (window.innerWidth <= 1024) { // Tablet
+	        embedded_svc.settings.widgetWidth = '320px';
+	        embedded_svc.settings.widgetHeight = '500px';
+	    }
 
 
 		
