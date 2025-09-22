@@ -31,17 +31,17 @@
 		
 		// });
 		
-		// embedded_svc.addEventHandler("onChatTransferInitiated", function(data) {
+		embedded_svc.addEventHandler("onChatTransferInitiated", function(data) {
 		
-		//     var chasitorText = document.querySelector('.chasitorText');
+		    var chasitorText = document.querySelector('.chasitorText');
 		
-		//     if(chasitorText) {
+		    if(chasitorText) {
 		
-		//         chasitorText.hidden = false;
+		        chasitorText.hidden = false;
 		
-		//     }
+		    }
 		
-		// });
+		});
 
 
 
@@ -81,12 +81,6 @@
 			}
 		);
 
-
-
-		var chasitorText = document.querySelector('.chasitorText');
-		if(chasitorText) {
-		    chasitorText.hidden = true;	
-		}
 	};
 
 	if (!window.embedded_svc) {
