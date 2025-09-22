@@ -15,33 +15,30 @@
 		embedded_svc.settings.displayHelpButton = true; //Or false
 		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
 		// testing
-var shouldChatDisable = true;
-
-embedded_svc.addEventHandler("onAgentRichMessage", function(data) {
-
+// Initially hide input box until a live agent connects
+document.addEventListener("DOMContentLoaded", function() {
     var chasitorText = document.querySelector('.chasitorText');
-
-    if(chasitorText && shouldChatDisable) {
-
+    if (chasitorText) {
         chasitorText.hidden = true;
-
-        shouldChatDisable = false;
-
     }
-
 });
 
-embedded_svc.addEventHandler("onChatTransferInitiated", function(data) {
-
+embedded_svc.addEventHandler("onChatEstablished", function(data) {
+    // Live agent connected → show input
     var chasitorText = document.querySelector('.chasitorText');
-
-    if(chasitorText) {
-
+    if (chasitorText) {
         chasitorText.hidden = false;
-
     }
-
 });
+
+embedded_svc.addEventHandler("onChatEnded", function(data) {
+    // Chat ended → hide input
+    var chasitorText = document.querySelector('.chasitorText');
+    if (chasitorText) {
+        chasitorText.hidden = true;
+    }
+});
+
 
 
 
