@@ -44,10 +44,7 @@
 		// });
 
 
-		var chasitorText = document.querySelector('.chasitorText');
-		if(chasitorText && shouldChatDisable) {
-		    chasitorText.hidden = true;	
-		}
+
 
 		
 		//embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
@@ -83,6 +80,13 @@
 				isOfflineSupportEnabled: true
 			}
 		);
+
+
+
+		var chasitorText = document.querySelector('.chasitorText');
+		if(chasitorText && shouldChatDisable) {
+		    chasitorText.hidden = true;	
+		}
 	};
 
 	if (!window.embedded_svc) {
