@@ -37,19 +37,6 @@
 		});
 
 
-	    // Default desktop size
-	    embedded_svc.settings.widgetWidth = '400px';
-	    embedded_svc.settings.widgetHeight = '600px';
-	
-	    // Adjust size depending on viewport
-	    if (window.innerWidth <= 600) { // Mobile
-	        embedded_svc.settings.widgetWidth = '100%';
-	        embedded_svc.settings.widgetHeight = '100%';
-	    } else if (window.innerWidth <= 1024) { // Tablet
-	        embedded_svc.settings.widgetWidth = '320px';
-	        embedded_svc.settings.widgetHeight = '500px';
-	    }
-
 
 		
 		//embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
@@ -85,6 +72,31 @@
 				isOfflineSupportEnabled: true
 			}
 		);
+
+		        /** -----------------------------
+         * Dynamic resize logic
+         * ----------------------------- */
+        function resizeChatWidget() {
+            const sidebar = document.querySelector('.embeddedServiceSidebar');
+            if (!sidebar) return;
+
+            if (window.innerWidth <= 600) {
+                sidebar.style.width = "100%";
+                sidebar.style.height = "100%";
+            } else if (window.innerWidth <= 1024) {
+                sidebar.style.width = "320px";
+                sidebar.style.height = "500px";
+            } else {
+                sidebar.style.width = "400px";
+                sidebar.style.height = "600px";
+            }
+        }
+
+        // Run once after widget loads
+        setTimeout(resizeChatWidget, 2000);
+
+        // Update when browser is resized
+        window.addEventListener("resize", resizeChatWidget);
 
 	};
 
