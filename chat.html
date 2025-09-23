@@ -19,8 +19,28 @@
 		embedded_svc.settings.displayHelpButton = true; //Or false
 		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
 		// testing
-		// Device detection
+				// Device detection
+		var screenWidth = window.innerWidth;
+		var isMobile = screenWidth <= 768;
+		var isTablet = screenWidth > 768 && screenWidth <= 1024;
 
+		// Set widget dimensions based on device
+		if (isMobile) {
+			embedded_svc.settings.widgetWidth = "100%";
+			embedded_svc.settings.widgetHeight = "90%";
+		} else if (isTablet) {
+			embedded_svc.settings.widgetWidth = "350px";
+			embedded_svc.settings.widgetHeight = "500px";
+		} else {
+			// Desktop
+			embedded_svc.settings.widgetWidth = "400px";
+			embedded_svc.settings.widgetHeight = "600px";
+		}
+
+		// Additional responsive settings
+		if (isMobile) {
+			embedded_svc.settings.targetElement = document.body; // Full screen on mobile
+		}
 
 		// end test
 		embedded_svc.addEventHandler("onChatEstablished", function(data) {
