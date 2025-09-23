@@ -1,12 +1,87 @@
 <html>
   <style type='text/css'>
-	.embeddedServiceHelpButton .helpButton .uiButton {
-		background-color: #005290;
+.embeddedServiceHelpButton .helpButton .uiButton {
+		background-color: #FF1744 !important; /* Red background */
 		font-family: "Arial", sans-serif;
+		border-radius: 50% !important; /* Make it circular */
+		width: 60px !important;
+		height: 60px !important;
+		border: none !important;
+		box-shadow: 0 4px 12px rgba(255, 23, 68, 0.4) !important;
+		transition: all 0.3s ease !important;
 	}
+	
+	.embeddedServiceHelpButton .helpButton .uiButton:hover {
+		background-color: #E91E63 !important;
+		transform: scale(1.05) !important;
+		box-shadow: 0 6px 16px rgba(255, 23, 68, 0.6) !important;
+	}
+	
 	.embeddedServiceHelpButton .helpButton .uiButton:focus {
-		outline: 1px solid #005290;
+		outline: 1px solid #FF1744;
+		background-color: #FF1744 !important;
 	}
+	
+	/* Hide the default text and show only icon */
+	.embeddedServiceHelpButton .helpButton .uiButton .helpButtonLabel {
+		display: none !important;
+	}
+	
+	/* Style the chat icon */
+	.embeddedServiceHelpButton .helpButton .uiButton:before {
+		content: "💬" !important;
+		font-size: 24px !important;
+		color: white !important;
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		width: 100% !important;
+		height: 100% !important;
+	}
+	
+	/* Alternative: Use custom chat icon instead of emoji */
+	.embeddedServiceHelpButton .helpButton .uiButton .message {
+		display: none !important;
+	}
+	
+	/* Custom chat lines icon */
+	.embeddedServiceHelpButton .helpButton .uiButton:after {
+		content: "" !important;
+		position: absolute !important;
+		top: 50% !important;
+		left: 50% !important;
+		transform: translate(-50%, -50%) !important;
+		width: 24px !important;
+		height: 2px !important;
+		background-color: white !important;
+		border-radius: 1px !important;
+		box-shadow: 
+			0 -6px 0 white,
+			0 6px 0 white !important;
+	}
+	
+	/* Position the button */
+	.embeddedServiceHelpButton {
+		bottom: 20px !important;
+		right: 20px !important;
+	}
+	
+	/* Mobile responsive button */
+	@media screen and (max-width: 768px) {
+		.embeddedServiceHelpButton .helpButton .uiButton {
+			width: 50px !important;
+			height: 50px !important;
+		}
+		
+		.embeddedServiceHelpButton .helpButton .uiButton:before {
+			font-size: 20px !important;
+		}
+		
+		.embeddedServiceHelpButton .helpButton .uiButton:after {
+			width: 20px !important;
+		}
+	}
+
 	.chasitorText {
         display: none !important;
     }
