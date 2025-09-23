@@ -19,7 +19,10 @@
 		embedded_svc.settings.displayHelpButton = true; //Or false
 		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
 		// testing
-
+		// Device detection
+		var screenWidth = window.innerWidth;
+		var isMobile = screenWidth <= 768;
+		var isTablet = screenWidth > 768 && screenWidth <= 1024;
 		// Set widget dimensions based on device
 		if (isMobile) {
 			embedded_svc.settings.widgetWidth = "100%";
