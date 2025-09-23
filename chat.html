@@ -10,7 +10,56 @@
 	.chasitorText {
         display: none !important;
     }
+	
+	    /* Desktop styles (default) */
+    .embeddedServiceSidebar .dockableContainer {
+        width: 400px !important;
+        height: 600px !important;
+        max-height: 80vh !important;
+    }
 
+    .embeddedServiceSidebar .sidebarBody {
+        height: calc(100% - 50px) !important;
+    }
+
+    /* Tablet styles */
+    @media screen and (max-width: 1024px) and (min-width: 769px) {
+        .embeddedServiceSidebar .dockableContainer {
+            width: 350px !important;
+            height: 500px !important;
+            max-height: 75vh !important;
+        }
+    }
+
+    /* Mobile styles */
+    @media screen and (max-width: 768px) {
+        .embeddedServiceSidebar .dockableContainer {
+            width: 95vw !important;
+            height: 80vh !important;
+            max-height: 500px !important;
+            left: 2.5vw !important;
+        }
+
+        .embeddedServiceHelpButton .helpButton {
+            width: 60px !important;
+            height: 60px !important;
+        }
+    }
+
+    /* Small mobile styles */
+    @media screen and (max-width: 480px) {
+        .embeddedServiceSidebar .dockableContainer {
+            width: 100vw !important;
+            height: 90vh !important;
+            left: 0 !important;
+            bottom: 0 !important;
+        }
+
+        .embeddedServiceHelpButton .helpButton {
+            width: 50px !important;
+            height: 50px !important;
+        }
+    }
 </style>
 
 <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
@@ -20,6 +69,23 @@
 		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
 		// testing
 
+		// Device-specific settings
+		var isMobile = window.innerWidth <= 768;
+		var isTablet = window.innerWidth > 768 && window.innerWidth <= 1024;
+
+		// Set chat window dimensions based on device
+		if (isMobile) {
+			embedded_svc.settings.chatWindowWidth = '100%';
+			embedded_svc.settings.chatWindowHeight = '90vh';
+		} else if (isTablet) {
+			embedded_svc.settings.chatWindowWidth = '350px';
+			embedded_svc.settings.chatWindowHeight = '500px';
+		} else {
+			embedded_svc.settings.chatWindowWidth = '400px';
+			embedded_svc.settings.chatWindowHeight = '600px';
+		}
+
+		// end test
 		embedded_svc.addEventHandler("onChatEstablished", function(data) {
 		    // Live agent connected → show input
 		    var chasitorText = document.querySelector('.chasitorText');
@@ -37,7 +103,17 @@
 		});
 
 
-
+		// Handle window resize for dynamic adjustment
+		window.addEventListener('resize', function() {
+			var newIsMobile = window.innerWidth <= 768;
+			var newIsTablet = window.innerWidth > 768 && window.innerWidth <= 1024;
+			
+			// You might need to refresh the chat widget on significant size changes
+			if ((isMobile !== newIsMobile) || (isTablet !== newIsTablet)) {
+				// Optionally reload the embedded service on device type change
+				console.log('Device type changed, consider refreshing chat widget');
+			}
+		});
 		
 		//embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
 		//embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
