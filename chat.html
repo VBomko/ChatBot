@@ -1,69 +1,75 @@
 <html>
   <style type='text/css'>
-.embeddedServiceHelpButton .helpButton .uiButton {
-		background-color: #FF1744 !important; /* Red background */
+	.embeddedServiceHelpButton .helpButton .uiButton {
+		background-color: #E91E63 !important; /* Pink/Red background */
 		font-family: "Arial", sans-serif;
 		border-radius: 50% !important; /* Make it circular */
 		width: 60px !important;
 		height: 60px !important;
+		min-width: 60px !important;
+		min-height: 60px !important;
 		border: none !important;
-		box-shadow: 0 4px 12px rgba(255, 23, 68, 0.4) !important;
+		box-shadow: 0 4px 12px rgba(233, 30, 99, 0.4) !important;
 		transition: all 0.3s ease !important;
-	}
-	
-	.embeddedServiceHelpButton .helpButton .uiButton:hover {
-		background-color: #E91E63 !important;
-		transform: scale(1.05) !important;
-		box-shadow: 0 6px 16px rgba(255, 23, 68, 0.6) !important;
-	}
-	
-	.embeddedServiceHelpButton .helpButton .uiButton:focus {
-		outline: 1px solid #FF1744;
-		background-color: #FF1744 !important;
-	}
-	
-	/* Hide the default text and show only icon */
-	.embeddedServiceHelpButton .helpButton .uiButton .helpButtonLabel {
-		display: none !important;
-	}
-	
-	/* Style the chat icon */
-	.embeddedServiceHelpButton .helpButton .uiButton:before {
-		content: "💬" !important;
-		font-size: 24px !important;
-		color: white !important;
+		padding: 0 !important;
 		display: flex !important;
 		align-items: center !important;
 		justify-content: center !important;
-		width: 100% !important;
-		height: 100% !important;
+		position: relative !important;
 	}
 	
-	/* Alternative: Use custom chat icon instead of emoji */
-	.embeddedServiceHelpButton .helpButton .uiButton .message {
+	.embeddedServiceHelpButton .helpButton .uiButton:hover {
+		background-color: #C2185B !important;
+		transform: scale(1.05) !important;
+		box-shadow: 0 6px 16px rgba(233, 30, 99, 0.6) !important;
+	}
+	
+	.embeddedServiceHelpButton .helpButton .uiButton:focus {
+		outline: none !important;
+		background-color: #E91E63 !important;
+	}
+	
+	/* Hide all default content */
+	.embeddedServiceHelpButton .helpButton .uiButton * {
 		display: none !important;
 	}
 	
-	/* Custom chat lines icon */
-	.embeddedServiceHelpButton .helpButton .uiButton:after {
+	.embeddedServiceHelpButton .helpButton .uiButton .helpButtonLabel,
+	.embeddedServiceHelpButton .helpButton .uiButton .message,
+	.embeddedServiceHelpButton .helpButton .uiButton .helpButtonLabel__text {
+		display: none !important;
+	}
+	
+	/* Create the chat icon with three horizontal lines */
+	.embeddedServiceHelpButton .helpButton .uiButton:before {
 		content: "" !important;
 		position: absolute !important;
 		top: 50% !important;
 		left: 50% !important;
 		transform: translate(-50%, -50%) !important;
-		width: 24px !important;
+		width: 20px !important;
 		height: 2px !important;
 		background-color: white !important;
 		border-radius: 1px !important;
 		box-shadow: 
-			0 -6px 0 white,
-			0 6px 0 white !important;
+			0 -6px 0 0 white,
+			0 6px 0 0 white !important;
+		z-index: 10 !important;
 	}
 	
 	/* Position the button */
 	.embeddedServiceHelpButton {
 		bottom: 20px !important;
 		right: 20px !important;
+		z-index: 1000 !important;
+	}
+	
+	/* Ensure button container doesn't interfere */
+	.embeddedServiceHelpButton .helpButton {
+		width: 60px !important;
+		height: 60px !important;
+		border-radius: 50% !important;
+		overflow: hidden !important;
 	}
 	
 	/* Mobile responsive button */
@@ -71,14 +77,20 @@
 		.embeddedServiceHelpButton .helpButton .uiButton {
 			width: 50px !important;
 			height: 50px !important;
+			min-width: 50px !important;
+			min-height: 50px !important;
+		}
+		
+		.embeddedServiceHelpButton .helpButton {
+			width: 50px !important;
+			height: 50px !important;
 		}
 		
 		.embeddedServiceHelpButton .helpButton .uiButton:before {
-			font-size: 20px !important;
-		}
-		
-		.embeddedServiceHelpButton .helpButton .uiButton:after {
-			width: 20px !important;
+			width: 16px !important;
+			box-shadow: 
+				0 -5px 0 0 white,
+				0 5px 0 0 white !important;
 		}
 	}
 
@@ -147,11 +159,40 @@
 			}
 		}
 	}
+
+		// Function to fix button styling after it loads
+	function fixButtonStyling() {
+		setTimeout(function() {
+			var button = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
+			if (button) {
+				// Force circular shape
+				button.style.borderRadius = '50%';
+				button.style.width = '60px';
+				button.style.height = '60px';
+				button.style.minWidth = '60px';
+				button.style.minHeight = '60px';
+				button.style.padding = '0';
+				button.style.display = 'flex';
+				button.style.alignItems = 'center';
+				button.style.justifyContent = 'center';
+				
+				// Hide any text content
+				var textElements = button.querySelectorAll('*');
+				textElements.forEach(function(el) {
+					el.style.display = 'none';
+				});
+			}
+		}, 100);
+	}
 	
 	var initESW = function(gslbBaseURL) { 
 		embedded_svc.settings.displayHelpButton = true; //Or false
 		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
-
+		
+		// Remove default text
+		embedded_svc.settings.defaultMinimizedText = '';
+		embedded_svc.settings.disabledMinimizedText = '';
+		
 		// Set initial dimensions
 		var currentDeviceType = getDeviceType();
 		setWidgetDimensions(currentDeviceType);
@@ -230,6 +271,10 @@
 			}, 100);
 		});
 
+		// Fix button styling when it first loads
+		embedded_svc.addEventHandler("onHelpButtonLoaded", function(data) {
+			fixButtonStyling();
+		});
 		
 		//embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
 		//embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
