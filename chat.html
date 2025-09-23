@@ -40,24 +40,23 @@
 		display: none !important;
 	}
 	
-	/* Create the chat icon with three horizontal lines */
+	/* Create the message icon using SVG */
 	.embeddedServiceHelpButton .helpButton .uiButton:before {
 		content: "" !important;
 		position: absolute !important;
 		top: 50% !important;
 		left: 50% !important;
 		transform: translate(-50%, -50%) !important;
-		width: 20px !important;
-		height: 2px !important;
-		background-color: white !important;
-		border-radius: 1px !important;
-		box-shadow: 
-			0 -6px 0 0 white,
-			0 6px 0 0 white !important;
+		width: 24px !important;
+		height: 24px !important;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z'/%3E%3C/svg%3E") !important;
+		background-size: contain !important;
+		background-repeat: no-repeat !important;
+		background-position: center !important;
 		z-index: 10 !important;
 	}
 	
-	/* Position the button */
+	/* Position the button - Same margin for all devices */
 	.embeddedServiceHelpButton {
 		bottom: 20px !important;
 		right: 20px !important;
@@ -87,10 +86,23 @@
 		}
 		
 		.embeddedServiceHelpButton .helpButton .uiButton:before {
-			width: 16px !important;
-			box-shadow: 
-				0 -5px 0 0 white,
-				0 5px 0 0 white !important;
+			width: 20px !important;
+			height: 20px !important;
+		}
+		
+		/* Same bottom margin for mobile */
+		.embeddedServiceHelpButton {
+			bottom: 20px !important;
+			right: 20px !important;
+		}
+	}
+	
+	/* Tablet responsive button */
+	@media screen and (max-width: 1024px) and (min-width: 769px) {
+		/* Same bottom margin for tablet */
+		.embeddedServiceHelpButton {
+			bottom: 20px !important;
+			right: 20px !important;
 		}
 	}
 
@@ -182,6 +194,12 @@
 					el.style.display = 'none';
 				});
 			}
+
+			// Ensure consistent positioning across all devices
+			if (helpButton) {
+				helpButton.style.bottom = '20px';
+				helpButton.style.right = '20px';
+			}
 		}, 100);
 	}
 	
@@ -242,6 +260,10 @@
 		// Add orientation change listener for mobile devices
 		window.addEventListener('orientationchange', function() {
 			setTimeout(handleResize, 100); // Small delay to let orientation change complete
+		});
+
+		embedded_svc.addEventHandler("onHelpButtonClick", function(data) {
+			fixButtonStyling();
 		});
 		
 		embedded_svc.addEventHandler("onChatEstablished", function(data) {
