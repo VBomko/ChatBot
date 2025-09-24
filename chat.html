@@ -46,7 +46,7 @@
 	display: none !important;
 }
 
-/* Megaport logo centered */
+/* Megaport logo centered - normal state */
 .embeddedServiceHelpButton .helpButton .uiButton:before {
 	content: "" !important;
 	position: absolute !important;
@@ -62,6 +62,35 @@
 	background-position: center !important;
 	border-radius: 50% !important;
 	z-index: 10 !important;
+	filter: none !important; /* Ensure no filters are applied */
+	opacity: 1 !important; /* Ensure full opacity */
+}
+
+/* Logo on hover - keep same appearance */
+.embeddedServiceHelpButton .helpButton .uiButton:hover:before {
+	background-color: white !important; /* Keep white background */
+	background-image: url("https://megaport--peeklogicd--c.sandbox.vf.force.com/resource/1758619710000/MegaportLogoSVG") !important;
+	filter: none !important; /* No color filters */
+	opacity: 1 !important; /* Full opacity */
+	mix-blend-mode: normal !important; /* Prevent blend mode changes */
+}
+
+/* Logo on focus - keep same appearance */
+.embeddedServiceHelpButton .helpButton .uiButton:focus:before {
+	background-color: white !important;
+	background-image: url("https://megaport--peeklogicd--c.sandbox.vf.force.com/resource/1758619710000/MegaportLogoSVG") !important;
+	filter: none !important;
+	opacity: 1 !important;
+	mix-blend-mode: normal !important;
+}
+
+/* Logo on active - keep same appearance */
+.embeddedServiceHelpButton .helpButton .uiButton:active:before {
+	background-color: white !important;
+	background-image: url("https://megaport--peeklogicd--c.sandbox.vf.force.com/resource/1758619710000/MegaportLogoSVG") !important;
+	filter: none !important;
+	opacity: 1 !important;
+	mix-blend-mode: normal !important;
 }
 
 /* Position the button - Same margin for all devices */
