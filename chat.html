@@ -19,14 +19,20 @@
 }
 
 .embeddedServiceHelpButton .helpButton .uiButton:hover {
-	background-color: #C2185B !important;
-	transform: scale(1.05) !important;
+	background-color: #E91E63 !important; /* Keep same pink color */
+	transform: scale(1.1) !important; /* Just increase size */
 	box-shadow: 0 6px 16px rgba(233, 30, 99, 0.6) !important;
 }
 
 .embeddedServiceHelpButton .helpButton .uiButton:focus {
 	outline: none !important;
-	background-color: #E91E63 !important;
+	background-color: #E91E63 !important; /* Keep same pink color */
+	transform: scale(1.1) !important; /* Same effect as hover */
+}
+
+.embeddedServiceHelpButton .helpButton .uiButton:active {
+	background-color: #E91E63 !important; /* Keep same pink color */
+	transform: scale(1.05) !important; /* Slightly smaller scale when clicked */
 }
 
 /* Hide all default content */
