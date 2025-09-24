@@ -47,7 +47,7 @@
 		display: none !important;
 	}
 
-	/* Megaport logo for initial button */
+	/* Megaport logo for initial button - normal state */
 	.embeddedServiceHelpButton .helpButton .uiButton:before {
 		content: "" !important;
 		position: absolute !important;
@@ -65,12 +65,86 @@
 		z-index: 10 !important;
 		filter: none !important;
 		opacity: 1 !important;
+		transition: opacity 0.3s ease !important;
+	}
+
+	/* Loading state - hide logo and show dots */
+	.embeddedServiceHelpButton.loading .helpButton .uiButton:before {
+		opacity: 0 !important;
+	}
+
+	/* 3 dots loading animation */
+	.embeddedServiceHelpButton.loading .helpButton .uiButton:after {
+		content: "⋯" !important;
+		position: absolute !important;
+		top: 50% !important;
+		left: 50% !important;
+		transform: translate(-50%, -50%) !important;
+		color: white !important;
+		font-size: 24px !important;
+		font-weight: bold !important;
+		z-index: 11 !important;
+		animation: loadingDots 1.5s infinite ease-in-out !important;
+	}
+
+	/* Loading dots animation */
+	@keyframes loadingDots {
+		0%, 20% {
+			opacity: 0.2;
+			transform: translate(-50%, -50%) scale(0.8);
+		}
+		50% {
+			opacity: 1;
+			transform: translate(-50%, -50%) scale(1);
+		}
+		80%, 100% {
+			opacity: 0.2;
+			transform: translate(-50%, -50%) scale(0.8);
+		}
+	}
+
+	/* Alternative CSS-only 3 dots animation */
+	.embeddedServiceHelpButton.loading .helpButton .uiButton:after {
+		content: "" !important;
+		position: absolute !important;
+		top: 50% !important;
+		left: 50% !important;
+		transform: translate(-50%, -50%) !important;
+		width: 6px !important;
+		height: 6px !important;
+		border-radius: 50% !important;
+		background-color: white !important;
+		box-shadow: 
+			-12px 0 0 white,
+			12px 0 0 white !important;
+		z-index: 11 !important;
+		animation: loadingDotsCSS 1.4s infinite ease-in-out !important;
+	}
+
+	@keyframes loadingDotsCSS {
+		0%, 80%, 100% {
+			box-shadow: 
+				-12px 0 0 rgba(255, 255, 255, 0.2),
+				12px 0 0 rgba(255, 255, 255, 0.2);
+			background-color: rgba(255, 255, 255, 0.2);
+		}
+		40% {
+			box-shadow: 
+				-12px 0 0 white,
+				12px 0 0 rgba(255, 255, 255, 0.2);
+			background-color: white;
+		}
+		60% {
+			box-shadow: 
+				-12px 0 0 rgba(255, 255, 255, 0.2),
+				12px 0 0 white;
+			background-color: rgba(255, 255, 255, 0.2);
+		}
 	}
 
 	/* Logo hover states for initial button */
 	.embeddedServiceHelpButton .helpButton .uiButton:hover:before,
-	.embeddedServiceHelpButton .helpButton .uiButton:focus:before,
-	.embeddedServiceHelpButton .helpButton .uiButton:active:before {
+	.embeddedServiceHelpButton .helpButton .uiButton:focus:before {
 		background-color: white !important;
 		background-image: url("https://megaport--peeklogicd--c.sandbox.vf.force.com/resource/1758619710000/MegaportLogoSVG") !important;
 		filter: none !important;
@@ -78,7 +152,13 @@
 		mix-blend-mode: normal !important;
 	}
 
-	/* Position the initial button - EXACT positioning */
+	/* Don't show hover logo when loading */
+	.embeddedServiceHelpButton.loading .helpButton .uiButton:hover:before,
+	.embeddedServiceHelpButton.loading .helpButton .uiButton:focus:before {
+		opacity: 0 !important;
+	}
+
+	/* Position the initial button */
 	.embeddedServiceHelpButton {
 		bottom: 20px !important;
 		right: 20px !important;
@@ -93,35 +173,32 @@
 		overflow: hidden !important;
 	}
 
-	/* ===== MINIMIZED CHAT BUTTON STYLES - FORCE SAME POSITIONING ===== */
-	/* Override your LWC component styles to match initial button EXACTLY */
+	/* ===== MINIMIZED CHAT BUTTON STYLES ===== */
 	.minimizedContainer,
 	button.minimizedContainer,
 	.minimizedContainer:not(.slds-hidden),
 	:host .minimizedContainer,
 	.embeddedServiceSidebar .minimizedContainer,
 	.embeddedServiceSidebar button.minimizedContainer,
-	.embeddedServiceSidebar .dockableContainer .minimizedContainer,
-	lightning-snap-in-minimized,
-	.snapInMinimized {
+	.embeddedServiceSidebar .dockableContainer .minimizedContainer {
 		position: fixed !important;
 		left: auto !important;
-		bottom: 20px !important; /* EXACT same position as initial */
-		right: 20px !important; /* EXACT same position as initial */
+		bottom: 20px !important;
+		right: 20px !important;
 		margin: 0 !important;
-		width: 60px !important; /* Same as initial button */
-		height: 60px !important; /* Same as initial button */
+		width: 60px !important;
+		height: 60px !important;
 		min-width: 60px !important;
 		max-width: 60px !important;
 		min-height: 60px !important;
 		max-height: 60px !important;
-		border-radius: 16px !important; /* Same rounded square */
+		border-radius: 16px !important;
 		text-align: center !important;
 		text-decoration: none !important;
-		box-shadow: 0 4px 12px rgba(233, 30, 99, 0.4) !important; /* EXACT same shadow */
+		box-shadow: 0 4px 12px rgba(233, 30, 99, 0.4) !important;
 		pointer-events: all !important;
 		overflow: visible !important;
-		background: #E91E63 !important; /* EXACT same pink background */
+		background: #E91E63 !important;
 		border: none !important;
 		cursor: pointer !important;
 		display: flex !important;
@@ -132,9 +209,9 @@
 		font-size: 16px !important;
 		padding: 0 !important;
 		color: white !important;
-		z-index: 1000 !important; /* EXACT same z-index */
-		transform: none !important; /* Reset any transforms */
-		top: auto !important; /* Force bottom positioning */
+		z-index: 1000 !important;
+		transform: none !important;
+		top: auto !important;
 	}
 
 	/* Force positioning override with even higher specificity */
@@ -150,7 +227,7 @@
 		position: fixed !important;
 	}
 
-	/* Hover effects for minimized button - EXACT same as initial */
+	/* Hover effects for minimized button */
 	.minimizedContainer:focus,
 	.minimizedContainer:hover,
 	button.minimizedContainer:focus,
@@ -159,12 +236,12 @@
 	:host .minimizedContainer:hover,
 	.embeddedServiceSidebar .minimizedContainer:hover,
 	.embeddedServiceSidebar button.minimizedContainer:hover {
-		transform: scale(1.1) !important; /* EXACT same scale effect */
-		box-shadow: 0 6px 16px rgba(233, 30, 99, 0.6) !important; /* EXACT same enhanced shadow */
+		transform: scale(1.1) !important;
+		box-shadow: 0 6px 16px rgba(233, 30, 99, 0.6) !important;
 		outline: none !important;
-		background: #E91E63 !important; /* Keep same pink color */
-		bottom: 20px !important; /* Maintain position on hover */
-		right: 20px !important; /* Maintain position on hover */
+		background: #E91E63 !important;
+		bottom: 20px !important;
+		right: 20px !important;
 	}
 
 	/* Hide all content in minimized button */
@@ -181,7 +258,7 @@
 		display: none !important;
 	}
 
-	/* Add Megaport logo to minimized button - EXACT same as initial */
+	/* Add Megaport logo to minimized button */
 	.minimizedContainer:before,
 	:host .minimizedContainer:before,
 	.embeddedServiceSidebar .minimizedContainer:before {
@@ -203,7 +280,7 @@
 		opacity: 1 !important;
 	}
 
-	/* Logo hover states for minimized button - EXACT same as initial */
+	/* Logo hover states for minimized button */
 	.minimizedContainer:hover:before,
 	.minimizedContainer:focus:before,
 	:host .minimizedContainer:hover:before,
@@ -216,33 +293,8 @@
 		mix-blend-mode: normal !important;
 	}
 
-	/* ===== ADDITIONAL OVERRIDES FOR OTHER MINIMIZED STATES ===== */
-	.snapInMinimized *,
-	lightning-snap-in-minimized * {
-		display: none !important;
-	}
-
-	.snapInMinimized:before,
-	lightning-snap-in-minimized:before {
-		content: "" !important;
-		position: absolute !important;
-		top: 50% !important;
-		left: 50% !important;
-		transform: translate(-50%, -50%) !important;
-		width: 32px !important;
-		height: 32px !important;
-		background-color: white !important;
-		background-image: url("https://megaport--peeklogicd--c.sandbox.vf.force.com/resource/1758619710000/MegaportLogoSVG") !important;
-		background-size: 24px 24px !important;
-		background-repeat: no-repeat !important;
-		background-position: center !important;
-		border-radius: 50% !important;
-		z-index: 10 !important;
-	}
-
 	/* ===== MOBILE RESPONSIVE STYLES ===== */
 	@media screen and (max-width: 768px) {
-		/* Initial button mobile */
 		.embeddedServiceHelpButton .helpButton .uiButton {
 			width: 50px !important;
 			height: 50px !important;
@@ -262,8 +314,17 @@
 			height: 26px !important;
 			background-size: 20px 20px !important;
 		}
+
+		/* Mobile loading dots */
+		.embeddedServiceHelpButton.loading .helpButton .uiButton:after {
+			font-size: 20px !important;
+			width: 5px !important;
+			height: 5px !important;
+			box-shadow: 
+				-10px 0 0 white,
+				10px 0 0 white !important;
+		}
 		
-		/* Minimized button mobile - EXACT same positioning */
 		.minimizedContainer,
 		button.minimizedContainer,
 		:host .minimizedContainer,
@@ -275,8 +336,8 @@
 			max-width: 50px !important;
 			max-height: 50px !important;
 			border-radius: 14px !important;
-			bottom: 20px !important; /* Same position */
-			right: 20px !important; /* Same position */
+			bottom: 20px !important;
+			right: 20px !important;
 		}
 		
 		.minimizedContainer:before,
@@ -288,16 +349,6 @@
 		}
 		
 		.embeddedServiceHelpButton {
-			bottom: 20px !important;
-			right: 20px !important;
-		}
-	}
-	
-	/* ===== TABLET RESPONSIVE STYLES ===== */
-	@media screen and (max-width: 1024px) and (min-width: 769px) {
-		.embeddedServiceHelpButton,
-		.minimizedContainer,
-		:host .minimizedContainer {
 			bottom: 20px !important;
 			right: 20px !important;
 		}
@@ -470,6 +521,12 @@
 		});
 		
 		embedded_svc.addEventHandler("onChatEstablished", function(data) {
+			    // Remove loading class when chat is established
+		    var helpButton = document.querySelector('.embeddedServiceHelpButton');
+		    if (helpButton) {
+		        helpButton.classList.remove('loading');
+		    }
+    
 		    // Live agent connected → show input
 		    var chasitorText = document.querySelector('.chasitorText');
 		    if (chasitorText) {
@@ -491,6 +548,12 @@
 
 		// Apply responsive styling when sidebar loads
 		embedded_svc.addEventHandler("onSidebarLoaded", function(data) {
+			    // Remove loading class when chat loads
+		    var helpButton = document.querySelector('.embeddedServiceHelpButton');
+		    if (helpButton) {
+		        helpButton.classList.remove('loading');
+		    }
+			
 			setTimeout(function() {
 				applyCSSChanges(getDeviceType());
 			}, 100);
@@ -499,6 +562,16 @@
 		// Fix button styling when it first loads
 		embedded_svc.addEventHandler("onHelpButtonLoaded", function(data) {
 			fixButtonStyling();
+		});
+
+		embedded_svc.addEventHandler("onHelpButtonClick", function(data) {
+		    // Add loading class when button is clicked
+		    var helpButton = document.querySelector('.embeddedServiceHelpButton');
+		    if (helpButton) {
+		        helpButton.classList.add('loading');
+		    }
+		    
+		    fixButtonStyling();
 		});
 		
 		//embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
