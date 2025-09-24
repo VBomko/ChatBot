@@ -1,5 +1,5 @@
 <html>
-  <style type='text/css'>
+ <style type='text/css'>
 	/* ===== INITIAL HELP BUTTON STYLES ===== */
 	.embeddedServiceHelpButton .helpButton .uiButton { 
 		background-color: #E91E63 !important; /* Pink background */
@@ -78,11 +78,12 @@
 		mix-blend-mode: normal !important;
 	}
 
-	/* Position the initial button */
+	/* Position the initial button - EXACT positioning */
 	.embeddedServiceHelpButton {
 		bottom: 20px !important;
 		right: 20px !important;
 		z-index: 1000 !important;
+		position: fixed !important;
 	}
 
 	.embeddedServiceHelpButton .helpButton {
@@ -92,19 +93,21 @@
 		overflow: hidden !important;
 	}
 
-	/* ===== MINIMIZED CHAT BUTTON STYLES (LWC Component) ===== */
-	/* Override your LWC component styles to match initial button exactly */
+	/* ===== MINIMIZED CHAT BUTTON STYLES - FORCE SAME POSITIONING ===== */
+	/* Override your LWC component styles to match initial button EXACTLY */
 	.minimizedContainer,
 	button.minimizedContainer,
 	.minimizedContainer:not(.slds-hidden),
 	:host .minimizedContainer,
 	.embeddedServiceSidebar .minimizedContainer,
 	.embeddedServiceSidebar button.minimizedContainer,
-	.embeddedServiceSidebar .dockableContainer .minimizedContainer {
+	.embeddedServiceSidebar .dockableContainer .minimizedContainer,
+	lightning-snap-in-minimized,
+	.snapInMinimized {
 		position: fixed !important;
 		left: auto !important;
-		bottom: 20px !important;
-		right: 20px !important;
+		bottom: 20px !important; /* EXACT same position as initial */
+		right: 20px !important; /* EXACT same position as initial */
 		margin: 0 !important;
 		width: 60px !important; /* Same as initial button */
 		height: 60px !important; /* Same as initial button */
@@ -115,10 +118,10 @@
 		border-radius: 16px !important; /* Same rounded square */
 		text-align: center !important;
 		text-decoration: none !important;
-		box-shadow: 0 4px 12px rgba(233, 30, 99, 0.4) !important; /* Same shadow */
+		box-shadow: 0 4px 12px rgba(233, 30, 99, 0.4) !important; /* EXACT same shadow */
 		pointer-events: all !important;
 		overflow: visible !important;
-		background: #E91E63 !important; /* Same pink background */
+		background: #E91E63 !important; /* EXACT same pink background */
 		border: none !important;
 		cursor: pointer !important;
 		display: flex !important;
@@ -129,10 +132,25 @@
 		font-size: 16px !important;
 		padding: 0 !important;
 		color: white !important;
-		z-index: 1000 !important;
+		z-index: 1000 !important; /* EXACT same z-index */
+		transform: none !important; /* Reset any transforms */
+		top: auto !important; /* Force bottom positioning */
 	}
 
-	/* Hover effects for minimized button - same as initial */
+	/* Force positioning override with even higher specificity */
+	body .minimizedContainer,
+	body button.minimizedContainer,
+	body :host .minimizedContainer,
+	body .embeddedServiceSidebar .minimizedContainer,
+	body .embeddedServiceSidebar button.minimizedContainer {
+		bottom: 20px !important;
+		right: 20px !important;
+		top: auto !important;
+		left: auto !important;
+		position: fixed !important;
+	}
+
+	/* Hover effects for minimized button - EXACT same as initial */
 	.minimizedContainer:focus,
 	.minimizedContainer:hover,
 	button.minimizedContainer:focus,
@@ -141,10 +159,12 @@
 	:host .minimizedContainer:hover,
 	.embeddedServiceSidebar .minimizedContainer:hover,
 	.embeddedServiceSidebar button.minimizedContainer:hover {
-		transform: scale(1.1) !important; /* Same scale effect */
-		box-shadow: 0 6px 16px rgba(233, 30, 99, 0.6) !important; /* Same enhanced shadow */
+		transform: scale(1.1) !important; /* EXACT same scale effect */
+		box-shadow: 0 6px 16px rgba(233, 30, 99, 0.6) !important; /* EXACT same enhanced shadow */
 		outline: none !important;
 		background: #E91E63 !important; /* Keep same pink color */
+		bottom: 20px !important; /* Maintain position on hover */
+		right: 20px !important; /* Maintain position on hover */
 	}
 
 	/* Hide all content in minimized button */
@@ -161,7 +181,7 @@
 		display: none !important;
 	}
 
-	/* Add Megaport logo to minimized button - exact same as initial */
+	/* Add Megaport logo to minimized button - EXACT same as initial */
 	.minimizedContainer:before,
 	:host .minimizedContainer:before,
 	.embeddedServiceSidebar .minimizedContainer:before {
@@ -183,7 +203,7 @@
 		opacity: 1 !important;
 	}
 
-	/* Logo hover states for minimized button */
+	/* Logo hover states for minimized button - EXACT same as initial */
 	.minimizedContainer:hover:before,
 	.minimizedContainer:focus:before,
 	:host .minimizedContainer:hover:before,
@@ -197,18 +217,6 @@
 	}
 
 	/* ===== ADDITIONAL OVERRIDES FOR OTHER MINIMIZED STATES ===== */
-	.snapInMinimized,
-	.snapInMinimized button,
-	lightning-snap-in-minimized,
-	lightning-snap-in-minimized button {
-		background-color: #E91E63 !important;
-		border-radius: 16px !important;
-		width: 60px !important;
-		height: 60px !important;
-		border: none !important;
-		box-shadow: 0 4px 12px rgba(233, 30, 99, 0.4) !important;
-	}
-
 	.snapInMinimized *,
 	lightning-snap-in-minimized * {
 		display: none !important;
@@ -255,7 +263,7 @@
 			background-size: 20px 20px !important;
 		}
 		
-		/* Minimized button mobile */
+		/* Minimized button mobile - EXACT same positioning */
 		.minimizedContainer,
 		button.minimizedContainer,
 		:host .minimizedContainer,
@@ -267,6 +275,8 @@
 			max-width: 50px !important;
 			max-height: 50px !important;
 			border-radius: 14px !important;
+			bottom: 20px !important; /* Same position */
+			right: 20px !important; /* Same position */
 		}
 		
 		.minimizedContainer:before,
@@ -285,7 +295,9 @@
 	
 	/* ===== TABLET RESPONSIVE STYLES ===== */
 	@media screen and (max-width: 1024px) and (min-width: 769px) {
-		.embeddedServiceHelpButton {
+		.embeddedServiceHelpButton,
+		.minimizedContainer,
+		:host .minimizedContainer {
 			bottom: 20px !important;
 			right: 20px !important;
 		}
