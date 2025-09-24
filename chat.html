@@ -73,72 +73,61 @@
 		opacity: 0 !important;
 	}
 
-	/* 3 dots loading animation */
-	.embeddedServiceHelpButton.loading .helpButton .uiButton:after {
-		content: "⋯" !important;
-		position: absolute !important;
-		top: 50% !important;
-		left: 50% !important;
-		transform: translate(-50%, -50%) !important;
-		color: white !important;
-		font-size: 24px !important;
-		font-weight: bold !important;
-		z-index: 11 !important;
-		animation: loadingDots 1.5s infinite ease-in-out !important;
-	}
-
-	/* Loading dots animation */
-	@keyframes loadingDots {
-		0%, 20% {
-			opacity: 0.2;
-			transform: translate(-50%, -50%) scale(0.8);
-		}
-		50% {
-			opacity: 1;
-			transform: translate(-50%, -50%) scale(1);
-		}
-		80%, 100% {
-			opacity: 0.2;
-			transform: translate(-50%, -50%) scale(0.8);
-		}
-	}
-
-	/* Alternative CSS-only 3 dots animation */
+	/* Sequential loading dots animation - dot 1 (left) */
 	.embeddedServiceHelpButton.loading .helpButton .uiButton:after {
 		content: "" !important;
 		position: absolute !important;
 		top: 50% !important;
 		left: 50% !important;
 		transform: translate(-50%, -50%) !important;
-		width: 6px !important;
-		height: 6px !important;
+		width: 5px !important;
+		height: 5px !important;
 		border-radius: 50% !important;
 		background-color: white !important;
-		box-shadow: 
-			-12px 0 0 white,
-			12px 0 0 white !important;
 		z-index: 11 !important;
-		animation: loadingDotsCSS 1.4s infinite ease-in-out !important;
+		animation: loadingDot1 1.8s infinite ease-in-out !important;
+		box-shadow: 
+			12px 0 0 white,  /* dot 2 (center) */
+			24px 0 0 white   /* dot 3 (right) */ !important;
 	}
 
-	@keyframes loadingDotsCSS {
-		0%, 80%, 100% {
+	/* Sequential dots animation keyframes */
+	@keyframes loadingDot1 {
+		0% {
+			background-color: rgba(255, 255, 255, 0.3);
 			box-shadow: 
-				-12px 0 0 rgba(255, 255, 255, 0.2),
-				12px 0 0 rgba(255, 255, 255, 0.2);
-			background-color: rgba(255, 255, 255, 0.2);
+				12px 0 0 rgba(255, 255, 255, 0.3),
+				24px 0 0 rgba(255, 255, 255, 0.3);
 		}
-		40% {
-			box-shadow: 
-				-12px 0 0 white,
-				12px 0 0 rgba(255, 255, 255, 0.2);
+		16.66% {
 			background-color: white;
-		}
-		60% {
 			box-shadow: 
-				-12px 0 0 rgba(255, 255, 255, 0.2),
-				12px 0 0 white;
-			background-color: rgba(255, 255, 255, 0.2);
+				12px 0 0 rgba(255, 255, 255, 0.3),
+				24px 0 0 rgba(255, 255, 255, 0.3);
+		}
+		33.33% {
+			background-color: rgba(255, 255, 255, 0.3);
+			box-shadow: 
+				12px 0 0 white,
+				24px 0 0 rgba(255, 255, 255, 0.3);
+		}
+		50% {
+			background-color: rgba(255, 255, 255, 0.3);
+			box-shadow: 
+				12px 0 0 rgba(255, 255, 255, 0.3),
+				24px 0 0 white;
+		}
+		66.66% {
+			background-color: rgba(255, 255, 255, 0.3);
+			box-shadow: 
+				12px 0 0 rgba(255, 255, 255, 0.3),
+				24px 0 0 rgba(255, 255, 255, 0.3);
+		}
+		100% {
+			background-color: rgba(255, 255, 255, 0.3);
+			box-shadow: 
+				12px 0 0 rgba(255, 255, 255, 0.3),
+				24px 0 0 rgba(255, 255, 255, 0.3);
 		}
 	}
 
@@ -315,14 +304,53 @@
 			background-size: 20px 20px !important;
 		}
 
-		/* Mobile loading dots */
+		/* Mobile loading dots - smaller and closer together */
 		.embeddedServiceHelpButton.loading .helpButton .uiButton:after {
-			font-size: 20px !important;
-			width: 5px !important;
-			height: 5px !important;
+			width: 4px !important;
+			height: 4px !important;
 			box-shadow: 
-				-10px 0 0 white,
-				10px 0 0 white !important;
+				10px 0 0 white,  /* dot 2 - closer spacing */
+				20px 0 0 white   /* dot 3 - closer spacing */ !important;
+		}
+
+		/* Mobile animation with adjusted spacing */
+		@keyframes loadingDot1 {
+			0% {
+				background-color: rgba(255, 255, 255, 0.3);
+				box-shadow: 
+					10px 0 0 rgba(255, 255, 255, 0.3),
+					20px 0 0 rgba(255, 255, 255, 0.3);
+			}
+			16.66% {
+				background-color: white;
+				box-shadow: 
+					10px 0 0 rgba(255, 255, 255, 0.3),
+					20px 0 0 rgba(255, 255, 255, 0.3);
+			}
+			33.33% {
+				background-color: rgba(255, 255, 255, 0.3);
+				box-shadow: 
+					10px 0 0 white,
+					20px 0 0 rgba(255, 255, 255, 0.3);
+			}
+			50% {
+				background-color: rgba(255, 255, 255, 0.3);
+				box-shadow: 
+					10px 0 0 rgba(255, 255, 255, 0.3),
+					20px 0 0 white;
+			}
+			66.66% {
+				background-color: rgba(255, 255, 255, 0.3);
+				box-shadow: 
+					10px 0 0 rgba(255, 255, 255, 0.3),
+					20px 0 0 rgba(255, 255, 255, 0.3);
+			}
+			100% {
+				background-color: rgba(255, 255, 255, 0.3);
+				box-shadow: 
+					10px 0 0 rgba(255, 255, 255, 0.3),
+					20px 0 0 rgba(255, 255, 255, 0.3);
+			}
 		}
 		
 		.minimizedContainer,
