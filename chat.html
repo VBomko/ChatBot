@@ -1,10 +1,10 @@
 <html>
   <style type='text/css'>
-		/* Initial chat help button styles */
+	/* ===== INITIAL HELP BUTTON STYLES ===== */
 	.embeddedServiceHelpButton .helpButton .uiButton { 
-		background-color: #E91E63 !important; /* Pink/Red background */
+		background-color: #E91E63 !important; /* Pink background */
 		font-family: "Arial", sans-serif;
-		border-radius: 16px !important; /* Rounded corners instead of circle */
+		border-radius: 16px !important; /* Rounded square shape */
 		width: 60px !important;
 		height: 60px !important;
 		min-width: 60px !important;
@@ -21,19 +21,19 @@
 
 	.embeddedServiceHelpButton .helpButton .uiButton:hover {
 		background-color: #E91E63 !important; /* Keep same pink color */
-		transform: scale(1.1) !important; /* Just increase size */
+		transform: scale(1.1) !important; /* Scale up effect */
 		box-shadow: 0 6px 16px rgba(233, 30, 99, 0.6) !important;
 	}
 
 	.embeddedServiceHelpButton .helpButton .uiButton:focus {
 		outline: none !important;
-		background-color: #E91E63 !important; /* Keep same pink color */
-		transform: scale(1.1) !important; /* Same effect as hover */
+		background-color: #E91E63 !important;
+		transform: scale(1.1) !important;
 	}
 
 	.embeddedServiceHelpButton .helpButton .uiButton:active {
-		background-color: #E91E63 !important; /* Keep same pink color */
-		transform: scale(1.05) !important; /* Slightly smaller scale when clicked */
+		background-color: #E91E63 !important;
+		transform: scale(1.05) !important;
 	}
 
 	/* Hide all default content */
@@ -47,7 +47,7 @@
 		display: none !important;
 	}
 
-	/* Megaport logo centered - normal state */
+	/* Megaport logo for initial button */
 	.embeddedServiceHelpButton .helpButton .uiButton:before {
 		content: "" !important;
 		position: absolute !important;
@@ -63,29 +63,13 @@
 		background-position: center !important;
 		border-radius: 50% !important;
 		z-index: 10 !important;
-		filter: none !important; /* Ensure no filters are applied */
-		opacity: 1 !important; /* Ensure full opacity */
-	}
-
-	/* Logo on hover - keep same appearance */
-	.embeddedServiceHelpButton .helpButton .uiButton:hover:before {
-		background-color: white !important; /* Keep white background */
-		background-image: url("https://megaport--peeklogicd--c.sandbox.vf.force.com/resource/1758619710000/MegaportLogoSVG") !important;
-		filter: none !important; /* No color filters */
-		opacity: 1 !important; /* Full opacity */
-		mix-blend-mode: normal !important; /* Prevent blend mode changes */
-	}
-
-	/* Logo on focus - keep same appearance */
-	.embeddedServiceHelpButton .helpButton .uiButton:focus:before {
-		background-color: white !important;
-		background-image: url("https://megaport--peeklogicd--c.sandbox.vf.force.com/resource/1758619710000/MegaportLogoSVG") !important;
 		filter: none !important;
 		opacity: 1 !important;
-		mix-blend-mode: normal !important;
 	}
 
-	/* Logo on active - keep same appearance */
+	/* Logo hover states for initial button */
+	.embeddedServiceHelpButton .helpButton .uiButton:hover:before,
+	.embeddedServiceHelpButton .helpButton .uiButton:focus:before,
 	.embeddedServiceHelpButton .helpButton .uiButton:active:before {
 		background-color: white !important;
 		background-image: url("https://megaport--peeklogicd--c.sandbox.vf.force.com/resource/1758619710000/MegaportLogoSVG") !important;
@@ -94,60 +78,92 @@
 		mix-blend-mode: normal !important;
 	}
 
-	/* Position the button - Same margin for all devices */
+	/* Position the initial button */
 	.embeddedServiceHelpButton {
 		bottom: 20px !important;
 		right: 20px !important;
 		z-index: 1000 !important;
 	}
 
-	/* Ensure button container doesn't interfere */
 	.embeddedServiceHelpButton .helpButton {
 		width: 60px !important;
 		height: 60px !important;
-		border-radius: 16px !important; /* Match button radius */
+		border-radius: 16px !important;
 		overflow: hidden !important;
 	}
 
-	/* Override minimized chat button when chat is open but minimized */
+	/* ===== MINIMIZED CHAT BUTTON STYLES (LWC Component) ===== */
+	/* Override your LWC component styles to match initial button exactly */
+	.minimizedContainer,
+	button.minimizedContainer,
+	.minimizedContainer:not(.slds-hidden),
+	:host .minimizedContainer,
 	.embeddedServiceSidebar .minimizedContainer,
 	.embeddedServiceSidebar button.minimizedContainer,
 	.embeddedServiceSidebar .dockableContainer .minimizedContainer {
-		background-color: #E91E63 !important; /* Same pink background */
-		border-radius: 16px !important; /* Same rounded square shape */
-		width: 60px !important;
-		height: 60px !important;
+		position: fixed !important;
+		left: auto !important;
+		bottom: 20px !important;
+		right: 20px !important;
+		margin: 0 !important;
+		width: 60px !important; /* Same as initial button */
+		height: 60px !important; /* Same as initial button */
 		min-width: 60px !important;
+		max-width: 60px !important;
 		min-height: 60px !important;
+		max-height: 60px !important;
+		border-radius: 16px !important; /* Same rounded square */
+		text-align: center !important;
+		text-decoration: none !important;
+		box-shadow: 0 4px 12px rgba(233, 30, 99, 0.4) !important; /* Same shadow */
+		pointer-events: all !important;
+		overflow: visible !important;
+		background: #E91E63 !important; /* Same pink background */
 		border: none !important;
-		box-shadow: 0 4px 12px rgba(233, 30, 99, 0.4) !important;
-		transition: all 0.3s ease !important;
-		padding: 0 !important;
+		cursor: pointer !important;
 		display: flex !important;
 		align-items: center !important;
 		justify-content: center !important;
-		position: fixed !important;
-		bottom: 20px !important;
-		right: 20px !important;
+		flex-direction: column !important;
+		transition: all 0.3s ease !important;
+		font-size: 16px !important;
+		padding: 0 !important;
+		color: white !important;
 		z-index: 1000 !important;
 	}
 
-	/* Hover effect for minimized chat button */
+	/* Hover effects for minimized button - same as initial */
+	.minimizedContainer:focus,
+	.minimizedContainer:hover,
+	button.minimizedContainer:focus,
+	button.minimizedContainer:hover,
+	:host .minimizedContainer:focus,
+	:host .minimizedContainer:hover,
 	.embeddedServiceSidebar .minimizedContainer:hover,
 	.embeddedServiceSidebar button.minimizedContainer:hover {
-		background-color: #E91E63 !important; /* Keep same pink color */
-		transform: scale(1.1) !important; /* Same increase effect */
-		box-shadow: 0 6px 16px rgba(233, 30, 99, 0.6) !important;
+		transform: scale(1.1) !important; /* Same scale effect */
+		box-shadow: 0 6px 16px rgba(233, 30, 99, 0.6) !important; /* Same enhanced shadow */
+		outline: none !important;
+		background: #E91E63 !important; /* Keep same pink color */
 	}
 
-	/* Hide all default content in minimized button */
+	/* Hide all content in minimized button */
+	.minimizedContainer *,
+	:host .minimizedContainer *,
+	.minimizedContainer .chat-icon,
+	.minimizedContainer .chat-bubble,
+	.minimizedContainer .chat-lines,
+	.minimizedContainer .line,
+	.minimizedContainer .messageContent,
 	.embeddedServiceSidebar .minimizedContainer *,
 	.embeddedServiceSidebar .minimizedContainer .minimizedText,
 	.embeddedServiceSidebar .minimizedContainer .message {
 		display: none !important;
 	}
 
-	/* Add Megaport logo to minimized chat button */
+	/* Add Megaport logo to minimized button - exact same as initial */
+	.minimizedContainer:before,
+	:host .minimizedContainer:before,
 	.embeddedServiceSidebar .minimizedContainer:before {
 		content: "" !important;
 		position: absolute !important;
@@ -167,7 +183,11 @@
 		opacity: 1 !important;
 	}
 
-	/* Keep logo appearance on hover for minimized button */
+	/* Logo hover states for minimized button */
+	.minimizedContainer:hover:before,
+	.minimizedContainer:focus:before,
+	:host .minimizedContainer:hover:before,
+	:host .minimizedContainer:focus:before,
 	.embeddedServiceSidebar .minimizedContainer:hover:before {
 		background-color: white !important;
 		background-image: url("https://megaport--peeklogicd--c.sandbox.vf.force.com/resource/1758619710000/MegaportLogoSVG") !important;
@@ -176,7 +196,7 @@
 		mix-blend-mode: normal !important;
 	}
 
-	/* Also override any Snap-in specific minimized styles */
+	/* ===== ADDITIONAL OVERRIDES FOR OTHER MINIMIZED STATES ===== */
 	.snapInMinimized,
 	.snapInMinimized button,
 	lightning-snap-in-minimized,
@@ -189,13 +209,11 @@
 		box-shadow: 0 4px 12px rgba(233, 30, 99, 0.4) !important;
 	}
 
-	/* Hide text in snap-in minimized */
 	.snapInMinimized *,
 	lightning-snap-in-minimized * {
 		display: none !important;
 	}
 
-	/* Add logo to snap-in minimized */
 	.snapInMinimized:before,
 	lightning-snap-in-minimized:before {
 		content: "" !important;
@@ -214,8 +232,9 @@
 		z-index: 10 !important;
 	}
 
-	/* Mobile responsive button */
+	/* ===== MOBILE RESPONSIVE STYLES ===== */
 	@media screen and (max-width: 768px) {
+		/* Initial button mobile */
 		.embeddedServiceHelpButton .helpButton .uiButton {
 			width: 50px !important;
 			height: 50px !important;
@@ -236,41 +255,46 @@
 			background-size: 20px 20px !important;
 		}
 		
-		/* Mobile responsive for minimized chat button */
+		/* Minimized button mobile */
+		.minimizedContainer,
+		button.minimizedContainer,
+		:host .minimizedContainer,
 		.embeddedServiceSidebar .minimizedContainer {
 			width: 50px !important;
 			height: 50px !important;
 			min-width: 50px !important;
 			min-height: 50px !important;
+			max-width: 50px !important;
+			max-height: 50px !important;
 			border-radius: 14px !important;
 		}
 		
+		.minimizedContainer:before,
+		:host .minimizedContainer:before,
 		.embeddedServiceSidebar .minimizedContainer:before {
 			width: 26px !important;
 			height: 26px !important;
 			background-size: 20px 20px !important;
 		}
 		
-		/* Same bottom margin for mobile */
 		.embeddedServiceHelpButton {
 			bottom: 20px !important;
 			right: 20px !important;
 		}
 	}
 	
-	/* Tablet responsive button */
+	/* ===== TABLET RESPONSIVE STYLES ===== */
 	@media screen and (max-width: 1024px) and (min-width: 769px) {
-		/* Same bottom margin for tablet */
 		.embeddedServiceHelpButton {
 			bottom: 20px !important;
 			right: 20px !important;
 		}
 	}
 
+	/* Hide chat input initially */
 	.chasitorText {
         display: none !important;
     }
-	
 </style>
 
 <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
