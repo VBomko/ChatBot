@@ -68,55 +68,66 @@
 		transition: opacity 0.3s ease !important;
 	}
 
-	/* Loading state - hide logo and show dots */
-	.embeddedServiceHelpButton.loading .helpButton .uiButton:before {
-		opacity: 0 !important;
+	/* Loading dots animation keyframes - defined first for better compatibility */
+	@keyframes loadingDotsAnimation {
+		0% {
+			background: white !important;
+			box-shadow: 
+				14px 0 0 rgba(255, 255, 255, 0.3),
+				-14px 0 0 rgba(255, 255, 255, 0.3) !important;
+		}
+		33% {
+			background: rgba(255, 255, 255, 0.3) !important;
+			box-shadow: 
+				14px 0 0 white,
+				-14px 0 0 rgba(255, 255, 255, 0.3) !important;
+		}
+		66% {
+			background: rgba(255, 255, 255, 0.3) !important;
+			box-shadow: 
+				14px 0 0 rgba(255, 255, 255, 0.3),
+				-14px 0 0 white !important;
+		}
+		100% {
+			background: white !important;
+			box-shadow: 
+				14px 0 0 rgba(255, 255, 255, 0.3),
+				-14px 0 0 rgba(255, 255, 255, 0.3) !important;
+		}
 	}
 
-	/* New improved loading animation with 3 dots */
-	.embeddedServiceHelpButton.loading .helpButton .uiButton:after {
+	/* Loading state - hide logo */
+	.embeddedServiceHelpButton.loading .helpButton .uiButton:before,
+	.embeddedServiceHelpButton[data-loading="true"] .helpButton .uiButton:before {
+		opacity: 0 !important;
+		display: none !important;
+	}
+
+	/* Show loading dots - with multiple selectors for reliability */
+	.embeddedServiceHelpButton.loading .helpButton .uiButton:after,
+	.embeddedServiceHelpButton[data-loading="true"] .helpButton .uiButton:after {
 		content: "" !important;
 		position: absolute !important;
 		top: 50% !important;
 		left: 50% !important;
 		transform: translate(-50%, -50%) !important;
-		width: 8px !important; /* Reduced size */
-		height: 8px !important; /* Reduced size */
+		width: 8px !important;
+		height: 8px !important;
 		border-radius: 50% !important;
-		background: rgba(255, 255, 255, 0.3) !important; /* Start with dim dot */
+		background: white !important;
 		box-shadow: 
-			14px 0 0 rgba(255, 255, 255, 0.3), /* Right dot - reduced spacing */
-			-14px 0 0 white !important; /* Left dot */
+			14px 0 0 rgba(255, 255, 255, 0.3),
+			-14px 0 0 rgba(255, 255, 255, 0.3) !important;
 		z-index: 11 !important;
-		animation: loadingDotsImproved 1.2s infinite ease-in-out !important;
+		animation: loadingDotsAnimation 1.2s infinite ease-in-out !important;
+		display: block !important;
 	}
 
-	/* Improved loading dots animation */
-	@keyframes loadingDotsImproved {
-		0% {
-			background: white;
-			box-shadow: 
-				14px 0 0 rgba(255, 255, 255, 0.3),
-				-14px 0 0 rgba(255, 255, 255, 0.3);
-		}
-		33% {
-			background: rgba(255, 255, 255, 0.3);
-			box-shadow: 
-				14px 0 0 white,
-				-14px 0 0 rgba(255, 255, 255, 0.3);
-		}
-		66% {
-			background: rgba(255, 255, 255, 0.3);
-			box-shadow: 
-				14px 0 0 rgba(255, 255, 255, 0.3),
-				-14px 0 0 white;
-		}
-		100% {
-			background: white;
-			box-shadow: 
-				14px 0 0 rgba(255, 255, 255, 0.3),
-				-14px 0 0 rgba(255, 255, 255, 0.3);
-		}
+	/* Ensure no animation when not loading */
+	.embeddedServiceHelpButton:not(.loading) .helpButton .uiButton:after,
+	.embeddedServiceHelpButton:not([data-loading="true"]) .helpButton .uiButton:after {
+		display: none !important;
+		animation: none !important;
 	}
 
 	/* Logo hover states for initial button */
@@ -131,8 +142,11 @@
 
 	/* Don't show hover logo when loading */
 	.embeddedServiceHelpButton.loading .helpButton .uiButton:hover:before,
-	.embeddedServiceHelpButton.loading .helpButton .uiButton:focus:before {
+	.embeddedServiceHelpButton.loading .helpButton .uiButton:focus:before,
+	.embeddedServiceHelpButton[data-loading="true"] .helpButton .uiButton:hover:before,
+	.embeddedServiceHelpButton[data-loading="true"] .helpButton .uiButton:focus:before {
 		opacity: 0 !important;
+		display: none !important;
 	}
 
 	/* Position the initial button */
@@ -292,40 +306,41 @@
 			background-size: 20px 20px !important;
 		}
 
-		/* Mobile loading dots - smaller size */
-		.embeddedServiceHelpButton.loading .helpButton .uiButton:after {
+		/* Mobile loading dots */
+		.embeddedServiceHelpButton.loading .helpButton .uiButton:after,
+		.embeddedServiceHelpButton[data-loading="true"] .helpButton .uiButton:after {
 			width: 6px !important;
 			height: 6px !important;
 			box-shadow: 
 				10px 0 0 rgba(255, 255, 255, 0.3),
-				-10px 0 0 white !important;
+				-10px 0 0 rgba(255, 255, 255, 0.3) !important;
 		}
-		
-		/* Mobile keyframes */
-		@keyframes loadingDotsImproved {
+
+		/* Mobile animation keyframes */
+		@keyframes loadingDotsAnimation {
 			0% {
-				background: white;
+				background: white !important;
 				box-shadow: 
 					10px 0 0 rgba(255, 255, 255, 0.3),
-					-10px 0 0 rgba(255, 255, 255, 0.3);
+					-10px 0 0 rgba(255, 255, 255, 0.3) !important;
 			}
 			33% {
-				background: rgba(255, 255, 255, 0.3);
+				background: rgba(255, 255, 255, 0.3) !important;
 				box-shadow: 
 					10px 0 0 white,
-					-10px 0 0 rgba(255, 255, 255, 0.3);
+					-10px 0 0 rgba(255, 255, 255, 0.3) !important;
 			}
 			66% {
-				background: rgba(255, 255, 255, 0.3);
+				background: rgba(255, 255, 255, 0.3) !important;
 				box-shadow: 
 					10px 0 0 rgba(255, 255, 255, 0.3),
-					-10px 0 0 white;
+					-10px 0 0 white !important;
 			}
 			100% {
-				background: white;
+				background: white !important;
 				box-shadow: 
 					10px 0 0 rgba(255, 255, 255, 0.3),
-					-10px 0 0 rgba(255, 255, 255, 0.3);
+					-10px 0 0 rgba(255, 255, 255, 0.3) !important;
 			}
 		}
 		
@@ -456,6 +471,27 @@
 			}
 		}, 100);
 	}
+
+	
+	// Enhanced function to trigger loading animation
+	function startLoadingAnimation() {
+		var helpButton = document.querySelector('.embeddedServiceHelpButton');
+		if (helpButton) {
+			helpButton.classList.add('loading');
+			helpButton.setAttribute('data-loading', 'true');
+			console.log('Loading animation started');
+		}
+	}
+
+	// Enhanced function to stop loading animation
+	function stopLoadingAnimation() {
+		var helpButton = document.querySelector('.embeddedServiceHelpButton');
+		if (helpButton) {
+			helpButton.classList.remove('loading');
+			helpButton.removeAttribute('data-loading');
+			console.log('Loading animation stopped');
+		}
+	}
 	
 	var initESW = function(gslbBaseURL) { 
 		embedded_svc.settings.displayHelpButton = true; //Or false
@@ -516,21 +552,13 @@
 		});
 
 		embedded_svc.addEventHandler("onHelpButtonClick", function(data) {
-			// Add loading class when button is clicked
-		    var helpButton = document.querySelector('.embeddedServiceHelpButton');
-		    if (helpButton) {
-		        helpButton.classList.add('loading');
-		    }
+			startLoadingAnimation();
 			fixButtonStyling();
 		});
 		
 		embedded_svc.addEventHandler("onChatEstablished", function(data) {
-			    // Remove loading class when chat is established
-		    var helpButton = document.querySelector('.embeddedServiceHelpButton');
-		    if (helpButton) {
-		        helpButton.classList.remove('loading');
-		    }
-    
+			stopLoadingAnimation();
+
 		    // Live agent connected → show input
 		    var chasitorText = document.querySelector('.chasitorText');
 		    if (chasitorText) {
@@ -552,12 +580,7 @@
 
 		// Apply responsive styling when sidebar loads
 		embedded_svc.addEventHandler("onSidebarLoaded", function(data) {
-			    // Remove loading class when chat loads
-		    var helpButton = document.querySelector('.embeddedServiceHelpButton');
-		    if (helpButton) {
-		        helpButton.classList.remove('loading');
-		    }
-			
+			stopLoadingAnimation();
 			setTimeout(function() {
 				applyCSSChanges(getDeviceType());
 			}, 100);
@@ -568,7 +591,16 @@
 			fixButtonStyling();
 		});
 
+		// Additional event handlers to ensure animation stops
+		embedded_svc.addEventHandler("onChatStarted", function(data) {
+			console.log('Chat started - stopping animation');
+			stopLoadingAnimation();
+		});
 
+		embedded_svc.addEventHandler("onAgentJoined", function(data) {
+			console.log('Agent joined - stopping animation');
+			stopLoadingAnimation();
+		});
 		
 		//embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
 		//embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
