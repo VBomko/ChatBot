@@ -73,41 +73,49 @@
 		opacity: 0 !important;
 	}
 
-	/* New loading animation with 3 dots */
+	/* New improved loading animation with 3 dots */
 	.embeddedServiceHelpButton.loading .helpButton .uiButton:after {
 		content: "" !important;
 		position: absolute !important;
 		top: 50% !important;
 		left: 50% !important;
 		transform: translate(-50%, -50%) !important;
-		width: 15px !important;
-		aspect-ratio: 1 !important;
+		width: 8px !important; /* Reduced size */
+		height: 8px !important; /* Reduced size */
 		border-radius: 50% !important;
-		background: white !important;
+		background: rgba(255, 255, 255, 0.3) !important; /* Start with dim dot */
 		box-shadow: 
-			20px 0 white,
-			-20px 0 rgba(255, 255, 255, 0.2) !important;
+			14px 0 0 rgba(255, 255, 255, 0.3), /* Right dot - reduced spacing */
+			-14px 0 0 white !important; /* Left dot */
 		z-index: 11 !important;
-		animation: loadingDotsNew 1s infinite linear alternate !important;
+		animation: loadingDotsImproved 1.2s infinite ease-in-out !important;
 	}
 
-	/* New loading dots animation */
-	@keyframes loadingDotsNew {
+	/* Improved loading dots animation */
+	@keyframes loadingDotsImproved {
 		0% {
-			box-shadow: 20px 0 white, -20px 0 rgba(255, 255, 255, 0.2);
 			background: white;
+			box-shadow: 
+				14px 0 0 rgba(255, 255, 255, 0.3),
+				-14px 0 0 rgba(255, 255, 255, 0.3);
 		}
 		33% {
-			box-shadow: 20px 0 white, -20px 0 rgba(255, 255, 255, 0.2);
-			background: rgba(255, 255, 255, 0.2);
+			background: rgba(255, 255, 255, 0.3);
+			box-shadow: 
+				14px 0 0 white,
+				-14px 0 0 rgba(255, 255, 255, 0.3);
 		}
 		66% {
-			box-shadow: 20px 0 rgba(255, 255, 255, 0.2), -20px 0 white;
-			background: rgba(255, 255, 255, 0.2);
+			background: rgba(255, 255, 255, 0.3);
+			box-shadow: 
+				14px 0 0 rgba(255, 255, 255, 0.3),
+				-14px 0 0 white;
 		}
 		100% {
-			box-shadow: 20px 0 rgba(255, 255, 255, 0.2), -20px 0 white;
 			background: white;
+			box-shadow: 
+				14px 0 0 rgba(255, 255, 255, 0.3),
+				-14px 0 0 rgba(255, 255, 255, 0.3);
 		}
 	}
 
@@ -284,12 +292,41 @@
 			background-size: 20px 20px !important;
 		}
 
-		/* Mobile loading dots - new animation */
+		/* Mobile loading dots - smaller size */
 		.embeddedServiceHelpButton.loading .helpButton .uiButton:after {
-			width: 12px !important;
+			width: 6px !important;
+			height: 6px !important;
 			box-shadow: 
-				16px 0 white,
-				-16px 0 rgba(255, 255, 255, 0.2) !important;
+				10px 0 0 rgba(255, 255, 255, 0.3),
+				-10px 0 0 white !important;
+		}
+		
+		/* Mobile keyframes */
+		@keyframes loadingDotsImproved {
+			0% {
+				background: white;
+				box-shadow: 
+					10px 0 0 rgba(255, 255, 255, 0.3),
+					-10px 0 0 rgba(255, 255, 255, 0.3);
+			}
+			33% {
+				background: rgba(255, 255, 255, 0.3);
+				box-shadow: 
+					10px 0 0 white,
+					-10px 0 0 rgba(255, 255, 255, 0.3);
+			}
+			66% {
+				background: rgba(255, 255, 255, 0.3);
+				box-shadow: 
+					10px 0 0 rgba(255, 255, 255, 0.3),
+					-10px 0 0 white;
+			}
+			100% {
+				background: white;
+				box-shadow: 
+					10px 0 0 rgba(255, 255, 255, 0.3),
+					-10px 0 0 rgba(255, 255, 255, 0.3);
+			}
 		}
 		
 		.minimizedContainer,
@@ -329,7 +366,7 @@
 
 <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
 <script type='text/javascript'>
-		// Function to get device type based on screen width
+	// Function to get device type based on screen width
 	function getDeviceType() {
 		var screenWidth = window.innerWidth;
 		if (screenWidth <= 768) return 'mobile';
@@ -337,7 +374,7 @@
 		return 'desktop';
 	}
 
-		// Function to set widget dimensions based on device type
+	// Function to set widget dimensions based on device type
 	function setWidgetDimensions(deviceType) {
 		if (!embedded_svc || !embedded_svc.settings) return;
 
@@ -358,7 +395,7 @@
 		}
 	}
 
-		// Function to apply CSS changes for responsive behavior
+	// Function to apply CSS changes for responsive behavior
 	function applyCSSChanges(deviceType) {
 		var chatContainer = document.querySelector('.embeddedServiceSidebar .dockableContainer');
 		
@@ -387,7 +424,7 @@
 		}
 	}
 
-		// Function to fix button styling after it loads
+	// Function to fix button styling after it loads
 	function fixButtonStyling() {
 		setTimeout(function() {
 			var button = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
@@ -423,10 +460,6 @@
 	var initESW = function(gslbBaseURL) { 
 		embedded_svc.settings.displayHelpButton = true; //Or false
 		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
-		
-		// Remove default text
-		// embedded_svc.settings.defaultMinimizedText = '';
-		// embedded_svc.settings.disabledMinimizedText = '';
 		
 		embedded_svc.settings.loadingText = 'Connecting to support...'; // Custom loading message
 		embedded_svc.settings.chatbotAvatarImgURL = "https://megaport--peeklogicd.sandbox.my.site.com/BotTesting/resource/1758619710000/MegaportLogoSVG";
