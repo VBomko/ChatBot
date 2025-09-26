@@ -373,6 +373,70 @@
 		}
 	}
 
+	/* Hide logo when loading */
+.embeddedServiceHelpButton .helpButton .uiButton.is-loading:before {
+	content: "" !important;
+	opacity: 0 !important;
+	display: none !important;
+}
+
+/* 3-dot loader while loading */
+.embeddedServiceHelpButton .helpButton .uiButton.is-loading:after {
+	content: "" !important;
+	position: absolute !important;
+	top: 50% !important;
+	left: 50% !important;
+	transform: translate(-50%, -50%) !important;
+	width: 8px !important;
+	height: 8px !important;
+	border-radius: 50% !important;
+	background: white !important;
+	box-shadow:
+		14px 0 0 rgba(255, 255, 255, 0.3),
+		-14px 0 0 rgba(255, 255, 255, 0.3) !important;
+	z-index: 11 !important;
+	animation: eswDots 1.2s infinite ease-in-out !important;
+	display: block !important;
+}
+
+@keyframes eswDots {
+	0% {
+		background: white !important;
+		box-shadow:
+			14px 0 0 rgba(255, 255, 255, 0.3),
+			-14px 0 0 rgba(255, 255, 255, 0.3) !important;
+	}
+	33% {
+		background: rgba(255, 255, 255, 0.3) !important;
+		box-shadow:
+			14px 0 0 white,
+			-14px 0 0 rgba(255, 255, 255, 0.3) !important;
+	}
+	66% {
+		background: rgba(255, 255, 255, 0.3) !important;
+		box-shadow:
+			14px 0 0 rgba(255, 255, 255, 0.3),
+			-14px 0 0 white !important;
+	}
+	100% {
+		background: white !important;
+		box-shadow:
+			14px 0 0 rgba(255, 255, 255, 0.3),
+			-14px 0 0 rgba(255, 255, 255, 0.3) !important;
+	}
+}
+
+/* Mobile sizing for the loader */
+@media screen and (max-width: 768px) {
+	.embeddedServiceHelpButton .helpButton .uiButton.is-loading:after {
+		width: 6px !important;
+		height: 6px !important;
+		box-shadow:
+			10px 0 0 rgba(255, 255, 255, 0.3),
+			-10px 0 0 rgba(255, 255, 255, 0.3) !important;
+	}
+}
+
 	/* Hide chat input initially */
 	.chasitorText {
         display: none !important;
@@ -472,25 +536,29 @@
 		}, 100);
 	}
 
-	
-	// Enhanced function to trigger loading animation
-	function startLoadingAnimation() {
-		var helpButton = document.querySelector('.embeddedServiceHelpButton');
-		if (helpButton) {
-			helpButton.classList.add('loading');
-			helpButton.setAttribute('data-loading', 'true');
-			console.log('Loading animation started');
-		}
+	function getHelpBtn() {
+		return document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
 	}
 
-	// Enhanced function to stop loading animation
+	let loadingTimer;
+
+	
+	function startLoadingAnimation() {
+		const btn = getHelpBtn();
+		if (!btn) return;
+		btn.classList.add('is-loading');
+		btn.setAttribute('aria-busy', 'true');
+		// Fail-safe in case no stop event fires
+		clearTimeout(loadingTimer);
+		loadingTimer = setTimeout(stopLoadingAnimation, 15000);
+	}
+
 	function stopLoadingAnimation() {
-		var helpButton = document.querySelector('.embeddedServiceHelpButton');
-		if (helpButton) {
-			helpButton.classList.remove('loading');
-			helpButton.removeAttribute('data-loading');
-			console.log('Loading animation stopped');
-		}
+		const btn = getHelpBtn();
+		if (!btn) return;
+		btn.classList.remove('is-loading');
+		btn.removeAttribute('aria-busy');
+		clearTimeout(loadingTimer);
 	}
 	
 	var initESW = function(gslbBaseURL) { 
@@ -588,6 +656,7 @@
 
 		// Fix button styling when it first loads
 		embedded_svc.addEventHandler("onHelpButtonLoaded", function(data) {
+			stopLoadingAnimation();
 			fixButtonStyling();
 		});
 
