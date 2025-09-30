@@ -373,6 +373,30 @@
 		}
 	}
 
+	/* Hide default powered by footer */
+.embeddedServiceHelpButton .helpButton .uiButton.helpButtonEnabled:after {
+    content: " "; /* Removes default powered by text */
+    display: none !important;
+}
+
+/* Custom footer bar */
+.embeddedServiceLiveAgentStateChatFooter {
+    background-color: #E91E63; /* Your footer color */
+    font-family: "Arial", sans-serif;
+    text-align: center;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+}
+
+/* Add your custom text */
+.embeddedServiceLiveAgentStateChatFooter:after {
+    content: "Restart conversation";
+    color: white;
+    font-weight: bold;
+    display: block;
+    cursor: pointer;
+}
+
 	/* Hide chat input initially */
 	.chasitorText {
         display: none !important;
