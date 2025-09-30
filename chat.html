@@ -453,6 +453,19 @@
 				restartButton.addEventListener('click', function() {
 					console.log('Restart button clicked - will restart chat session');
 					// TODO: Add actual restart functionality here
+						console.log('Returning to main menu...');
+	
+							try {
+								// Use the Embedded Service API to return to pre-chat state
+								if (embedded_svc && embedded_svc.showPrechat) {
+									embedded_svc.showPrechat();
+								} else if (embedded_svc && embedded_svc.menu) {
+									// Alternative: Show the menu
+									embedded_svc.menu.showMenu();
+								}
+							} catch (error) {
+								console.error('Error returning to main menu:', error);
+							}
 				});
 				
 				buttonContainer.appendChild(restartButton);
