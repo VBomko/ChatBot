@@ -1,12 +1,6 @@
-<!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Megaport Embedded Chat</title>
-
 <style type='text/css'>
-	/* ===== INITIAL HELP BUTTON STYLES (UNCHANGED) ===== */
+	/* ===== INITIAL HELP BUTTON STYLES ===== */
 	.embeddedServiceHelpButton .helpButton .uiButton { 
 		background-color: #E91E63 !important; /* Pink background */
 		font-family: "Arial", sans-serif;
@@ -170,7 +164,7 @@
 		overflow: hidden !important;
 	}
 
-	/* ===== MINIMIZED CHAT BUTTON STYLES (UNCHANGED) ===== */
+	/* ===== MINIMIZED CHAT BUTTON STYLES ===== */
 	.minimizedContainer,
 	button.minimizedContainer,
 	.minimizedContainer:not(.slds-hidden),
@@ -290,7 +284,7 @@
 		mix-blend-mode: normal !important;
 	}
 
-	/* ===== MOBILE RESPONSIVE STYLES (UNCHANGED) ===== */
+	/* ===== MOBILE RESPONSIVE STYLES ===== */
 	@media screen and (max-width: 768px) {
 		.embeddedServiceHelpButton .helpButton .uiButton {
 			width: 50px !important;
@@ -380,104 +374,14 @@
 	}
 
 	/* Hide chat input initially */
-	.chasitorText { display: none !important; }
-
-	/* ===== CUSTOM FOOTER OVERRIDE (NEW) ===== */
-	/* Hide platform footer so only our footer shows on first page */
-	.embeddedServiceSidebar .footer,
-	.embeddedServiceSidebar .dockableFooter {
-		display: none !important;
-	}
-
-	/* Positioning context for custom footer */
-	.embeddedServiceSidebar .dockableContainer {
-		position: relative !important;
-	}
-
-	/* Avoid content being covered by the custom footer */
-	.embeddedServiceSidebar .dockableContainer .conversationRegion,
-	.embeddedServiceSidebar .dockableContainer .conversation .scrollable,
-	.embeddedServiceSidebar .dockableContainer .conversation {
-		padding-bottom: 96px !important;
-	}
-
-	/* Custom footer UI */
-	.meg-custom-footer {
-		position: absolute;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		padding: 12px 16px 16px;
-		background: transparent;
-		pointer-events: none;
-	}
-
-	.meg-custom-footer__card {
-		background: #fff;
-		border-radius: 20px 20px 16px 16px;
-		box-shadow: 0 6px 24px rgba(0,0,0,0.18);
-		padding: 12px;
-		max-width: 100%;
-		margin: 0 auto;
-	}
-
-	.meg-custom-footer__button {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		border: none;
-		border-radius: 14px;
-		padding: 14px 16px;
-		background: #E91E63;
-		color: #fff;
-		font-weight: 600;
-		font-size: 15px;
-		cursor: pointer;
-		box-shadow: 0 8px 20px rgba(233,30,99,0.35);
-		transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
-		pointer-events: auto;
-	}
-
-	.meg-custom-footer__button:hover,
-	.meg-custom-footer__button:focus {
-		transform: translateY(-1px);
-		box-shadow: 0 10px 24px rgba(233,30,99,0.45);
-		outline: none;
-	}
-
-	.meg-custom-footer__icon {
-		width: 18px;
-		height: 18px;
-		border: 2px solid rgba(255,255,255,0.9);
-		border-radius: 50%;
-		margin-right: 10px;
-		position: relative;
-	}
-
-	.meg-custom-footer__icon:after {
-		content: "";
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		width: 8px;
-		height: 2px;
-		background: rgba(255,255,255,0.9);
-		transform: translate(-50%, -50%) rotate(45deg);
-		border-radius: 1px;
-	}
-
-	@media (max-width: 768px) {
-		.meg-custom-footer { padding: 10px 12px 12px; }
-		.meg-custom-footer__card { border-radius: 18px 18px 14px 14px; }
-		.meg-custom-footer__button { border-radius: 12px; padding: 12px 14px; font-size: 14px; }
-	}
+	.chasitorText {
+        display: none !important;
+    }
 </style>
-</head>
 
-<body>
 <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
 <script type='text/javascript'>
+	// Function to get device type based on screen width
 	function getDeviceType() {
 		var screenWidth = window.innerWidth;
 		if (screenWidth <= 768) return 'mobile';
@@ -485,6 +389,7 @@
 		return 'desktop';
 	}
 
+	// Function to set widget dimensions based on device type
 	function setWidgetDimensions(deviceType) {
 		if (!embedded_svc || !embedded_svc.settings) return;
 
@@ -505,8 +410,10 @@
 		}
 	}
 
+	// Function to apply CSS changes for responsive behavior
 	function applyCSSChanges(deviceType) {
 		var chatContainer = document.querySelector('.embeddedServiceSidebar .dockableContainer');
+		
 		if (chatContainer) {
 			switch(deviceType) {
 				case 'mobile':
@@ -532,109 +439,184 @@
 		}
 	}
 
-	/* Footer helpers */
-	function createCustomFooter() {
-		var root = document.createElement('div');
-		root.className = 'meg-custom-footer';
-		root.innerHTML =
-			'<div class="meg-custom-footer__card">' +
-				'<button type="button" class="meg-custom-footer__button" id="meg-restart-btn">' +
-					'<span class="meg-custom-footer__icon" aria-hidden="true"></span>' +
-					'<span>Restart conversation</span>' +
-				'</button>' +
-			'</div>';
-		return root;
-	}
-
-	function ensureCustomFooterMounted() {
-		var dock = document.querySelector('.embeddedServiceSidebar .dockableContainer');
-		if (!dock) return;
-		if (!dock.querySelector('.meg-custom-footer')) {
-			dock.appendChild(createCustomFooter());
-			var btn = dock.querySelector('#meg-restart-btn');
-			if (btn) {
-				btn.addEventListener('click', function () {
-					console.log('[Megaport Chat] Restart conversation clicked');
+	// Function to fix button styling after it loads
+	function fixButtonStyling() {
+		setTimeout(function() {
+			var button = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
+			var helpButton = document.querySelector('.embeddedServiceHelpButton');
+			
+			if (button) {
+				// Force circular shape
+				button.style.borderRadius = '50%';
+				button.style.width = '60px';
+				button.style.height = '60px';
+				button.style.minWidth = '60px';
+				button.style.minHeight = '60px';
+				button.style.padding = '0';
+				button.style.display = 'flex';
+				button.style.alignItems = 'center';
+				button.style.justifyContent = 'center';
+				
+				// Hide any text content
+				var textElements = button.querySelectorAll('*');
+				textElements.forEach(function(el) {
+					el.style.display = 'none';
 				});
 			}
+
+			// Ensure consistent positioning across all devices
+			if (helpButton) {
+				helpButton.style.bottom = '20px';
+				helpButton.style.right = '20px';
+			}
+		}, 100);
+	}
+
+	
+	// Enhanced function to trigger loading animation
+	function startLoadingAnimation() {
+		var helpButton = document.querySelector('.embeddedServiceHelpButton');
+		if (helpButton) {
+			helpButton.classList.add('loading');
+			helpButton.setAttribute('data-loading', 'true');
+			console.log('Loading animation started');
 		}
 	}
 
-	function showCustomFooter(show) {
-		var el = document.querySelector('.embeddedServiceSidebar .dockableContainer .meg-custom-footer');
-		if (el) el.style.display = show ? 'block' : 'none';
+	// Enhanced function to stop loading animation
+	function stopLoadingAnimation() {
+		var helpButton = document.querySelector('.embeddedServiceHelpButton');
+		if (helpButton) {
+			helpButton.classList.remove('loading');
+			helpButton.removeAttribute('data-loading');
+			console.log('Loading animation stopped');
+		}
 	}
-
+	
 	var initESW = function(gslbBaseURL) { 
-		embedded_svc.settings.displayHelpButton = true;
-		embedded_svc.settings.language = '';
-		embedded_svc.settings.loadingText = 'Connecting to support...';
+		embedded_svc.settings.displayHelpButton = true; //Or false
+		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+		
+		embedded_svc.settings.loadingText = 'Connecting to support...'; // Custom loading message
 		embedded_svc.settings.chatbotAvatarImgURL = "https://megaport--peeklogicd.sandbox.my.site.com/BotTesting/resource/1758619710000/MegaportLogoSVG";
 
+		// Set initial dimensions
 		var currentDeviceType = getDeviceType();
 		setWidgetDimensions(currentDeviceType);
+
+		// Store current device type for comparison
 		var lastDeviceType = currentDeviceType;
 
+		// Resize event handler with debouncing
 		var resizeTimeout;
 		function handleResize() {
 			clearTimeout(resizeTimeout);
 			resizeTimeout = setTimeout(function() {
 				var newDeviceType = getDeviceType();
+				
+				// Only update if device type actually changed
 				if (newDeviceType !== lastDeviceType) {
+					console.log('Device type changed from', lastDeviceType, 'to', newDeviceType);
+					
+					// Update settings
 					setWidgetDimensions(newDeviceType);
+					
+					// Apply CSS changes to existing chat window
 					applyCSSChanges(newDeviceType);
+					
+					// Update stored device type
 					lastDeviceType = newDeviceType;
+					
+					// Trigger a refresh of the chat widget if it's open
 					var chatContainer = document.querySelector('.embeddedServiceSidebar');
 					if (chatContainer && chatContainer.style.display !== 'none') {
+						// Force a re-render by toggling visibility briefly
 						chatContainer.style.visibility = 'hidden';
-						setTimeout(function() { chatContainer.style.visibility = 'visible'; }, 50);
+						setTimeout(function() {
+							chatContainer.style.visibility = 'visible';
+						}, 50);
 					}
 				} else {
+					// Even if device type didn't change, apply CSS for minor adjustments
 					applyCSSChanges(newDeviceType);
 				}
-			}, 250);
+			}, 250); // 250ms debounce delay
 		}
 
+		// Add resize event listener
 		window.addEventListener('resize', handleResize);
+
+		// Add orientation change listener for mobile devices
 		window.addEventListener('orientationchange', function() {
-			setTimeout(handleResize, 100);
+			setTimeout(handleResize, 100); // Small delay to let orientation change complete
 		});
 
-		embedded_svc.addEventHandler("onHelpButtonClick", function() {
-			/* Keep original styles; no JS overrides */
+		embedded_svc.addEventHandler("onHelpButtonClick", function(data) {
+			startLoadingAnimation();
+			fixButtonStyling();
 		});
 		
-		embedded_svc.addEventHandler("onChatEstablished", function() {
-			var chasitorText = document.querySelector('.chasitorText');
-			if (chasitorText) { chasitorText.style.display = "block"; }
+		embedded_svc.addEventHandler("onChatEstablished", function(data) {
+			stopLoadingAnimation();
+
+		    // Live agent connected → show input
+		    var chasitorText = document.querySelector('.chasitorText');
+		    if (chasitorText) {
+		        chasitorText.style.display = "block";
+		    }
+			// Apply responsive styling when chat opens
 		    setTimeout(function() {
 		    	applyCSSChanges(getDeviceType());
-				ensureCustomFooterMounted();
-				showCustomFooter(true);
 		    }, 100);
 		});
 		
-		embedded_svc.addEventHandler("onChatEnded", function() {
-			var chasitorText = document.querySelector('.chasitorText');
-			if (chasitorText) { chasitorText.style.display = "none"; }
-			showCustomFooter(true);
+		embedded_svc.addEventHandler("onChatEnded", function(data) {
+		    // Chat ended → hide input
+		    var chasitorText = document.querySelector('.chasitorText');
+		    if (chasitorText) {
+		        chasitorText.style.display = "none";
+		    }
 		});
 
-		embedded_svc.addEventHandler("onSidebarLoaded", function() {
+		// Apply responsive styling when sidebar loads
+		embedded_svc.addEventHandler("onSidebarLoaded", function(data) {
+			stopLoadingAnimation();
 			setTimeout(function() {
 				applyCSSChanges(getDeviceType());
-				ensureCustomFooterMounted();
-				showCustomFooter(true);
 			}, 100);
 		});
 
-		embedded_svc.addEventHandler("onHelpButtonLoaded", function() {
-			/* No help-button style overrides here either */
+		// Fix button styling when it first loads
+		embedded_svc.addEventHandler("onHelpButtonLoaded", function(data) {
+			fixButtonStyling();
 		});
 
-		embedded_svc.addEventHandler("onChatStarted", function() {});
-		embedded_svc.addEventHandler("onAgentJoined", function() {});
+		// Additional event handlers to ensure animation stops
+		embedded_svc.addEventHandler("onChatStarted", function(data) {
+			console.log('Chat started - stopping animation');
+			stopLoadingAnimation();
+		});
+
+		embedded_svc.addEventHandler("onAgentJoined", function(data) {
+			console.log('Agent joined - stopping animation');
+			stopLoadingAnimation();
+		});
 		
+		//embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
+		//embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
+
+		//embedded_svc.settings.loadingText = ''; //(Defaults to Loading)
+		//embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
+
+		// Settings for Chat
+		//embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+			// Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
+			// Returns a valid button ID.
+		//};
+		//embedded_svc.settings.prepopulatedPrechatFields = {}; //Sets the auto-population of pre-chat form fields
+		//embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
+		//embedded_svc.settings.offlineSupportMinimizedText = '...'; //(Defaults to Contact Us)
+
 		embedded_svc.settings.enabledFeatures = ['LiveAgent'];
 		embedded_svc.settings.entryFeature = 'LiveAgent';
 
@@ -653,16 +635,18 @@
 				isOfflineSupportEnabled: true
 			}
 		);
+
 	};
 
 	if (!window.embedded_svc) {
 		var s = document.createElement('script');
 		s.setAttribute('src', 'https://megaport--peeklogicd.sandbox.my.salesforce.com/embeddedservice/5.0/esw.min.js');
-		s.onload = function() { initESW(null); };
+		s.onload = function() {
+			initESW(null);
+		};
 		document.body.appendChild(s);
 	} else {
 		initESW('https://service.force.com');
 	}
 </script>
-</body>
 </html>
