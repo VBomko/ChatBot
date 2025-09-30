@@ -284,91 +284,6 @@
 		mix-blend-mode: normal !important;
 	}
 
-	/* ===== CUSTOM FOOTER STYLES ===== */
-	/* Hide standard chat input and footer elements */
-	.chasitorText,
-	.chatInput,
-	.chatInputWrapper,
-	.inputTextArea,
-	.textArea,
-	.chatFooter,
-	.footer,
-	.chatInputContainer,
-	.inputContainer,
-	.messageInput,
-	.embeddedServiceSidebar .chatInput,
-	.embeddedServiceSidebar .chasitorText,
-	.embeddedServiceSidebar .inputTextArea,
-	.embeddedServiceSidebar .textArea,
-	.embeddedServiceSidebar .chatFooter,
-	.embeddedServiceSidebar .footer,
-	.embeddedServiceSidebar .chatInputContainer,
-	.embeddedServiceSidebar .inputContainer,
-	.embeddedServiceSidebar .messageInput,
-	.embeddedServiceSidebar .dockableContainer .chatInput,
-	.embeddedServiceSidebar .dockableContainer .chasitorText,
-	.embeddedServiceSidebar .dockableContainer .inputTextArea,
-	.embeddedServiceSidebar .dockableContainer .textArea,
-	.embeddedServiceSidebar .dockableContainer .chatFooter,
-	.embeddedServiceSidebar .dockableContainer .footer,
-	.embeddedServiceSidebar .dockableContainer .chatInputContainer,
-	.embeddedServiceSidebar .dockableContainer .inputContainer,
-	.embeddedServiceSidebar .dockableContainer .messageInput {
-		display: none !important;
-	}
-
-	/* Custom footer button styles */
-	.custom-footer-button {
-		position: absolute !important;
-		bottom: 0 !important;
-		left: 0 !important;
-		right: 0 !important;
-		width: 100% !important;
-		height: 50px !important;
-		background-color: #E91E63 !important;
-		color: white !important;
-		border: none !important;
-		font-family: "Arial", sans-serif !important;
-		font-size: 14px !important;
-		font-weight: 500 !important;
-		cursor: pointer !important;
-		display: flex !important;
-		align-items: center !important;
-		justify-content: center !important;
-		gap: 8px !important;
-		transition: background-color 0.3s ease !important;
-		z-index: 1001 !important;
-		box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1) !important;
-	}
-
-	.custom-footer-button:hover {
-		background-color: #C2185B !important;
-	}
-
-	.custom-footer-button:focus {
-		outline: none !important;
-		background-color: #C2185B !important;
-	}
-
-	.custom-footer-button:active {
-		background-color: #AD1457 !important;
-	}
-
-	/* Restart icon styles */
-	.restart-icon {
-		width: 16px !important;
-		height: 16px !important;
-		background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z'/%3E%3C/svg%3E") no-repeat center !important;
-		background-size: 16px 16px !important;
-	}
-
-	/* Adjust chat container to accommodate custom footer */
-	.embeddedServiceSidebar .dockableContainer,
-	.embeddedServiceSidebar .chatContainer,
-	.embeddedServiceSidebar .chatWindow {
-		padding-bottom: 50px !important;
-	}
-
 	/* ===== MOBILE RESPONSIVE STYLES ===== */
 	@media screen and (max-width: 768px) {
 		.embeddedServiceHelpButton .helpButton .uiButton {
@@ -456,25 +371,12 @@
 			bottom: 20px !important;
 			right: 20px !important;
 		}
-
-		/* Mobile custom footer */
-		.custom-footer-button {
-			height: 45px !important;
-			font-size: 13px !important;
-		}
-
-		.restart-icon {
-			width: 14px !important;
-			height: 14px !important;
-			background-size: 14px 14px !important;
-		}
-
-		.embeddedServiceSidebar .dockableContainer,
-		.embeddedServiceSidebar .chatContainer,
-		.embeddedServiceSidebar .chatWindow {
-			padding-bottom: 45px !important;
-		}
 	}
+
+	/* Hide chat input initially */
+	.chasitorText {
+        display: none !important;
+    }
 </style>
 
 <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
@@ -570,6 +472,7 @@
 		}, 100);
 	}
 
+	
 	// Enhanced function to trigger loading animation
 	function startLoadingAnimation() {
 		var helpButton = document.querySelector('.embeddedServiceHelpButton');
@@ -588,61 +491,6 @@
 			helpButton.removeAttribute('data-loading');
 			console.log('Loading animation stopped');
 		}
-	}
-
-	// Function to create custom footer
-	function createCustomFooter() {
-		// Remove any existing custom footer
-		var existingFooter = document.querySelector('.custom-footer-button');
-		if (existingFooter) {
-			existingFooter.remove();
-		}
-
-		// Create custom footer button
-		var customFooter = document.createElement('button');
-		customFooter.className = 'custom-footer-button';
-		customFooter.innerHTML = '<span class="restart-icon"></span>Restart conversation';
-		
-		// Add click handler
-		customFooter.addEventListener('click', function() {
-			// Restart the conversation by refreshing the embedded service
-			if (embedded_svc && embedded_svc.restartConversation) {
-				embedded_svc.restartConversation();
-			} else {
-				// Fallback: reload the embedded service
-				location.reload();
-			}
-		});
-
-		// Find the chat container and append the footer
-		var chatContainer = document.querySelector('.embeddedServiceSidebar .dockableContainer');
-		if (chatContainer) {
-			chatContainer.style.position = 'relative';
-			chatContainer.appendChild(customFooter);
-		}
-	}
-
-	// Function to hide standard footer elements
-	function hideStandardFooter() {
-		var selectors = [
-			'.chasitorText',
-			'.chatInput',
-			'.chatInputWrapper',
-			'.inputTextArea',
-			'.textArea',
-			'.chatFooter',
-			'.footer',
-			'.chatInputContainer',
-			'.inputContainer',
-			'.messageInput'
-		];
-
-		selectors.forEach(function(selector) {
-			var elements = document.querySelectorAll(selector);
-			elements.forEach(function(element) {
-				element.style.display = 'none';
-			});
-		});
 	}
 	
 	var initESW = function(gslbBaseURL) { 
@@ -710,28 +558,29 @@
 		
 		embedded_svc.addEventHandler("onChatEstablished", function(data) {
 			stopLoadingAnimation();
-			hideStandardFooter();
-			setTimeout(createCustomFooter, 200);
 
-		    // Apply responsive styling when chat opens
+		    // Live agent connected → show input
+		    var chasitorText = document.querySelector('.chasitorText');
+		    if (chasitorText) {
+		        chasitorText.style.display = "block";
+		    }
+			// Apply responsive styling when chat opens
 		    setTimeout(function() {
 		    	applyCSSChanges(getDeviceType());
 		    }, 100);
 		});
 		
 		embedded_svc.addEventHandler("onChatEnded", function(data) {
-		    // Remove custom footer when chat ends
-		    var customFooter = document.querySelector('.custom-footer-button');
-		    if (customFooter) {
-		        customFooter.remove();
+		    // Chat ended → hide input
+		    var chasitorText = document.querySelector('.chasitorText');
+		    if (chasitorText) {
+		        chasitorText.style.display = "none";
 		    }
 		});
 
 		// Apply responsive styling when sidebar loads
 		embedded_svc.addEventHandler("onSidebarLoaded", function(data) {
 			stopLoadingAnimation();
-			hideStandardFooter();
-			setTimeout(createCustomFooter, 200);
 			setTimeout(function() {
 				applyCSSChanges(getDeviceType());
 			}, 100);
@@ -746,16 +595,27 @@
 		embedded_svc.addEventHandler("onChatStarted", function(data) {
 			console.log('Chat started - stopping animation');
 			stopLoadingAnimation();
-			hideStandardFooter();
-			setTimeout(createCustomFooter, 200);
 		});
 
 		embedded_svc.addEventHandler("onAgentJoined", function(data) {
 			console.log('Agent joined - stopping animation');
 			stopLoadingAnimation();
-			hideStandardFooter();
-			setTimeout(createCustomFooter, 200);
 		});
+		
+		//embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
+		//embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
+
+		//embedded_svc.settings.loadingText = ''; //(Defaults to Loading)
+		//embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
+
+		// Settings for Chat
+		//embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+			// Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
+			// Returns a valid button ID.
+		//};
+		//embedded_svc.settings.prepopulatedPrechatFields = {}; //Sets the auto-population of pre-chat form fields
+		//embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
+		//embedded_svc.settings.offlineSupportMinimizedText = '...'; //(Defaults to Contact Us)
 
 		embedded_svc.settings.enabledFeatures = ['LiveAgent'];
 		embedded_svc.settings.entryFeature = 'LiveAgent';
