@@ -373,6 +373,23 @@
 		}
 	}
 
+		/* Chat footer background to pink + remove gray borders */
+	.embeddedServiceSidebar .dockableContainer .footer,
+	.embeddedServiceSidebar .dockableContainer .footer * ,
+	.embeddedServiceLiveAgentSidebar .dockableContainer .footer,
+	.embeddedServiceLiveAgentSidebar .dockableContainer .footer * {
+	  background-color: #E91E63 !important;
+	  border-top: 0 !important;
+	  color: #fff !important;
+	}
+	
+	/* If input is shown later, keep its wrapper pink too */
+	.embeddedServiceSidebar .dockableContainer .chasitorText,
+	.embeddedServiceSidebar .dockableContainer .chasitorControls {
+	  background-color: #E91E63 !important;
+	  border-top: 0 !important;
+	}
+
 	/* Hide chat input initially */
 	.chasitorText {
         display: none !important;
