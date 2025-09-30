@@ -391,7 +391,7 @@
 		transition: all 0.3s ease !important;
 		margin: 10px auto !important;
 		display: block !important;
-		width: calc(100% - 40px) !important;
+		width: calc(100% - 20px) !important;
 		max-width: 200px !important;
 		box-shadow: 0 2px 8px rgba(233, 30, 99, 0.3) !important;
 	}
@@ -407,20 +407,26 @@
 		box-shadow: 0 2px 6px rgba(233, 30, 99, 0.3) !important;
 	}
 
-	.restart-button-container {
-		padding: 10px !important;
-		text-align: center !important;
-		border-top: 1px solid #eee !important;
-		background: white !important;
+	/* Position restart button in footer */
+	.embeddedServiceSidebarFooter {
+		position: relative !important;
+		padding-bottom: 60px !important;
 	}
+
+	.restart-button-container {
+		position: absolute !important;
+		bottom: 10px !important;
+		left: 0 !important;
+		right: 0 !important;
+		padding: 0 10px !important;
+		z-index: 1000 !important;
+	}
+
 	
 </style>
 
 <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
 <script type='text/javascript'>
-
-	var restartButtonAdded = false;
-
 	// Function to get device type based on screen width
 	function getDeviceType() {
 		var screenWidth = window.innerWidth;
@@ -429,136 +435,151 @@
 		return 'desktop';
 	}
 
-	// Function to return to main menu by sending @Meg
-	function returnToMainMenu() {
-		console.log('Returning to main menu by sending @Meg...');
-		sendChatMessage('@Meg');
-	}
-
-
-	
-// Function to send a chat message programmatically
-	function sendChatMessage(message) {
-		console.log('=== SEND MESSAGE FUNCTION CALLED ===');
-		console.log('Message to send:', message);
-		
-		// Find the chat input
-		var chatInput = document.querySelector('textarea.uiInput');
-		
-		console.log('Chat input (textarea.uiInput):', chatInput);
-		
-		if (chatInput) {
-			console.log('Input found! Setting value...');
-			
-			// Set the value directly
-			chatInput.value = message;
-			
-			// Trigger input event
-			var event = new Event('input', { bubbles: true });
-			chatInput.dispatchEvent(event);
-			
-			console.log('Input value is now:', chatInput.value);
-			
-			// Wait a bit, then click send
-			setTimeout(function() {
-				// Find the send button - it should be in .chasitorControls
-				var sendButton = document.querySelector('.chasitorControls button.uiButton');
-				
-				console.log('Send button:', sendButton);
-				
-				if (sendButton) {
-					console.log('Clicking send button...');
-					sendButton.click();
-					console.log('Message sent!');
-				} else {
-					console.error('Send button not found');
-					
-					// Log all buttons for debugging
-					var allButtons = document.querySelectorAll('button');
-					console.log('All buttons:', allButtons);
-					allButtons.forEach(function(btn, i) {
-						console.log('Button ' + i + ':', btn, 'Text:', btn.textContent, 'Class:', btn.className);
-					});
-				}
-			}, 500);
-		} else {
-			console.error('Chat input not found!');
-			
-			// Debug: log all textareas
-			var allTextareas = document.querySelectorAll('textarea');
-			console.log('All textareas found:', allTextareas);
-			allTextareas.forEach(function(ta, i) {
-				console.log('Textarea ' + i + ':', ta, 'Class:', ta.className, 'Visible:', ta.offsetHeight > 0);
-			});
-		}
-	}
-
-
-		// Function to add restart button to chat footer
+	// Function to add restart button to chat footer
 	function addRestartButton() {
-		// Prevent multiple additions
-		if (restartButtonAdded) {
-			console.log('Restart button already added, skipping...');
-			return;
-		}
-		
-		var attempts = 0;
-		var maxAttempts = 10;
-		
-		var tryAddButton = function() {
-			attempts++;
-			console.log('Attempt', attempts, 'to add restart button...');
-			
-			// Look for the chasitor controls container
+		setTimeout(function() {
 			var footer = document.querySelector('.chasitorControls');
-			
-			console.log('Footer (.chasitorControls):', footer);
-			
-			// Check if button container already exists
-			var existingButton = document.querySelector('.restart-button-container');
-			
-			if (footer && !existingButton) {
-				console.log('Footer found! Adding restart button...');
-				
+			console.log('chasitorControls' , footer );
+			// Check if button already exists
+			if (footer && !document.querySelector('.restart-button-container')) {
 				var buttonContainer = document.createElement('div');
 				buttonContainer.className = 'restart-button-container';
 				
 				var restartButton = document.createElement('button');
 				restartButton.className = 'restart-chat-button';
-				restartButton.textContent = 'Return to Menu';
-				restartButton.setAttribute('aria-label', 'Return to main menu');
-				restartButton.setAttribute('type', 'button');
+				restartButton.textContent = 'Restart Chat';
+				restartButton.setAttribute('aria-label', 'Restart chat conversation');
 				
-				restartButton.addEventListener('click', function(e) {
-					e.preventDefault();
-					e.stopPropagation();
-					console.log('=== RESTART BUTTON CLICKED ===');
+				restartButton.addEventListener('click', function() {
+					console.log('Restart button clicked TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT');
 					returnToMainMenu();
 				});
 				
 				buttonContainer.appendChild(restartButton);
 				footer.appendChild(buttonContainer);
-				
-				restartButtonAdded = true;
-				console.log('Restart button successfully added!');
-			} else if (existingButton) {
-				console.log('Button already exists in DOM');
-				restartButtonAdded = true;
-			} else if (attempts < maxAttempts) {
-				console.log('Footer not found, retrying in 500ms...');
-				setTimeout(tryAddButton, 500);
-			} else {
-				console.log('Could not find footer after', maxAttempts, 'attempts');
-				console.log('Available elements:', {
-					chasitorControls: document.querySelector('.chasitorControls'),
-					messageArea: document.querySelector('.messageArea'),
-					sidebarBody: document.querySelector('.sidebarBody')
-				});
 			}
-		};
-		
-		tryAddButton();
+		}, 500);
 	}
+
+	function returnToMainMenu() {
+	console.log('Returning to main menu by sending @Meg...');
+	sendChatMessage('@Meg');
+}
+
+// Function to send a chat message programmatically
+function sendChatMessage(message) {
+	setTimeout(function() {
+		console.log('Attempting to send message:', message);
+		
+		// Find the chat input - try multiple selectors
+		var chatInput = document.querySelector('textarea.uiInput') ||
+						document.querySelector('textarea.chasitorText') ||
+						document.querySelector('.embeddedServiceSidebarFormField textarea') ||
+						document.querySelector('.chasitorText textarea');
+		
+		// If still not found, find ANY visible textarea
+		if (!chatInput) {
+			var textareas = document.querySelectorAll('textarea');
+			for (var i = 0; i < textareas.length; i++) {
+				if (textareas[i].offsetHeight > 0 && textareas[i].offsetWidth > 0) {
+					chatInput = textareas[i];
+					console.log('Found visible textarea:', chatInput);
+					break;
+				}
+			}
+		}
+		
+		if (chatInput) {
+			console.log('Chat input found:', chatInput);
+			
+			// Focus the input first
+			chatInput.focus();
+			
+			// Set the value
+			chatInput.value = message;
+			
+			// Create and dispatch various events to ensure the framework detects the change
+			var inputEvent = new Event('input', { bubbles: true, cancelable: true });
+			var changeEvent = new Event('change', { bubbles: true, cancelable: true });
+			var keyupEvent = new Event('keyup', { bubbles: true, cancelable: true });
+			
+			chatInput.dispatchEvent(inputEvent);
+			chatInput.dispatchEvent(changeEvent);
+			chatInput.dispatchEvent(keyupEvent);
+			
+			console.log('Input value set to:', chatInput.value);
+			
+			// Wait a bit then find and click the send button
+			setTimeout(function() {
+				// Try multiple ways to find the send button
+				var sendButton = document.querySelector('button.uiButton[aria-label*="Send"]') ||
+								 document.querySelector('button[title*="Send"]') ||
+								 document.querySelector('button.sendButton') ||
+								 document.querySelector('.chasitorControls button');
+				
+				// If not found, search through all buttons
+				if (!sendButton) {
+					var buttons = document.querySelectorAll('button');
+					for (var i = 0; i < buttons.length; i++) {
+						var btn = buttons[i];
+						var btnText = btn.textContent.trim();
+						var ariaLabel = btn.getAttribute('aria-label') || '';
+						
+						// Check if it's visible and contains "Send"
+						if (btn.offsetHeight > 0 && btn.offsetWidth > 0 &&
+							(btnText.toLowerCase() === 'send' || ariaLabel.toLowerCase().includes('send'))) {
+							sendButton = btn;
+							console.log('Found send button by searching:', btn);
+							break;
+						}
+					}
+				}
+				
+				console.log('Send button:', sendButton);
+				
+				if (sendButton) {
+					// Click the send button
+					sendButton.click();
+					console.log('Send button clicked! Message sent:', message);
+					
+					// Clear the input after sending
+					setTimeout(function() {
+						if (chatInput) {
+							chatInput.value = '';
+						}
+					}, 100);
+				} else {
+					console.log('Send button not found, trying Enter key...');
+					// If no button found, simulate Enter key press
+					var enterEvent = new KeyboardEvent('keydown', {
+						key: 'Enter',
+						code: 'Enter',
+						keyCode: 13,
+						which: 13,
+						bubbles: true,
+						cancelable: true
+					});
+					chatInput.dispatchEvent(enterEvent);
+					
+					var keypressEvent = new KeyboardEvent('keypress', {
+						key: 'Enter',
+						code: 'Enter',
+						keyCode: 13,
+						which: 13,
+						bubbles: true,
+						cancelable: true
+					});
+					chatInput.dispatchEvent(keypressEvent);
+					
+					console.log('Enter key pressed');
+				}
+			}, 300);
+		} else {
+			console.error('Could not find chat input element');
+			console.log('All textareas:', document.querySelectorAll('textarea'));
+		}
+	}, 100);
+}
 	
 	// Function to set widget dimensions based on device type
 	function setWidgetDimensions(deviceType) {
@@ -739,11 +760,7 @@
 		    setTimeout(function() {
 		    	applyCSSChanges(getDeviceType());
 		    }, 100);
-			// Reset flag and add button
-			restartButtonAdded = false;
-			setTimeout(function() {
-				addRestartButton();
-			}, 1000);
+			addRestartButton();
 		});
 		
 		embedded_svc.addEventHandler("onChatEnded", function(data) {
@@ -752,8 +769,6 @@
 		    if (chasitorText) {
 		        chasitorText.style.display = "none";
 		    }
-			// Reset flag when chat ends
-			restartButtonAdded = false;
 		});
 
 		// Apply responsive styling when sidebar loads
