@@ -439,7 +439,7 @@
 	function addRestartButton() {
 		setTimeout(function() {
 			var footer = document.querySelector('.embeddedServiceSidebarFooter');
-			
+			console.log('footer' , footer);
 			// Check if button already exists
 			if (footer && !document.querySelector('.restart-button-container')) {
 				var buttonContainer = document.createElement('div');
