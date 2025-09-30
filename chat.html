@@ -635,6 +635,56 @@
 			stopLoadingAnimation();
 		});
 
+
+		// Add "Main menu" button in footer and wire it to restart the conversation
+(function addMainMenuButton() {
+  var FOOTER_SEL = '.embeddedServiceSidebar .embeddedServiceLiveAgentStateChatInputFooter';
+
+  function createBtn() {
+    var footer = document.querySelector(FOOTER_SEL);
+    if (!footer || footer.querySelector('.mp-mainmenu-btn')) return;
+
+    var btn = document.createElement('button');
+    btn.className = 'mp-mainmenu-btn';
+    btn.type = 'button';
+    btn.textContent = 'Restart conversation';
+    btn.style.cssText =
+      'margin:8px 12px; width:100%; height:44px; border-radius:10px; ' +
+      'background:#E91E63; color:#fff; border:0; font-weight:600; cursor:pointer;';
+    btn.addEventListener('click', function () {
+      // Restart → back to bot welcome/main menu
+      try { embedded_svc.liveAgentAPI.endChat(); } catch (e) {}
+      setTimeout(function () {
+        try { embedded_svc.liveAgentAPI.startChat({}); } catch (e) {}
+      }, 300);
+    });
+
+    // Place above the native controls/input
+    footer.insertBefore(btn, footer.firstChild);
+  }
+
+  function attach() {
+    createBtn();
+    var footer = document.querySelector(FOOTER_SEL);
+    if (!footer) return;
+    new MutationObserver(createBtn).observe(footer, { childList: true, subtree: true });
+  }
+
+  // Wait until the footer exists
+  var tries = 0, t = setInterval(function () {
+    tries++;
+    if (document.querySelector(FOOTER_SEL) || tries > 40) {
+      clearInterval(t);
+      attach();
+    }
+  }, 100);
+
+  // Re-add after key lifecycle events
+  embedded_svc.addEventHandler('onSidebarLoaded', createBtn);
+  embedded_svc.addEventHandler('onChatStarted', createBtn);
+  embedded_svc.addEventHandler('onChatEstablished', createBtn);
+})();
+
 		// Remove the hamburger/footer menu and keep it gone
 		(function persistentlyRemoveFooterMenu() {
 		  var MENU_WRAPPER = '.embeddedServiceSidebar .embeddedServiceLiveAgentStateChatInputFooter .footermenuwrapper, .embeddedServiceSidebar .embeddedServiceLiveAgentStateChatInputFooter .footer-menu';
