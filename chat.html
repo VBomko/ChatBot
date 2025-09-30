@@ -390,6 +390,20 @@
 	  border-top: 0 !important;
 	}
 
+	/* Remove hamburger/menu button in chat footer */
+	.embeddedServiceSidebar .dockableContainer .footer .menuWrapper,
+	.embeddedServiceSidebar .dockableContainer .footer .menu,
+	.embeddedServiceSidebar .dockableContainer .footer button[aria-label="Menu"],
+	.embeddedServiceSidebar .dockableContainer .footer button[title="Menu"],
+	.embeddedServiceSidebar .dockableContainer .footer .slds-button_icon {
+	  display: none !important;
+	}
+	
+	/* Tighten footer padding after removing the icon */
+	.embeddedServiceSidebar .dockableContainer .footer {
+	  padding-left: 0 !important;
+	}
+
 	/* Hide chat input initially */
 	.chasitorText {
         display: none !important;
@@ -597,6 +611,8 @@
 
 		// Apply responsive styling when sidebar loads
 		embedded_svc.addEventHandler("onSidebarLoaded", function(data) {
+			var menuBtn = document.querySelector('.embeddedServiceSidebar .dockableContainer .footer button[aria-label="Menu"], .embeddedServiceSidebar .dockableContainer .footer .slds-button_icon');
+  			if (menuBtn && menuBtn.parentElement) menuBtn.parentElement.remove();
 			stopLoadingAnimation();
 			setTimeout(function() {
 				applyCSSChanges(getDeviceType());
