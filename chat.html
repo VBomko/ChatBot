@@ -377,6 +377,52 @@
 	.chasitorText {
         display: none !important;
     }
+
+	/* ===== RESTART BUTTON STYLES ===== */
+	.restart-chat-button {
+		background-color: #E91E63 !important;
+		color: white !important;
+		border: none !important;
+		border-radius: 8px !important;
+		padding: 10px 20px !important;
+		font-size: 14px !important;
+		font-weight: 600 !important;
+		cursor: pointer !important;
+		transition: all 0.3s ease !important;
+		margin: 10px auto !important;
+		display: block !important;
+		width: calc(100% - 20px) !important;
+		max-width: 200px !important;
+		box-shadow: 0 2px 8px rgba(233, 30, 99, 0.3) !important;
+	}
+
+	.restart-chat-button:hover {
+		background-color: #C2185B !important;
+		box-shadow: 0 4px 12px rgba(233, 30, 99, 0.5) !important;
+		transform: translateY(-2px) !important;
+	}
+
+	.restart-chat-button:active {
+		transform: translateY(0px) !important;
+		box-shadow: 0 2px 6px rgba(233, 30, 99, 0.3) !important;
+	}
+
+	/* Position restart button in footer */
+	.embeddedServiceSidebarFooter {
+		position: relative !important;
+		padding-bottom: 60px !important;
+	}
+
+	.restart-button-container {
+		position: absolute !important;
+		bottom: 10px !important;
+		left: 0 !important;
+		right: 0 !important;
+		padding: 0 10px !important;
+		z-index: 1000 !important;
+	}
+
+	
 </style>
 
 <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
@@ -389,6 +435,32 @@
 		return 'desktop';
 	}
 
+	// Function to add restart button to chat footer
+	function addRestartButton() {
+		setTimeout(function() {
+			var footer = document.querySelector('.embeddedServiceSidebarFooter');
+			
+			// Check if button already exists
+			if (footer && !document.querySelector('.restart-button-container')) {
+				var buttonContainer = document.createElement('div');
+				buttonContainer.className = 'restart-button-container';
+				
+				var restartButton = document.createElement('button');
+				restartButton.className = 'restart-chat-button';
+				restartButton.textContent = 'Restart Chat';
+				restartButton.setAttribute('aria-label', 'Restart chat conversation');
+				
+				restartButton.addEventListener('click', function() {
+					console.log('Restart button clicked - will restart chat session');
+					// TODO: Add actual restart functionality here
+				});
+				
+				buttonContainer.appendChild(restartButton);
+				footer.appendChild(buttonContainer);
+			}
+		}, 500);
+	}
+	
 	// Function to set widget dimensions based on device type
 	function setWidgetDimensions(deviceType) {
 		if (!embedded_svc || !embedded_svc.settings) return;
@@ -568,6 +640,7 @@
 		    setTimeout(function() {
 		    	applyCSSChanges(getDeviceType());
 		    }, 100);
+			addRestartButton();
 		});
 		
 		embedded_svc.addEventHandler("onChatEnded", function(data) {
@@ -583,6 +656,7 @@
 			stopLoadingAnimation();
 			setTimeout(function() {
 				applyCSSChanges(getDeviceType());
+				addRestartButton();
 			}, 100);
 		});
 
@@ -595,6 +669,7 @@
 		embedded_svc.addEventHandler("onChatStarted", function(data) {
 			console.log('Chat started - stopping animation');
 			stopLoadingAnimation();
+			addRestartButton();
 		});
 
 		embedded_svc.addEventHandler("onAgentJoined", function(data) {
