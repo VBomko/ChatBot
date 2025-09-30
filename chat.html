@@ -669,6 +669,51 @@
 			}
 		);
 
+
+		// Persistently hide/remove the hamburger menu (handles re-renders)
+(function ensureHamburgerHidden() {
+  var MENU_SELECTORS = [
+    '.embeddedServiceSidebar .dockableContainer .footer button[aria-label="Menu"]',
+    '.embeddedServiceSidebar .dockableContainer .footer button[title="Menu"]',
+    '.embeddedServiceSidebar .dockableContainer .footer .menuWrapper',
+    '.embeddedServiceSidebar .dockableContainer .footer .slds-button_icon'
+  ];
+
+  function hideHamburger() {
+    MENU_SELECTORS.forEach(function (sel) {
+      document.querySelectorAll(sel).forEach(function (el) {
+        var btn = el.closest('button') || el;
+        if (btn) {
+          // remove the button or its wrapper
+          (btn.parentElement || el.parentElement)?.removeChild(btn);
+        }
+      });
+    });
+  }
+
+		function attachObserver() {
+		    var sidebar = document.querySelector('.embeddedServiceSidebar');
+		    if (!sidebar) return;
+		    hideHamburger();
+		    new MutationObserver(hideHamburger).observe(sidebar, { childList: true, subtree: true });
+		  }
+		
+		  // Wait for sidebar, then observe; also try a few times
+		  var tries = 0;
+		  var t = setInterval(function () {
+		    tries++;
+		    if (document.querySelector('.embeddedServiceSidebar') || tries > 40) {
+		      clearInterval(t);
+		      attachObserver();
+		    }
+		  }, 100);
+		
+		  // Also hook into widget lifecycle events
+		  embedded_svc.addEventHandler('onSidebarLoaded', hideHamburger);
+		  embedded_svc.addEventHandler('onChatEstablished', hideHamburger);
+		  embedded_svc.addEventHandler('onChatStarted', hideHamburger);
+		})();
+
 	};
 
 	if (!window.embedded_svc) {
