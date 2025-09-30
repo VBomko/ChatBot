@@ -373,7 +373,6 @@
 		}
 	}
 
-
 	/* Hide chat input initially */
 	.chasitorText {
         display: none !important;
@@ -565,24 +564,6 @@
 		    if (chasitorText) {
 		        chasitorText.style.display = "block";
 		    }
-
-			// Add or show restart button
-			var restartBtn = document.getElementById('restartConversationBtn');
-			if (!restartBtn) {
-			    restartBtn = document.createElement('button');
-			    restartBtn.id = 'restartConversationBtn';
-			    restartBtn.textContent = 'Restart Conversation';
-			    restartBtn.onclick = function() {
-			        console.log('Restart Conversation clicked');
-			    };
-			    // Append to the parent of the input (assuming footer container)
-			    if (chasitorText && chasitorText.parentNode) {
-			        chasitorText.parentNode.appendChild(restartBtn);
-			    }
-			} else {
-			    restartBtn.style.display = 'block';
-			}
-
 			// Apply responsive styling when chat opens
 		    setTimeout(function() {
 		    	applyCSSChanges(getDeviceType());
@@ -595,12 +576,6 @@
 		    if (chasitorText) {
 		        chasitorText.style.display = "none";
 		    }
-
-			// Hide restart button
-			var restartBtn = document.getElementById('restartConversationBtn');
-			if (restartBtn) {
-			    restartBtn.style.display = 'none';
-			}
 		});
 
 		// Apply responsive styling when sidebar loads
