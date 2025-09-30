@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8" />
+<meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Megaport Embedded Chat</title>
 
-<style type="text/css">
-	/* ===== INITIAL HELP BUTTON STYLES ===== */
+<style type='text/css'>
+	/* ===== INITIAL HELP BUTTON STYLES (UNCHANGED) ===== */
 	.embeddedServiceHelpButton .helpButton .uiButton { 
-		background-color: #E91E63 !important;
+		background-color: #E91E63 !important; /* Pink background */
 		font-family: "Arial", sans-serif;
-		border-radius: 16px !important;
+		border-radius: 16px !important; /* Rounded square shape */
 		width: 60px !important;
 		height: 60px !important;
 		min-width: 60px !important;
@@ -26,8 +26,8 @@
 	}
 
 	.embeddedServiceHelpButton .helpButton .uiButton:hover {
-		background-color: #E91E63 !important;
-		transform: scale(1.1) !important;
+		background-color: #E91E63 !important; /* Keep same pink color */
+		transform: scale(1.1) !important; /* Scale up effect */
 		box-shadow: 0 6px 16px rgba(233, 30, 99, 0.6) !important;
 	}
 
@@ -43,10 +43,15 @@
 	}
 
 	/* Hide all default content */
-	.embeddedServiceHelpButton .helpButton .uiButton * { display: none !important; }
+	.embeddedServiceHelpButton .helpButton .uiButton * {
+		display: none !important;
+	}
+
 	.embeddedServiceHelpButton .helpButton .uiButton .helpButtonLabel,
 	.embeddedServiceHelpButton .helpButton .uiButton .message,
-	.embeddedServiceHelpButton .helpButton .uiButton .helpButtonLabel__text { display: none !important; }
+	.embeddedServiceHelpButton .helpButton .uiButton .helpButtonLabel__text {
+		display: none !important;
+	}
 
 	/* Megaport logo for initial button - normal state */
 	.embeddedServiceHelpButton .helpButton .uiButton:before {
@@ -69,12 +74,32 @@
 		transition: opacity 0.3s ease !important;
 	}
 
-	/* Loading dots animation keyframes */
+	/* Loading dots animation keyframes - defined first for better compatibility */
 	@keyframes loadingDotsAnimation {
-		0%   { background: white !important; box-shadow: 14px 0 0 rgba(255,255,255,.3), -14px 0 0 rgba(255,255,255,.3) !important; }
-		33%  { background: rgba(255,255,255,.3) !important; box-shadow: 14px 0 0 white, -14px 0 0 rgba(255,255,255,.3) !important; }
-		66%  { background: rgba(255,255,255,.3) !important; box-shadow: 14px 0 0 rgba(255,255,255,.3), -14px 0 0 white !important; }
-		100% { background: white !important; box-shadow: 14px 0 0 rgba(255,255,255,.3), -14px 0 0 rgba(255,255,255,.3) !important; }
+		0% {
+			background: white !important;
+			box-shadow: 
+				14px 0 0 rgba(255, 255, 255, 0.3),
+				-14px 0 0 rgba(255, 255, 255, 0.3) !important;
+		}
+		33% {
+			background: rgba(255, 255, 255, 0.3) !important;
+			box-shadow: 
+				14px 0 0 white,
+				-14px 0 0 rgba(255, 255, 255, 0.3) !important;
+		}
+		66% {
+			background: rgba(255, 255, 255, 0.3) !important;
+			box-shadow: 
+				14px 0 0 rgba(255, 255, 255, 0.3),
+				-14px 0 0 white !important;
+		}
+		100% {
+			background: white !important;
+			box-shadow: 
+				14px 0 0 rgba(255, 255, 255, 0.3),
+				-14px 0 0 rgba(255, 255, 255, 0.3) !important;
+		}
 	}
 
 	/* Loading state - hide logo */
@@ -84,7 +109,7 @@
 		display: none !important;
 	}
 
-	/* Show loading dots */
+	/* Show loading dots - with multiple selectors for reliability */
 	.embeddedServiceHelpButton.loading .helpButton .uiButton:after,
 	.embeddedServiceHelpButton[data-loading="true"] .helpButton .uiButton:after {
 		content: "" !important;
@@ -96,7 +121,9 @@
 		height: 8px !important;
 		border-radius: 50% !important;
 		background: white !important;
-		box-shadow: 14px 0 0 rgba(255,255,255,.3), -14px 0 0 rgba(255,255,255,.3) !important;
+		box-shadow: 
+			14px 0 0 rgba(255, 255, 255, 0.3),
+			-14px 0 0 rgba(255, 255, 255, 0.3) !important;
 		z-index: 11 !important;
 		animation: loadingDotsAnimation 1.2s infinite ease-in-out !important;
 		display: block !important;
@@ -129,10 +156,21 @@
 	}
 
 	/* Position the initial button */
-	.embeddedServiceHelpButton { bottom: 20px !important; right: 20px !important; z-index: 1000 !important; position: fixed !important; }
-	.embeddedServiceHelpButton .helpButton { width: 60px !important; height: 60px !important; border-radius: 16px !important; overflow: hidden !important; }
+	.embeddedServiceHelpButton {
+		bottom: 20px !important;
+		right: 20px !important;
+		z-index: 1000 !important;
+		position: fixed !important;
+	}
 
-	/* ===== MINIMIZED CHAT BUTTON STYLES ===== */
+	.embeddedServiceHelpButton .helpButton {
+		width: 60px !important;
+		height: 60px !important;
+		border-radius: 16px !important;
+		overflow: hidden !important;
+	}
+
+	/* ===== MINIMIZED CHAT BUTTON STYLES (UNCHANGED) ===== */
 	.minimizedContainer,
 	button.minimizedContainer,
 	.minimizedContainer:not(.slds-hidden),
@@ -173,6 +211,7 @@
 		top: auto !important;
 	}
 
+	/* Force positioning override with even higher specificity */
 	body .minimizedContainer,
 	body button.minimizedContainer,
 	body :host .minimizedContainer,
@@ -185,6 +224,7 @@
 		position: fixed !important;
 	}
 
+	/* Hover effects for minimized button */
 	.minimizedContainer:focus,
 	.minimizedContainer:hover,
 	button.minimizedContainer:focus,
@@ -201,6 +241,7 @@
 		right: 20px !important;
 	}
 
+	/* Hide all content in minimized button */
 	.minimizedContainer *,
 	:host .minimizedContainer *,
 	.minimizedContainer .chat-icon,
@@ -210,8 +251,11 @@
 	.minimizedContainer .messageContent,
 	.embeddedServiceSidebar .minimizedContainer *,
 	.embeddedServiceSidebar .minimizedContainer .minimizedText,
-	.embeddedServiceSidebar .minimizedContainer .message { display: none !important; }
+	.embeddedServiceSidebar .minimizedContainer .message {
+		display: none !important;
+	}
 
+	/* Add Megaport logo to minimized button */
 	.minimizedContainer:before,
 	:host .minimizedContainer:before,
 	.embeddedServiceSidebar .minimizedContainer:before {
@@ -233,6 +277,7 @@
 		opacity: 1 !important;
 	}
 
+	/* Logo hover states for minimized button */
 	.minimizedContainer:hover:before,
 	.minimizedContainer:focus:before,
 	:host .minimizedContainer:hover:before,
@@ -245,62 +290,118 @@
 		mix-blend-mode: normal !important;
 	}
 
-	/* ===== MOBILE RESPONSIVE STYLES ===== */
+	/* ===== MOBILE RESPONSIVE STYLES (UNCHANGED) ===== */
 	@media screen and (max-width: 768px) {
 		.embeddedServiceHelpButton .helpButton .uiButton {
-			width: 50px !important; height: 50px !important; min-width: 50px !important; min-height: 50px !important; border-radius: 14px !important;
+			width: 50px !important;
+			height: 50px !important;
+			min-width: 50px !important;
+			min-height: 50px !important;
+			border-radius: 14px !important;
 		}
-		.embeddedServiceHelpButton .helpButton { width: 50px !important; height: 50px !important; border-radius: 14px !important; }
-		.embeddedServiceHelpButton .helpButton .uiButton:before { width: 26px !important; height: 26px !important; background-size: 20px 20px !important; }
+		
+		.embeddedServiceHelpButton .helpButton {
+			width: 50px !important;
+			height: 50px !important;
+			border-radius: 14px !important;
+		}
+		
+		.embeddedServiceHelpButton .helpButton .uiButton:before {
+			width: 26px !important;
+			height: 26px !important;
+			background-size: 20px 20px !important;
+		}
 
+		/* Mobile loading dots */
 		.embeddedServiceHelpButton.loading .helpButton .uiButton:after,
 		.embeddedServiceHelpButton[data-loading="true"] .helpButton .uiButton:after {
-			width: 6px !important; height: 6px !important; box-shadow: 10px 0 0 rgba(255,255,255,.3), -10px 0 0 rgba(255,255,255,.3) !important;
+			width: 6px !important;
+			height: 6px !important;
+			box-shadow: 
+				10px 0 0 rgba(255, 255, 255, 0.3),
+				-10px 0 0 rgba(255, 255, 255, 0.3) !important;
 		}
 
+		/* Mobile animation keyframes */
 		@keyframes loadingDotsAnimation {
-			0%   { background: white !important; box-shadow: 10px 0 0 rgba(255,255,255,.3), -10px 0 0 rgba(255,255,255,.3) !important; }
-			33%  { background: rgba(255,255,255,.3) !important; box-shadow: 10px 0 0 white, -10px 0 0 rgba(255,255,255,.3) !important; }
-			66%  { background: rgba(255,255,255,.3) !important; box-shadow: 10px 0 0 rgba(255,255,255,.3), -10px 0 0 white !important; }
-			100% { background: white !important; box-shadow: 10px 0 0 rgba(255,255,255,.3), -10px 0 0 rgba(255,255,255,.3) !important; }
+			0% {
+				background: white !important;
+				box-shadow: 
+					10px 0 0 rgba(255, 255, 255, 0.3),
+					-10px 0 0 rgba(255, 255, 255, 0.3) !important;
+			}
+			33% {
+				background: rgba(255, 255, 255, 0.3) !important;
+				box-shadow: 
+					10px 0 0 white,
+					-10px 0 0 rgba(255, 255, 255, 0.3) !important;
+			}
+			66% {
+				background: rgba(255, 255, 255, 0.3) !important;
+				box-shadow: 
+					10px 0 0 rgba(255, 255, 255, 0.3),
+					-10px 0 0 white !important;
+			}
+			100% {
+				background: white !important;
+				box-shadow: 
+					10px 0 0 rgba(255, 255, 255, 0.3),
+					-10px 0 0 rgba(255, 255, 255, 0.3) !important;
+			}
 		}
 		
 		.minimizedContainer,
 		button.minimizedContainer,
 		:host .minimizedContainer,
 		.embeddedServiceSidebar .minimizedContainer {
-			width: 50px !important; height: 50px !important; min-width: 50px !important; min-height: 50px !important; max-width: 50px !important; max-height: 50px !important;
-			border-radius: 14px !important; bottom: 20px !important; right: 20px !important;
+			width: 50px !important;
+			height: 50px !important;
+			min-width: 50px !important;
+			min-height: 50px !important;
+			max-width: 50px !important;
+			max-height: 50px !important;
+			border-radius: 14px !important;
+			bottom: 20px !important;
+			right: 20px !important;
 		}
+		
 		.minimizedContainer:before,
 		:host .minimizedContainer:before,
-		.embeddedServiceSidebar .minimizedContainer:before { width: 26px !important; height: 26px !important; background-size: 20px 20px !important; }
-		.embeddedServiceHelpButton { bottom: 20px !important; right: 20px !important; }
+		.embeddedServiceSidebar .minimizedContainer:before {
+			width: 26px !important;
+			height: 26px !important;
+			background-size: 20px 20px !important;
+		}
+		
+		.embeddedServiceHelpButton {
+			bottom: 20px !important;
+			right: 20px !important;
+		}
 	}
 
 	/* Hide chat input initially */
 	.chasitorText { display: none !important; }
 
-	/* ===== CUSTOM FOOTER OVERRIDE ===== */
-	/* Hide any default footer/composer to avoid double bars on the first page */
+	/* ===== CUSTOM FOOTER OVERRIDE (NEW) ===== */
+	/* Hide platform footer so only our footer shows on first page */
 	.embeddedServiceSidebar .footer,
 	.embeddedServiceSidebar .dockableFooter {
 		display: none !important;
 	}
 
-	/* Make the chat container a positioning context */
+	/* Positioning context for custom footer */
 	.embeddedServiceSidebar .dockableContainer {
 		position: relative !important;
 	}
 
-	/* Add bottom space so messages don’t sit behind the custom bar */
+	/* Avoid content being covered by the custom footer */
 	.embeddedServiceSidebar .dockableContainer .conversationRegion,
 	.embeddedServiceSidebar .dockableContainer .conversation .scrollable,
 	.embeddedServiceSidebar .dockableContainer .conversation {
 		padding-bottom: 96px !important;
 	}
 
-	/* Custom footer bar */
+	/* Custom footer UI */
 	.meg-custom-footer {
 		position: absolute;
 		left: 0;
@@ -308,7 +409,7 @@
 		bottom: 0;
 		padding: 12px 16px 16px;
 		background: transparent;
-		pointer-events: none; /* prevent overlay issues except button */
+		pointer-events: none;
 	}
 
 	.meg-custom-footer__card {
@@ -335,7 +436,7 @@
 		cursor: pointer;
 		box-shadow: 0 8px 20px rgba(233,30,99,0.35);
 		transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
-		pointer-events: auto; /* clickable */
+		pointer-events: auto;
 	}
 
 	.meg-custom-footer__button:hover,
@@ -366,9 +467,6 @@
 		border-radius: 1px;
 	}
 
-	/* Optional: small "Powered by" spacer area (hidden by default) */
-	.meg-custom-footer__meta { display: none; }
-
 	@media (max-width: 768px) {
 		.meg-custom-footer { padding: 10px 12px 12px; }
 		.meg-custom-footer__card { border-radius: 18px 18px 14px 14px; }
@@ -378,11 +476,8 @@
 </head>
 
 <body>
-<!-- Salesforce Embedded Service SDK -->
-<script type="text/javascript" src="https://service.force.com/embeddedservice/5.0/esw.min.js"></script>
-
-<script type="text/javascript">
-	/* ========= Device helpers ========= */
+<script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+<script type='text/javascript'>
 	function getDeviceType() {
 		var screenWidth = window.innerWidth;
 		if (screenWidth <= 768) return 'mobile';
@@ -392,6 +487,7 @@
 
 	function setWidgetDimensions(deviceType) {
 		if (!embedded_svc || !embedded_svc.settings) return;
+
 		switch(deviceType) {
 			case 'mobile':
 				embedded_svc.settings.widgetWidth = "100%";
@@ -436,50 +532,7 @@
 		}
 	}
 
-	/* ========= Help button adjustments ========= */
-	function fixButtonStyling() {
-		setTimeout(function() {
-			var button = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
-			var helpButton = document.querySelector('.embeddedServiceHelpButton');
-			if (button) {
-				button.style.borderRadius = '50%';
-				button.style.width = '60px';
-				button.style.height = '60px';
-				button.style.minWidth = '60px';
-				button.style.minHeight = '60px';
-				button.style.padding = '0';
-				button.style.display = 'flex';
-				button.style.alignItems = 'center';
-				button.style.justifyContent = 'center';
-				var textElements = button.querySelectorAll('*');
-				textElements.forEach(function(el) { el.style.display = 'none'; });
-			}
-			if (helpButton) {
-				helpButton.style.bottom = '20px';
-				helpButton.style.right = '20px';
-			}
-		}, 100);
-	}
-
-	function startLoadingAnimation() {
-		var helpButton = document.querySelector('.embeddedServiceHelpButton');
-		if (helpButton) {
-			helpButton.classList.add('loading');
-			helpButton.setAttribute('data-loading', 'true');
-			console.log('Loading animation started');
-		}
-	}
-
-	function stopLoadingAnimation() {
-		var helpButton = document.querySelector('.embeddedServiceHelpButton');
-		if (helpButton) {
-			helpButton.classList.remove('loading');
-			helpButton.removeAttribute('data-loading');
-			console.log('Loading animation stopped');
-		}
-	}
-
-	/* ========= Custom footer injection ========= */
+	/* Footer helpers */
 	function createCustomFooter() {
 		var root = document.createElement('div');
 		root.className = 'meg-custom-footer';
@@ -489,7 +542,6 @@
 					'<span class="meg-custom-footer__icon" aria-hidden="true"></span>' +
 					'<span>Restart conversation</span>' +
 				'</button>' +
-				'<div class="meg-custom-footer__meta" aria-hidden="true"></div>' +
 			'</div>';
 		return root;
 	}
@@ -497,12 +549,8 @@
 	function ensureCustomFooterMounted() {
 		var dock = document.querySelector('.embeddedServiceSidebar .dockableContainer');
 		if (!dock) return;
-
-		/* Avoid duplicates */
 		if (!dock.querySelector('.meg-custom-footer')) {
 			dock.appendChild(createCustomFooter());
-
-			/* Dummy handler for now */
 			var btn = dock.querySelector('#meg-restart-btn');
 			if (btn) {
 				btn.addEventListener('click', function () {
@@ -512,13 +560,11 @@
 		}
 	}
 
-	/* Optionally show/hide our footer depending on state */
 	function showCustomFooter(show) {
 		var el = document.querySelector('.embeddedServiceSidebar .dockableContainer .meg-custom-footer');
 		if (el) el.style.display = show ? 'block' : 'none';
 	}
 
-	/* ========= Init ESW ========= */
 	var initESW = function(gslbBaseURL) { 
 		embedded_svc.settings.displayHelpButton = true;
 		embedded_svc.settings.language = '';
@@ -548,50 +594,47 @@
 				}
 			}, 250);
 		}
+
 		window.addEventListener('resize', handleResize);
-		window.addEventListener('orientationchange', function() { setTimeout(handleResize, 100); });
+		window.addEventListener('orientationchange', function() {
+			setTimeout(handleResize, 100);
+		});
 
 		embedded_svc.addEventHandler("onHelpButtonClick", function() {
-			startLoadingAnimation();
-			fixButtonStyling();
+			/* Keep original styles; no JS overrides */
 		});
-
-		/* Sidebar loaded → inject our custom footer (first page) */
-		embedded_svc.addEventHandler("onSidebarLoaded", function() {
-			stopLoadingAnimation();
-			setTimeout(function() {
-				applyCSSChanges(getDeviceType());
-				ensureCustomFooterMounted();
-				showCustomFooter(true); /* visible on initial page */
-			}, 100);
-		});
-
-		/* Chat established → keep input visible and keep custom footer (or adjust as desired) */
+		
 		embedded_svc.addEventHandler("onChatEstablished", function() {
-			stopLoadingAnimation();
-
-			/* Show native input once agent connects */
 			var chasitorText = document.querySelector('.chasitorText');
 			if (chasitorText) { chasitorText.style.display = "block"; }
+		    setTimeout(function() {
+		    	applyCSSChanges(getDeviceType());
+				ensureCustomFooterMounted();
+				showCustomFooter(true);
+		    }, 100);
+		});
+		
+		embedded_svc.addEventHandler("onChatEnded", function() {
+			var chasitorText = document.querySelector('.chasitorText');
+			if (chasitorText) { chasitorText.style.display = "none"; }
+			showCustomFooter(true);
+		});
 
+		embedded_svc.addEventHandler("onSidebarLoaded", function() {
 			setTimeout(function() {
 				applyCSSChanges(getDeviceType());
 				ensureCustomFooterMounted();
-				/* If you want to hide the custom footer after connection, set to false */
 				showCustomFooter(true);
 			}, 100);
 		});
 
-		embedded_svc.addEventHandler("onChatEnded", function() {
-			var chasitorText = document.querySelector('.chasitorText');
-			if (chasitorText) { chasitorText.style.display = "none"; }
-			showCustomFooter(true); /* show again on end */
+		embedded_svc.addEventHandler("onHelpButtonLoaded", function() {
+			/* No help-button style overrides here either */
 		});
 
-		embedded_svc.addEventHandler("onHelpButtonLoaded", function() { fixButtonStyling(); });
-		embedded_svc.addEventHandler("onChatStarted", function() { stopLoadingAnimation(); });
-		embedded_svc.addEventHandler("onAgentJoined", function() { stopLoadingAnimation(); });
-
+		embedded_svc.addEventHandler("onChatStarted", function() {});
+		embedded_svc.addEventHandler("onAgentJoined", function() {});
+		
 		embedded_svc.settings.enabledFeatures = ['LiveAgent'];
 		embedded_svc.settings.entryFeature = 'LiveAgent';
 
