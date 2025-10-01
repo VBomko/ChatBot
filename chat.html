@@ -374,9 +374,9 @@
 	}
 
 	/* Hide chat input initially */
-	.chasitorText {
+	/* .chasitorText {
         display: none !important;
-    }
+    } */
 
 	/* ===== RESTART BUTTON STYLES ===== */
 	.restart-chat-button {
@@ -455,10 +455,13 @@
 						console.log("embedded_svc" , embedded_svc);
 						console.log("embedded_svc.chasitor" , embedded_svc.chasitor);
 
-					    // Example: send "Hi" message to the bot automatically
-					    embedded_svc.chasitor.sendMessage({
-					        text: "Hi"
-					    });
+					    if(window.embedded_svc && window.embedded_svc.chasitor) {
+					        window.embedded_svc.chasitor.sendMessage({
+					            text: "Custom button message"
+					        });
+					    } else {
+					        console.warn("Chat not ready yet. Try after bot session starts.");
+					    }
 				});
 				
 				buttonContainer.appendChild(restartButton);
