@@ -451,16 +451,17 @@
 				restartButton.setAttribute('aria-label', 'Restart chat conversation');
 				
 				restartButton.addEventListener('click', function() {
-					    console.log("Chat started with Einstein Bot window.postMessage location.origin @Meg");
+					    console.log("embedded_svc.liveAgentAPI.endChat()");
 				
-					
-					    window.postMessage(
-					        {
-					            type: "chasitor.sendMessage",
-					            message: '@Meg'
-					        },
-					        window.location.origin // always match the iframe origin
-					    );
+						embedded_svc.liveAgentAPI.endChat();
+
+					    // window.postMessage(
+					    //     {
+					    //         type: "chasitor.sendMessage",
+					    //         message: '@Meg'
+					    //     },
+					    //     window.location.origin // always match the iframe origin
+					    // );
 
     					
 				});
