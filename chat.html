@@ -451,8 +451,12 @@
 				restartButton.setAttribute('aria-label', 'Restart chat conversation');
 				
 				restartButton.addEventListener('click', function() {
-					console.log('Restart button clicked TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT');
-					returnToMainMenu();
+					    console.log("Chat started with Einstein Bot");
+
+					    // Example: send "Hi" message to the bot automatically
+					    embedded_svc.chasitor.sendMessage({
+					        text: "Hi"
+					    });
 				});
 				
 				buttonContainer.appendChild(restartButton);
@@ -461,7 +465,8 @@
 		}, 500);
 	}
 
-	function returnToMainMenu() {
+	
+function returnToMainMenu() {
 	console.log('Returning to main menu by sending @Meg...');
 	sendChatMessage('@Meg');
 }
