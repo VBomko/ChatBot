@@ -451,17 +451,10 @@
 				restartButton.setAttribute('aria-label', 'Restart chat conversation');
 				
 				restartButton.addEventListener('click', function() {
-					    console.log("Chat started with Einstein Bot");
-						console.log("embedded_svc" , embedded_svc);
-						console.log("embedded_svc.chasitor" , embedded_svc.chasitor);
+					    console.log("Chat started with Einstein Bot postMessage");
 
-					    if(window.embedded_svc && window.embedded_svc.chasitor) {
-					        window.embedded_svc.chasitor.sendMessage({
-					            text: "Custom button message"
-					        });
-					    } else {
-					        console.warn("Chat not ready yet. Try after bot session starts.");
-					    }
+
+    					embedded_svc.postMessage("chasitor.sendMessage", { message: "Hello, I need help!" });
 				});
 				
 				buttonContainer.appendChild(restartButton);
