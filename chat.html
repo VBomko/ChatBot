@@ -452,23 +452,38 @@ function addRestartButton() {
             restartButton.setAttribute('aria-label', 'Restart chat conversation');
             
             restartButton.addEventListener('click', function() {
-                console.log("Restarting chat (keeping window open)... embedded_svc.liveAgentAPI.startChat");
+                console.log("Restarting chat...");
                 
                 // End the current chat session
-                // embedded_svc.liveAgentAPI.endChat();
+                embedded_svc.liveAgentAPI.endChat();
                 
-                // Wait briefly, then start a new chat session
+                // Wait for chat to end, then reopen the window
                 setTimeout(function() {
-                    embedded_svc.liveAgentAPI.startChat({
-                        directToAgentRouting: {
-                            buttonId: '5739n000000dMIP',
-                            fallback: true
-                        },
-                        extraPrechatInfo: [],
-                        extraPrechatFormDetails: []
-                    });
-                    console.log("New chat session started");
-                }, 800);
+                    // Find and click the help button or minimized button to reopen
+                    var helpButton = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
+                    var minimizedButton = document.querySelector('.minimizedContainer');
+                    
+                    var buttonToClick = helpButton || minimizedButton;
+                    
+                    if (buttonToClick) {
+                        buttonToClick.click();
+                        console.log("Chat window reopened successfully");
+                        
+                        // After reopening, start a new chat session
+                        setTimeout(function() {
+                            embedded_svc.liveAgentAPI.startChat({
+                                directToAgentRouting: {
+                                    buttonId: '5739n000000dMIP',
+                                    fallback: true
+                                },
+                                extraPrechatInfo: [],
+                                extraPrechatFormDetails: []
+                            });
+                        }, 1000);
+                    } else {
+                        console.error("Could not find button to reopen chat");
+                    }
+                }, 500);
             });
             
             buttonContainer.appendChild(restartButton);
