@@ -451,19 +451,11 @@
 				restartButton.setAttribute('aria-label', 'Restart chat conversation');
 				
 				restartButton.addEventListener('click', function() {
-					    console.log("embedded_svc.liveAgentAPI.endChat() embedded_svc.liveAgentAPI.startChat");
+					    console.log("embedded_svc.liveAgentAPI.endChat()  initESW embedded_svc.liveAgentAPI.startChat");
 				
 						embedded_svc.liveAgentAPI.endChat();
 						
-						// embedded_svc.liveAgentAPI.startChat({
-						// 	directToAgentRouting: {
-						// 	buttonId: '5739n000000dMIP',
-						// 	// userId:'',
-						// 	fallback: true
-						// 	},
-						// 	extraPrechatInfo: [],
-						// 	extraPrechatFormDetails: []
-						// });
+
 
       //               const helpButton = document.querySelector('.embeddedServiceHelpButton .helpButton');
                     
@@ -475,6 +467,16 @@
       //               }
 
 					initESW(null);
+
+					embedded_svc.liveAgentAPI.startChat({
+							directToAgentRouting: {
+							buttonId: '5739n000000dMIP',
+							// userId:'',
+							fallback: true
+							},
+							extraPrechatInfo: [],
+							extraPrechatFormDetails: []
+					});
 
     					
 				});
