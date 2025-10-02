@@ -452,20 +452,18 @@
 				
 				restartButton.addEventListener('click', function() {
 					    console.log("embedded_svc.liveAgentAPI.sendMessage");
-						embedded_svc.liveAgentAPI.sendMessage({
-							text: "@Meg"
-						});
+					
 						// embedded_svc.liveAgentAPI.endChat();
 						
-						// embedded_svc.liveAgentAPI.startChat({
-						// 	directToAgentRouting: {
-						// 	buttonId: '5739n000000dMIP',
-						// 	// userId:'',
-						// 	fallback: true
-						// 	},
-						// 	extraPrechatInfo: [],
-						// 	extraPrechatFormDetails: []
-						// });
+						embedded_svc.liveAgentAPI.startChat({
+							directToAgentRouting: {
+							buttonId: '5739n000000dMIP',
+							// userId:'',
+							fallback: true
+							},
+							extraPrechatInfo: [],
+							extraPrechatFormDetails: []
+						});
 
 				});
 				
