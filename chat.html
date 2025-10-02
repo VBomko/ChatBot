@@ -464,23 +464,35 @@
 	            restartButton.textContent = 'Restart Chat';
 	            restartButton.setAttribute('aria-label', 'Restart chat conversation');
 	            
-	            restartButton.addEventListener('click', function() {
-	                console.log("Restarting chat and redirecting to dialog endChat:", TARGET_DIALOG_NAME);
-	                
-	                // Optional: You may want to end the existing chat session gracefully first
-	                embedded_svc.liveAgentAPI.endChat();
-	                
-	                // 2. Pass the routing variable in the startChat call
-	                embedded_svc.liveAgentAPI.startChat({
-	                    directToAgentRouting: {
-	                        buttonId: '5739n000000dMIP', // Your Chat Button ID
-	                        // userId: '',
-	                        fallback: true
-	                    },
-	                    extraPrechatInfo: [dialogRoutingVariable], // <--- ADDED HERE
-	                    extraPrechatFormDetails: []
-	                });
-	            });
+            restartButton.addEventListener('click', function() {
+                console.log("Restarting chat and opening window via button click...");
+                
+                // 1. END THE CURRENT CHAT SESSION
+                embedded_svc.liveAgentAPI.endChat(); 
+                
+                // 2. START A NEW CHAT SESSION (PASSING THE REDIRECT VARIABLE)
+                // This initializes the session, but doesn't necessarily open the window
+                embedded_svc.liveAgentAPI.startChat({
+                    directToAgentRouting: {
+                        buttonId: '5739n000000dMIP', // Your Chat Button ID
+                        fallback: true
+                    },
+                    extraPrechatInfo: [dialogRoutingVariable], 
+                    extraPrechatFormDetails: []
+                }, function() {
+                    // 3. ON SUCCESSFUL START: Find and click the help button to open the window
+                    
+                    // The main help button element usually has this class/ID structure:
+                    // Try to find the button/widget by its known class name.
+                    const helpButton = document.querySelector('.embeddedServiceHelpButton .helpButton');
+                    
+                    if (helpButton) {
+                        helpButton.click();
+                        console.log("Help button clicked successfully.");
+                    } else {
+                        console.error("Error: Could not find the help button element.");
+                    }
+                });
 	            
 	            buttonContainer.appendChild(restartButton);
 	            footer.appendChild(buttonContainer);
