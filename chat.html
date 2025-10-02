@@ -422,6 +422,10 @@
 		z-index: 1000 !important;
 	}
 
+	.embeddedServiceLiveAgentStateChatInputFooter {
+    	background-color: #E91E63 !important;
+	}
+
 	
 </style>
 
@@ -429,6 +433,7 @@
 <script type='text/javascript'>
 	// Function to get device type based on screen width
 	function getDeviceType() {
+		console.log('embeddedServiceLiveAgentStateChatInputFooter');
 		var screenWidth = window.innerWidth;
 		if (screenWidth <= 768) return 'mobile';
 		if (screenWidth <= 1024) return 'tablet';
