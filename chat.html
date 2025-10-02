@@ -374,9 +374,9 @@
 	}
 
 	/* Hide chat input initially */
-	/* .chasitorText {
+	.chasitorText {
         display: none !important;
-    } */
+    }
 
 	/* ===== RESTART BUTTON STYLES ===== */
 	.restart-chat-button {
@@ -451,29 +451,22 @@
 				restartButton.setAttribute('aria-label', 'Restart chat conversation');
 				
 				restartButton.addEventListener('click', function() {
-					    console.log("embedded_svc.liveAgentAPI.endChat() embedded_svc.liveAgentAPI.startChat");
-				
-						embedded_svc.liveAgentAPI.endChat();
-						
-						embedded_svc.liveAgentAPI.startChat({
-							directToAgentRouting: {
-							buttonId: '5739n000000dMIP',
-							// userId:'',
-							fallback: true
-							},
-							extraPrechatInfo: [],
-							extraPrechatFormDetails: []
+					    console.log("embedded_svc.liveAgentAPI.sendMessage");
+						embedded_svc.liveAgentAPI.sendMessage({
+							text: "@Meg"
 						});
+						// embedded_svc.liveAgentAPI.endChat();
+						
+						// embedded_svc.liveAgentAPI.startChat({
+						// 	directToAgentRouting: {
+						// 	buttonId: '5739n000000dMIP',
+						// 	// userId:'',
+						// 	fallback: true
+						// 	},
+						// 	extraPrechatInfo: [],
+						// 	extraPrechatFormDetails: []
+						// });
 
-					    // window.postMessage(
-					    //     {
-					    //         type: "chasitor.sendMessage",
-					    //         message: '@Meg'
-					    //     },
-					    //     window.location.origin // always match the iframe origin
-					    // );
-
-    					
 				});
 				
 				buttonContainer.appendChild(restartButton);
@@ -482,126 +475,6 @@
 		}, 500);
 	}
 
-	
-function returnToMainMenu() {
-	console.log('Returning to main menu by sending @Meg...');
-	sendChatMessage('@Meg');
-}
-
-// Function to send a chat message programmatically
-function sendChatMessage(message) {
-	setTimeout(function() {
-		console.log('Attempting to send message:', message);
-		
-		// Find the chat input - try multiple selectors
-		var chatInput = document.querySelector('textarea.uiInput') ||
-						document.querySelector('textarea.chasitorText') ||
-						document.querySelector('.embeddedServiceSidebarFormField textarea') ||
-						document.querySelector('.chasitorText textarea');
-		
-		// If still not found, find ANY visible textarea
-		if (!chatInput) {
-			var textareas = document.querySelectorAll('textarea');
-			for (var i = 0; i < textareas.length; i++) {
-				if (textareas[i].offsetHeight > 0 && textareas[i].offsetWidth > 0) {
-					chatInput = textareas[i];
-					console.log('Found visible textarea:', chatInput);
-					break;
-				}
-			}
-		}
-		
-		if (chatInput) {
-			console.log('Chat input found:', chatInput);
-			
-			// Focus the input first
-			chatInput.focus();
-			
-			// Set the value
-			chatInput.value = message;
-			
-			// Create and dispatch various events to ensure the framework detects the change
-			var inputEvent = new Event('input', { bubbles: true, cancelable: true });
-			var changeEvent = new Event('change', { bubbles: true, cancelable: true });
-			var keyupEvent = new Event('keyup', { bubbles: true, cancelable: true });
-			
-			chatInput.dispatchEvent(inputEvent);
-			chatInput.dispatchEvent(changeEvent);
-			chatInput.dispatchEvent(keyupEvent);
-			
-			console.log('Input value set to:', chatInput.value);
-			
-			// Wait a bit then find and click the send button
-			setTimeout(function() {
-				// Try multiple ways to find the send button
-				var sendButton = document.querySelector('button.uiButton[aria-label*="Send"]') ||
-								 document.querySelector('button[title*="Send"]') ||
-								 document.querySelector('button.sendButton') ||
-								 document.querySelector('.chasitorControls button');
-				
-				// If not found, search through all buttons
-				if (!sendButton) {
-					var buttons = document.querySelectorAll('button');
-					for (var i = 0; i < buttons.length; i++) {
-						var btn = buttons[i];
-						var btnText = btn.textContent.trim();
-						var ariaLabel = btn.getAttribute('aria-label') || '';
-						
-						// Check if it's visible and contains "Send"
-						if (btn.offsetHeight > 0 && btn.offsetWidth > 0 &&
-							(btnText.toLowerCase() === 'send' || ariaLabel.toLowerCase().includes('send'))) {
-							sendButton = btn;
-							console.log('Found send button by searching:', btn);
-							break;
-						}
-					}
-				}
-				
-				console.log('Send button:', sendButton);
-				
-				if (sendButton) {
-					// Click the send button
-					sendButton.click();
-					console.log('Send button clicked! Message sent:', message);
-					
-					// Clear the input after sending
-					setTimeout(function() {
-						if (chatInput) {
-							chatInput.value = '';
-						}
-					}, 100);
-				} else {
-					console.log('Send button not found, trying Enter key...');
-					// If no button found, simulate Enter key press
-					var enterEvent = new KeyboardEvent('keydown', {
-						key: 'Enter',
-						code: 'Enter',
-						keyCode: 13,
-						which: 13,
-						bubbles: true,
-						cancelable: true
-					});
-					chatInput.dispatchEvent(enterEvent);
-					
-					var keypressEvent = new KeyboardEvent('keypress', {
-						key: 'Enter',
-						code: 'Enter',
-						keyCode: 13,
-						which: 13,
-						bubbles: true,
-						cancelable: true
-					});
-					chatInput.dispatchEvent(keypressEvent);
-					
-					console.log('Enter key pressed');
-				}
-			}, 300);
-		} else {
-			console.error('Could not find chat input element');
-			console.log('All textareas:', document.querySelectorAll('textarea'));
-		}
-	}, 100);
-}
 	
 	// Function to set widget dimensions based on device type
 	function setWidgetDimensions(deviceType) {
