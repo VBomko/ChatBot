@@ -435,56 +435,62 @@
 		return 'desktop';
 	}
 
-	// Function to add restart button to chat footer
-	function addRestartButton() {
-		setTimeout(function() {
-			var footer = document.querySelector('.chasitorControls');
-			console.log('chasitorControls' , footer );
-			// Check if button already exists
-			if (footer && !document.querySelector('.restart-button-container')) {
-				var buttonContainer = document.createElement('div');
-				buttonContainer.className = 'restart-button-container';
-				
-				var restartButton = document.createElement('button');
-				restartButton.className = 'restart-chat-button';
-				restartButton.textContent = 'Restart Chat';
-				restartButton.setAttribute('aria-label', 'Restart chat conversation');
-				
-				restartButton.addEventListener('click', function() {
-					    console.log("embedded_svc.liveAgentAPI.endChat()  initESW embedded_svc.liveAgentAPI.startChat");
-				
-						embedded_svc.liveAgentAPI.endChat();
-						
-
-
-      //               const helpButton = document.querySelector('.embeddedServiceHelpButton .helpButton');
+// Function to add restart button to chat footer
+function addRestartButton() {
+    setTimeout(function() {
+        var footer = document.querySelector('.chasitorControls');
+        console.log('chasitorControls', footer);
+        
+        // Check if button already exists
+        if (footer && !document.querySelector('.restart-button-container')) {
+            var buttonContainer = document.createElement('div');
+            buttonContainer.className = 'restart-button-container';
+            
+            var restartButton = document.createElement('button');
+            restartButton.className = 'restart-chat-button';
+            restartButton.textContent = 'Restart Chat';
+            restartButton.setAttribute('aria-label', 'Restart chat conversation');
+            
+            restartButton.addEventListener('click', function() {
+                console.log("Restarting chat...");
+                
+                // End the current chat session
+                embedded_svc.liveAgentAPI.endChat();
+                
+                // Wait for chat to end, then reopen the window
+                setTimeout(function() {
+                    // Find and click the help button or minimized button to reopen
+                    var helpButton = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
+                    var minimizedButton = document.querySelector('.minimizedContainer');
                     
-      //               if (helpButton) {
-      //                   helpButton.click();
-      //                   console.log("Help button clicked successfully.");
-      //               } else {
-      //                   console.error("Error: Could not find the help button element.");
-      //               }
-
-					initESW(null);
-
-					embedded_svc.liveAgentAPI.startChat({
-						directToAgentRouting: {
-							buttonId: '5739n000000dMIP',
-							fallback: true
-						},
-						extraPrechatInfo: [],
-						extraPrechatFormDetails: []
-					});
-
-    					
-				});
-				
-				buttonContainer.appendChild(restartButton);
-				footer.appendChild(buttonContainer);
-			}
-		}, 500);
-	}
+                    var buttonToClick = helpButton || minimizedButton;
+                    
+                    if (buttonToClick) {
+                        buttonToClick.click();
+                        console.log("Chat window reopened successfully");
+                        
+                        // After reopening, start a new chat session
+                        setTimeout(function() {
+                            embedded_svc.liveAgentAPI.startChat({
+                                directToAgentRouting: {
+                                    buttonId: '5739n000000dMIP',
+                                    fallback: true
+                                },
+                                extraPrechatInfo: [],
+                                extraPrechatFormDetails: []
+                            });
+                        }, 1000);
+                    } else {
+                        console.error("Could not find button to reopen chat");
+                    }
+                }, 500);
+            });
+            
+            buttonContainer.appendChild(restartButton);
+            footer.appendChild(buttonContainer);
+        }
+    }, 500);
+}
 
 	
 	// Function to set widget dimensions based on device type
