@@ -465,10 +465,10 @@
 	            restartButton.setAttribute('aria-label', 'Restart chat conversation');
 	            
 	            restartButton.addEventListener('click', function() {
-	                console.log("Restarting chat and redirecting to dialog:", TARGET_DIALOG_NAME);
+	                console.log("Restarting chat and redirecting to dialog endChat:", TARGET_DIALOG_NAME);
 	                
 	                // Optional: You may want to end the existing chat session gracefully first
-	                // embedded_svc.liveAgentAPI.endChat();
+	                embedded_svc.liveAgentAPI.endChat();
 	                
 	                // 2. Pass the routing variable in the startChat call
 	                embedded_svc.liveAgentAPI.startChat({
