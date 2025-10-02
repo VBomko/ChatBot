@@ -437,40 +437,55 @@
 
 	// Function to add restart button to chat footer
 	function addRestartButton() {
-		setTimeout(function() {
-			var footer = document.querySelector('.chasitorControls');
-			console.log('chasitorControls' , footer );
-			// Check if button already exists
-			if (footer && !document.querySelector('.restart-button-container')) {
-				var buttonContainer = document.createElement('div');
-				buttonContainer.className = 'restart-button-container';
-				
-				var restartButton = document.createElement('button');
-				restartButton.className = 'restart-chat-button';
-				restartButton.textContent = 'Restart Chat';
-				restartButton.setAttribute('aria-label', 'Restart chat conversation');
-				
-				restartButton.addEventListener('click', function() {
-					    console.log("embedded_svc.liveAgentAPI.startChat");
-					
-						// embedded_svc.liveAgentAPI.endChat();
-						
-						embedded_svc.liveAgentAPI.startChat({
-							directToAgentRouting: {
-							buttonId: '5739n000000dMIP',
-							// userId:'',
-							fallback: true
-							},
-							extraPrechatInfo: [],
-							extraPrechatFormDetails: []
-						});
-
-				});
-				
-				buttonContainer.appendChild(restartButton);
-				footer.appendChild(buttonContainer);
-			}
-		}, 500);
+	 // 1. Define the target dialog and variable key outside the button logic
+	    const TARGET_DIALOG_NAME = 'Welcome'; // <-- REPLACE with your Bot's Dialog API Name
+	    const ROUTING_VARIABLE_KEY = 'CustomDialogStart'; // <-- Use this name in your Bot's variable setup
+	    
+	    // The structure to pass the variable to the bot
+	    const dialogRoutingVariable = {
+	        "entityName": "Variable",
+	        "saveToTranscript": false,
+	        "showOnCreate": false,
+	        "variable_key": ROUTING_VARIABLE_KEY,
+	        "variable_value": TARGET_DIALOG_NAME
+	    };
+	    
+	    setTimeout(function() {
+	        var footer = document.querySelector('.chasitorControls');
+	        console.log('chasitorControls', footer);
+	        
+	        // Check if button already exists
+	        if (footer && !document.querySelector('.restart-button-container')) {
+	            var buttonContainer = document.createElement('div');
+	            buttonContainer.className = 'restart-button-container';
+	            
+	            var restartButton = document.createElement('button');
+	            restartButton.className = 'restart-chat-button';
+	            restartButton.textContent = 'Restart Chat';
+	            restartButton.setAttribute('aria-label', 'Restart chat conversation');
+	            
+	            restartButton.addEventListener('click', function() {
+	                console.log("Restarting chat and redirecting to dialog:", TARGET_DIALOG_NAME);
+	                
+	                // Optional: You may want to end the existing chat session gracefully first
+	                // embedded_svc.liveAgentAPI.endChat();
+	                
+	                // 2. Pass the routing variable in the startChat call
+	                embedded_svc.liveAgentAPI.startChat({
+	                    directToAgentRouting: {
+	                        buttonId: '5739n000000dMIP', // Your Chat Button ID
+	                        // userId: '',
+	                        fallback: true
+	                    },
+	                    extraPrechatInfo: [dialogRoutingVariable], // <--- ADDED HERE
+	                    extraPrechatFormDetails: []
+	                });
+	            });
+	            
+	            buttonContainer.appendChild(restartButton);
+	            footer.appendChild(buttonContainer);
+	        }
+	    }, 500);
 	}
 
 	
