@@ -455,24 +455,26 @@
 				
 						embedded_svc.liveAgentAPI.endChat();
 						
-						embedded_svc.liveAgentAPI.startChat({
-							directToAgentRouting: {
-							buttonId: '5739n000000dMIP',
-							// userId:'',
-							fallback: true
-							},
-							extraPrechatInfo: [],
-							extraPrechatFormDetails: []
-						});
+						// embedded_svc.liveAgentAPI.startChat({
+						// 	directToAgentRouting: {
+						// 	buttonId: '5739n000000dMIP',
+						// 	// userId:'',
+						// 	fallback: true
+						// 	},
+						// 	extraPrechatInfo: [],
+						// 	extraPrechatFormDetails: []
+						// });
 
-                    const helpButton = document.querySelector('.embeddedServiceHelpButton .helpButton');
+      //               const helpButton = document.querySelector('.embeddedServiceHelpButton .helpButton');
                     
-                    if (helpButton) {
-                        helpButton.click();
-                        console.log("Help button clicked successfully.");
-                    } else {
-                        console.error("Error: Could not find the help button element.");
-                    }
+      //               if (helpButton) {
+      //                   helpButton.click();
+      //                   console.log("Help button clicked successfully.");
+      //               } else {
+      //                   console.error("Error: Could not find the help button element.");
+      //               }
+
+					initESW(null);
 
     					
 				});
