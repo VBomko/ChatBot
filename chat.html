@@ -380,39 +380,81 @@
 
 	/* ===== RESTART BUTTON STYLES ===== */
 	.restart-chat-button {
-		background-color: #E91E63 !important;
-		color: white !important;
+		background: transparent !important;
+		color: #E91E63 !important;
 		border: none !important;
-		border-radius: 8px !important;
-		padding: 10px 20px !important;
-		font-size: 14px !important;
+		border-radius: 0 !important;
+		padding: 8px 0 !important;
+		font-size: 13px !important;
 		font-weight: 600 !important;
 		cursor: pointer !important;
-		transition: all 0.3s ease !important;
-		margin: 10px auto !important;
-		display: block !important;
-		width: calc(100% - 20px) !important;
-		max-width: 200px !important;
-		box-shadow: 0 2px 8px rgba(233, 30, 99, 0.3) !important;
+		transition: all 0.2s ease !important;
+		margin: 0 auto !important;
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		gap: 6px !important;
+		width: auto !important;
+		max-width: none !important;
+		box-shadow: none !important;
+		position: relative !important;
+		text-decoration: none !important;
+	}
+
+	/* Restart icon (circular arrow) using CSS */
+	.restart-chat-button:before {
+		content: "" !important;
+		display: inline-block !important;
+		width: 16px !important;
+		height: 16px !important;
+		border: 2px solid #E91E63 !important;
+		border-radius: 50% !important;
+		border-top-color: transparent !important;
+		border-right-color: transparent !important;
+		transform: rotate(-45deg) !important;
+		transition: all 0.2s ease !important;
+		position: relative !important;
+	}
+
+	/* Arrow tip for restart icon */
+	.restart-chat-button:after {
+		content: "" !important;
+		position: absolute !important;
+		left: 50% !important;
+		top: 50% !important;
+		transform: translate(-10px, -7px) rotate(-45deg) !important;
+		width: 0 !important;
+		height: 0 !important;
+		border-left: 4px solid transparent !important;
+		border-right: 4px solid transparent !important;
+		border-bottom: 6px solid #E91E63 !important;
+		transition: all 0.2s ease !important;
 	}
 
 	.restart-chat-button:hover {
-		background-color: #C2185B !important;
-		box-shadow: 0 4px 12px rgba(233, 30, 99, 0.5) !important;
-		transform: translateY(-2px) !important;
+		color: #C2185B !important;
+		background: transparent !important;
+		box-shadow: none !important;
+		transform: none !important;
+	}
+
+	.restart-chat-button:hover:before {
+		border-color: #C2185B !important;
+		border-top-color: transparent !important;
+		border-right-color: transparent !important;
+		transform: rotate(-45deg) scale(1.1) !important;
+	}
+
+	.restart-chat-button:hover:after {
+		border-bottom-color: #C2185B !important;
 	}
 
 	.restart-chat-button:active {
-		transform: translateY(0px) !important;
-		box-shadow: 0 2px 6px rgba(233, 30, 99, 0.3) !important;
+		transform: scale(0.95) !important;
+		box-shadow: none !important;
 	}
 
-	/* Position restart button in footer */
-	.embeddedServiceSidebarFooter {
-		position: relative !important;
-		padding-bottom: 60px !important;
-	}
-
+	/* Underline effect on hover */
 	.restart-button-container {
 		position: absolute !important;
 		bottom: 10px !important;
@@ -420,6 +462,30 @@
 		right: 0 !important;
 		padding: 0 10px !important;
 		z-index: 1000 !important;
+		text-align: center !important;
+	}
+
+	.restart-button-container:after {
+		content: "" !important;
+		position: absolute !important;
+		bottom: 6px !important;
+		left: 50% !important;
+		transform: translateX(-50%) scaleX(0) !important;
+		width: auto !important;
+		height: 1px !important;
+		background-color: #E91E63 !important;
+		transition: transform 0.2s ease !important;
+	}
+
+	.restart-button-container:hover:after {
+		transform: translateX(-50%) scaleX(1) !important;
+		width: 120px !important;
+	}
+
+	/* Position restart button in footer */
+	.embeddedServiceSidebarFooter {
+		position: relative !important;
+		padding-bottom: 60px !important;
 	}
 
 	.embeddedServiceLiveAgentStateChatInputFooter {
@@ -440,62 +506,62 @@
 		return 'desktop';
 	}
 
-// Function to add restart button to chat footer
-function addRestartButton() {
-    setTimeout(function() {
-        var footer = document.querySelector('.chasitorControls');
-        console.log('chasitorControls', footer);
-        
-        // Check if button already exists
-        if (footer && !document.querySelector('.restart-button-container')) {
-            var buttonContainer = document.createElement('div');
-            buttonContainer.className = 'restart-button-container';
-            
-            var restartButton = document.createElement('button');
-            restartButton.className = 'restart-chat-button';
-            restartButton.textContent = 'Restart Chat';
-            restartButton.setAttribute('aria-label', 'Restart chat conversation');
-            
-            restartButton.addEventListener('click', function() {
-                console.log("Restarting chat...");
-                
-                // End the current chat session
-                embedded_svc.liveAgentAPI.endChat();
-                
-                // Wait for chat to end, then reopen the window
-                setTimeout(function() {
-                    // Find and click the help button or minimized button to reopen
-                    var helpButton = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
-                    var minimizedButton = document.querySelector('.minimizedContainer');
-                    
-                    var buttonToClick = helpButton || minimizedButton;
-                    
-                    if (buttonToClick) {
-                        buttonToClick.click();
-                        console.log("Chat window reopened successfully");
-                        
-                        // After reopening, start a new chat session
-                        setTimeout(function() {
-                            embedded_svc.liveAgentAPI.startChat({
-                                directToAgentRouting: {
-                                    buttonId: '5739n000000dMIP',
-                                    fallback: true
-                                },
-                                extraPrechatInfo: [],
-                                extraPrechatFormDetails: []
-                            });
-                        }, 1000);
-                    } else {
-                        console.error("Could not find button to reopen chat");
-                    }
-                }, 500);
-            });
-            
-            buttonContainer.appendChild(restartButton);
-            footer.appendChild(buttonContainer);
-        }
-    }, 500);
-}
+	// Function to add restart button to chat footer
+	function addRestartButton() {
+	    setTimeout(function() {
+	        var footer = document.querySelector('.chasitorControls');
+	        console.log('chasitorControls', footer);
+	        
+	        // Check if button already exists
+	        if (footer && !document.querySelector('.restart-button-container')) {
+	            var buttonContainer = document.createElement('div');
+	            buttonContainer.className = 'restart-button-container';
+	            
+	            var restartButton = document.createElement('button');
+	            restartButton.className = 'restart-chat-button';
+	            restartButton.textContent = 'Restart conversation';
+	            restartButton.setAttribute('aria-label', 'Restart chat conversation');
+	            
+	            restartButton.addEventListener('click', function() {
+	                console.log("Restarting chat...");
+	                
+	                // End the current chat session
+	                embedded_svc.liveAgentAPI.endChat();
+	                
+	                // Wait for chat to end, then reopen the window
+	                setTimeout(function() {
+	                    // Find and click the help button or minimized button to reopen
+	                    var helpButton = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
+	                    var minimizedButton = document.querySelector('.minimizedContainer');
+	                    
+	                    var buttonToClick = helpButton || minimizedButton;
+	                    
+	                    if (buttonToClick) {
+	                        buttonToClick.click();
+	                        console.log("Chat window reopened successfully");
+	                        
+	                        // After reopening, start a new chat session
+	                        setTimeout(function() {
+	                            embedded_svc.liveAgentAPI.startChat({
+	                                directToAgentRouting: {
+	                                    buttonId: '5739n000000dMIP',
+	                                    fallback: true
+	                                },
+	                                extraPrechatInfo: [],
+	                                extraPrechatFormDetails: []
+	                            });
+	                        }, 1000);
+	                    } else {
+	                        console.error("Could not find button to reopen chat");
+	                    }
+	                }, 500);
+	            });
+	            
+	            buttonContainer.appendChild(restartButton);
+	            footer.appendChild(buttonContainer);
+	        }
+	    }, 500);
+	}
 
 	
 	// Function to set widget dimensions based on device type
