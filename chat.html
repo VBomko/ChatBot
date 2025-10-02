@@ -435,35 +435,33 @@
 		return 'desktop';
 	}
 
-	// Function to add restart button to chat footer
-	function addRestartButton() {
-	 // 1. Define the target dialog and variable key outside the button logic
-	    const TARGET_DIALOG_NAME = 'Welcome'; // <-- REPLACE with your Bot's Dialog API Name
-	    const ROUTING_VARIABLE_KEY = 'CustomDialogStart'; // <-- Use this name in your Bot's variable setup
-	    
-	    // The structure to pass the variable to the bot
-	    const dialogRoutingVariable = {
-	        "entityName": "Variable",
-	        "saveToTranscript": false,
-	        "showOnCreate": false,
-	        "variable_key": ROUTING_VARIABLE_KEY,
-	        "variable_value": TARGET_DIALOG_NAME
-	    };
-	    
-	    setTimeout(function() {
-	        var footer = document.querySelector('.chasitorControls');
-	        console.log('chasitorControls', footer);
-	        
-	        // Check if button already exists
-	        if (footer && !document.querySelector('.restart-button-container')) {
-	            var buttonContainer = document.createElement('div');
-	            buttonContainer.className = 'restart-button-container';
-	            
-	            var restartButton = document.createElement('button');
-	            restartButton.className = 'restart-chat-button';
-	            restartButton.textContent = 'Restart Chat';
-	            restartButton.setAttribute('aria-label', 'Restart chat conversation');
-	            
+// Function to add restart button to chat footer
+function addRestartButton() {
+    // CRITICAL: Replace 'My_Target_Dialog_API_Name' with the EXACT API Name from your Bot
+    const TARGET_DIALOG_NAME = 'Welcome'; 
+    const ROUTING_VARIABLE_KEY = 'CustomDialogStart'; 
+    
+    // The structure to pass the variable to the bot
+    const dialogRoutingVariable = {
+        "entityName": "Variable",
+        "saveToTranscript": false,
+        "showOnCreate": false,
+        "variable_key": ROUTING_VARIABLE_KEY,
+        "variable_value": TARGET_DIALOG_NAME
+    };
+    
+    setTimeout(function() {
+        var footer = document.querySelector('.chasitorControls');
+        
+        if (footer && !document.querySelector('.restart-button-container')) {
+            var buttonContainer = document.createElement('div');
+            buttonContainer.className = 'restart-button-container';
+            
+            var restartButton = document.createElement('button');
+            restartButton.className = 'restart-chat-button';
+            restartButton.textContent = 'Restart Chat';
+            restartButton.setAttribute('aria-label', 'Restart chat conversation');
+            
             restartButton.addEventListener('click', function() {
                 console.log("Restarting chat and opening window via button click...");
                 
@@ -493,12 +491,13 @@
                         console.error("Error: Could not find the help button element.");
                     }
                 });
-	            
-	            buttonContainer.appendChild(restartButton);
-	            footer.appendChild(buttonContainer);
-	        }
-	    }, 500);
-	}
+            });
+            
+            buttonContainer.appendChild(restartButton);
+            footer.appendChild(buttonContainer);
+        }
+    }, 500);
+}
 
 	
 	// Function to set widget dimensions based on device type
