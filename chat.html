@@ -381,7 +381,7 @@
 	/* ===== RESTART BUTTON STYLES ===== */
 	.restart-chat-button {
 		background: transparent !important;
-		color: white !important;
+		color: rgba(255, 255, 255, 0.7) !important;
 		border: none !important;
 		border-radius: 0 !important;
 		padding: 8px 0 !important;
@@ -393,7 +393,7 @@
 		display: flex !important;
 		align-items: center !important;
 		justify-content: center !important;
-		gap: 0 !important;
+		gap: 6px !important;
 		width: auto !important;
 		max-width: none !important;
 		box-shadow: none !important;
@@ -401,21 +401,52 @@
 		text-decoration: none !important;
 	}
 
-	/* Remove the restart icon */
+	/* Restart icon (circular arrow) using CSS - WHITE-GRAY */
 	.restart-chat-button:before {
-		display: none !important;
+		content: "" !important;
+		display: inline-block !important;
+		width: 16px !important;
+		height: 16px !important;
+		border: 2px solid rgba(255, 255, 255, 0.7) !important;
+		border-radius: 50% !important;
+		border-top-color: transparent !important;
+		border-right-color: transparent !important;
+		transform: rotate(-45deg) !important;
+		transition: all 0.2s ease !important;
+		position: relative !important;
 	}
 
-	/* Remove the arrow tip */
+	/* Arrow tip for restart icon - WHITE-GRAY */
 	.restart-chat-button:after {
-		display: none !important;
+		content: "" !important;
+		position: absolute !important;
+		left: 50% !important;
+		top: 50% !important;
+		transform: translate(-10px, -7px) rotate(-45deg) !important;
+		width: 0 !important;
+		height: 0 !important;
+		border-left: 4px solid transparent !important;
+		border-right: 4px solid transparent !important;
+		border-bottom: 6px solid rgba(255, 255, 255, 0.7) !important;
+		transition: all 0.2s ease !important;
 	}
 
 	.restart-chat-button:hover {
-		color: rgba(255, 255, 255, 0.8) !important;
+		color: white !important;
 		background: transparent !important;
 		box-shadow: none !important;
 		transform: none !important;
+	}
+
+	.restart-chat-button:hover:before {
+		border-color: white !important;
+		border-top-color: transparent !important;
+		border-right-color: transparent !important;
+		transform: rotate(-45deg) scale(1.1) !important;
+	}
+
+	.restart-chat-button:hover:after {
+		border-bottom-color: white !important;
 	}
 
 	.restart-chat-button:active {
