@@ -452,10 +452,10 @@ function addRestartButton() {
             restartButton.setAttribute('aria-label', 'Restart chat conversation');
             
             restartButton.addEventListener('click', function() {
-                console.log("Restarting chat (keeping window open)...");
+                console.log("Restarting chat (keeping window open)... embedded_svc.liveAgentAPI.startChat");
                 
                 // End the current chat session
-                embedded_svc.liveAgentAPI.endChat();
+                // embedded_svc.liveAgentAPI.endChat();
                 
                 // Wait briefly, then start a new chat session
                 setTimeout(function() {
