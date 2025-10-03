@@ -576,13 +576,64 @@ button.slds-button:active {
 }
 
 
+/* ===== RED BORDER FOR CHAT BUTTONS ===== */
+
+/* Normal state - red border */
+.embeddedServiceSidebarDialogState .messageContent button,
+.embeddedServiceLiveAgentStateChatItem .messageContent button,
+.embeddedServiceSidebarDialogState .uiButton,
+.embeddedServiceLiveAgentStateChatItem .uiButton,
+.embeddedServiceSidebarDialogState .slds-button,
+.embeddedServiceLiveAgentStateChatItem .slds-button,
+button.slds-button {
+	border: 2px solid rgb(228, 0, 70) !important;
+	border-color: rgb(228, 0, 70) !important;
+}
+
+/* Keep red border on hover */
+.embeddedServiceSidebarDialogState .messageContent button:hover,
+.embeddedServiceLiveAgentStateChatItem .messageContent button:hover,
+.embeddedServiceSidebarDialogState .uiButton:hover,
+.embeddedServiceLiveAgentStateChatItem .uiButton:hover,
+.embeddedServiceSidebarDialogState .slds-button:hover,
+.embeddedServiceLiveAgentStateChatItem .slds-button:hover,
+button.slds-button:hover {
+	border: 2px solid rgb(228, 0, 70) !important;
+	border-color: rgb(228, 0, 70) !important;
+}
+
+/* Keep red border on focus */
+.embeddedServiceSidebarDialogState .messageContent button:focus,
+.embeddedServiceLiveAgentStateChatItem .messageContent button:focus,
+.embeddedServiceSidebarDialogState .uiButton:focus,
+.embeddedServiceLiveAgentStateChatItem .uiButton:focus,
+.embeddedServiceSidebarDialogState .slds-button:focus,
+.embeddedServiceLiveAgentStateChatItem .slds-button:focus,
+button.slds-button:focus {
+	border: 2px solid rgb(228, 0, 70) !important;
+	border-color: rgb(228, 0, 70) !important;
+}
+
+/* Keep red border on active */
+.embeddedServiceSidebarDialogState .messageContent button:active,
+.embeddedServiceLiveAgentStateChatItem .messageContent button:active,
+.embeddedServiceSidebarDialogState .uiButton:active,
+.embeddedServiceLiveAgentStateChatItem .uiButton:active,
+.embeddedServiceSidebarDialogState .slds-button:active,
+.embeddedServiceLiveAgentStateChatItem .slds-button:active,
+button.slds-button:active {
+	border: 2px solid rgb(228, 0, 70) !important;
+	border-color: rgb(228, 0, 70) !important;
+}
+
+
 </style>
 
 <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
 <script type='text/javascript'>
 	// Function to get device type based on screen width
 	function getDeviceType() {
-		console.log('BUTTON HOVER STYLES - FORCE EXACT COLOR ');
+		console.log('RED BORDER FOR CHAT BUTTONS ');
 		var screenWidth = window.innerWidth;
 		if (screenWidth <= 768) return 'mobile';
 		if (screenWidth <= 1024) return 'tablet';
