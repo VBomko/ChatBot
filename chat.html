@@ -626,9 +626,9 @@
 		border-color: rgb(228, 0, 70) !important;
 	}
 
-	/* ===== FIX BUTTON HEIGHT TO MATCH CHAT MESSAGES ===== */
+/* ===== FIX BUTTON TEXT OVERFLOW ===== */
 
-/* Match button height to chat message height */
+/* Allow text to wrap and button to expand */
 .embeddedServiceSidebarDialogState .messageContent button,
 .embeddedServiceLiveAgentStateChatItem .messageContent button,
 .embeddedServiceSidebarDialogState .uiButton,
@@ -636,24 +636,37 @@
 .embeddedServiceSidebarDialogState .slds-button,
 .embeddedServiceLiveAgentStateChatItem .slds-button,
 button.slds-button {
+	white-space: normal !important;
+	word-wrap: break-word !important;
+	overflow-wrap: break-word !important;
 	min-height: 40px !important;
-	max-height: 40px !important;
-	height: 40px !important;
+	height: auto !important;
+	max-height: none !important;
 	line-height: 1.4 !important;
-	padding: 8px 24px !important;
+	padding: 10px 20px !important;
 	vertical-align: middle !important;
 }
 
-/* Mobile - slightly smaller height */
+/* Ensure button text/spans also wrap */
+.embeddedServiceSidebarDialogState .messageContent button span,
+.embeddedServiceLiveAgentStateChatItem .messageContent button span,
+.embeddedServiceSidebarDialogState .uiButton span,
+.embeddedServiceLiveAgentStateChatItem .uiButton span,
+.embeddedServiceSidebarDialogState .slds-button span,
+.embeddedServiceLiveAgentStateChatItem .slds-button span {
+	white-space: normal !important;
+	word-wrap: break-word !important;
+	overflow-wrap: break-word !important;
+}
+
+/* Mobile - responsive padding */
 @media screen and (max-width: 768px) {
 	.embeddedServiceSidebarDialogState .messageContent button,
 	.embeddedServiceLiveAgentStateChatItem .messageContent button,
 	.embeddedServiceSidebarDialogState .uiButton,
 	.embeddedServiceLiveAgentStateChatItem .uiButton {
 		min-height: 36px !important;
-		max-height: 36px !important;
-		height: 36px !important;
-		padding: 6px 16px !important;
+		padding: 8px 16px !important;
 	}
 }
 
@@ -664,7 +677,7 @@ button.slds-button {
 <script type='text/javascript'>
 	// Function to get device type based on screen width
 	function getDeviceType() {
-		console.log('FIX BUTTON HEIGHT TO MATCH CHAT MESSAGES');
+		console.log('FIX BUTTON TEXT OVERFLOW');
 		var screenWidth = window.innerWidth;
 		if (screenWidth <= 768) return 'mobile';
 		if (screenWidth <= 1024) return 'tablet';
