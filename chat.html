@@ -409,8 +409,64 @@
 	}
 
 	.embeddedServiceLiveAgentStateChatInputFooter {
-		background-color: #E91E63 !important;
+		background-color:  rgb(228, 0, 70) !important;
 	}
+
+
+	/* ===== FORCE MENU OPTIONS TO SINGLE COLUMN ===== */
+
+/* Target the menu/options container */
+.embeddedServiceSidebarButton,
+.embeddedServiceLiveAgentStateChatMenuMessage .menuItem,
+.embeddedServiceLiveAgentStateChatMenuMessage .chasitorText,
+.embeddedServiceLiveAgentStateChatMenuMessage .slds-grid,
+.embeddedServiceLiveAgentStateChatMenuMessage .slds-grid_vertical,
+.embeddedServiceLiveAgentStateChatMenuMessage .menu,
+.embeddedServiceLiveAgentStateChatMenuMessage .menuItems {
+	display: flex !important;
+	flex-direction: column !important;
+	width: 100% !important;
+	flex-wrap: nowrap !important;
+}
+
+/* Force each menu button to full width */
+.embeddedServiceSidebarButton,
+.embeddedServiceLiveAgentStateChatMenuMessage .menuItem button,
+.embeddedServiceLiveAgentStateChatMenuMessage button.uiButton,
+.embeddedServiceLiveAgentStateChatMenuMessage .slds-button {
+	width: 100% !important;
+	max-width: 100% !important;
+	min-width: 100% !important;
+	display: block !important;
+	margin: 4px 0 !important;
+	box-sizing: border-box !important;
+}
+
+/* Remove any grid layouts that might cause multi-column */
+.embeddedServiceLiveAgentStateChatMenuMessage .slds-col,
+.embeddedServiceLiveAgentStateChatMenuMessage [class*="slds-size"] {
+	width: 100% !important;
+	max-width: 100% !important;
+	flex: 0 0 100% !important;
+}
+
+/* Ensure consistent spacing between buttons */
+.embeddedServiceLiveAgentStateChatMenuMessage .menuItem {
+	margin-bottom: 8px !important;
+}
+
+.embeddedServiceLiveAgentStateChatMenuMessage .menuItem:last-child {
+	margin-bottom: 0 !important;
+}
+
+/* Apply to all screen sizes including desktop */
+@media screen and (min-width: 769px) {
+	.embeddedServiceLiveAgentStateChatMenuMessage .menuItem button,
+	.embeddedServiceLiveAgentStateChatMenuMessage button.uiButton {
+		width: 100% !important;
+		max-width: 100% !important;
+	}
+}
 
 
 </style>
