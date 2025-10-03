@@ -495,9 +495,26 @@
 	}
 
 
-	/* ===== BUTTON HOVER STYLES ===== */
+	/* ===== BUTTON HOVER STYLES - FORCE EXACT COLOR ===== */
 
-/* Hover state for all chat buttons */
+/* Remove any pseudo-elements or overlays */
+.embeddedServiceSidebarDialogState .messageContent button:hover::before,
+.embeddedServiceLiveAgentStateChatItem .messageContent button:hover::before,
+.embeddedServiceSidebarDialogState .uiButton:hover::before,
+.embeddedServiceLiveAgentStateChatItem .uiButton:hover::before,
+.embeddedServiceSidebarDialogState .slds-button:hover::before,
+.embeddedServiceLiveAgentStateChatItem .slds-button:hover::before,
+.embeddedServiceSidebarDialogState .messageContent button:hover::after,
+.embeddedServiceLiveAgentStateChatItem .messageContent button:hover::after,
+.embeddedServiceSidebarDialogState .uiButton:hover::after,
+.embeddedServiceLiveAgentStateChatItem .uiButton:hover::after,
+.embeddedServiceSidebarDialogState .slds-button:hover::after,
+.embeddedServiceLiveAgentStateChatItem .slds-button:hover::after {
+	display: none !important;
+	opacity: 0 !important;
+}
+
+/* Hover state for all chat buttons - with exact color */
 .embeddedServiceSidebarDialogState .messageContent button:hover,
 .embeddedServiceLiveAgentStateChatItem .messageContent button:hover,
 .embeddedServiceSidebarDialogState .uiButton:hover,
@@ -505,10 +522,24 @@
 .embeddedServiceSidebarDialogState .slds-button:hover,
 .embeddedServiceLiveAgentStateChatItem .slds-button:hover,
 button.slds-button:hover {
+	background: rgb(228, 0, 70) !important;
 	background-color: rgb(228, 0, 70) !important;
 	color: white !important;
 	border-color: rgb(228, 0, 70) !important;
 	transition: all 0.2s ease !important;
+	opacity: 1 !important;
+	filter: none !important;
+}
+
+/* Target nested span elements that might affect color */
+.embeddedServiceSidebarDialogState .messageContent button:hover span,
+.embeddedServiceLiveAgentStateChatItem .messageContent button:hover span,
+.embeddedServiceSidebarDialogState .uiButton:hover span,
+.embeddedServiceLiveAgentStateChatItem .uiButton:hover span,
+.embeddedServiceSidebarDialogState .slds-button:hover span,
+.embeddedServiceLiveAgentStateChatItem .slds-button:hover span {
+	color: white !important;
+	opacity: 1 !important;
 }
 
 /* Focus state (for keyboard navigation) */
@@ -519,11 +550,14 @@ button.slds-button:hover {
 .embeddedServiceSidebarDialogState .slds-button:focus,
 .embeddedServiceLiveAgentStateChatItem .slds-button:focus,
 button.slds-button:focus {
+	background: rgb(228, 0, 70) !important;
 	background-color: rgb(228, 0, 70) !important;
 	color: white !important;
 	border-color: rgb(228, 0, 70) !important;
 	outline: none !important;
 	box-shadow: 0 0 0 2px rgba(228, 0, 70, 0.3) !important;
+	opacity: 1 !important;
+	filter: none !important;
 }
 
 /* Active state (when clicking) */
@@ -534,8 +568,11 @@ button.slds-button:focus {
 .embeddedServiceSidebarDialogState .slds-button:active,
 .embeddedServiceLiveAgentStateChatItem .slds-button:active,
 button.slds-button:active {
-	background-color: rgb(200, 0, 60) !important;
+	background: rgb(228, 0, 70) !important;
+	background-color: rgb(228, 0, 70) !important;
 	transform: scale(0.98) !important;
+	opacity: 1 !important;
+	filter: none !important;
 }
 
 
@@ -545,7 +582,7 @@ button.slds-button:active {
 <script type='text/javascript'>
 	// Function to get device type based on screen width
 	function getDeviceType() {
-		console.log('BUTTON HOVER STYLES');
+		console.log('BUTTON HOVER STYLES - FORCE EXACT COLOR ');
 		var screenWidth = window.innerWidth;
 		if (screenWidth <= 768) return 'mobile';
 		if (screenWidth <= 1024) return 'tablet';
