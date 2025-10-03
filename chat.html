@@ -413,59 +413,48 @@
 	}
 
 
-	/* ===== FORCE MENU OPTIONS TO SINGLE COLUMN ===== */
+	/* ===== FORCE CHAT MENU BUTTONS TO SINGLE COLUMN ===== */
 
-/* Target the menu/options container */
-.embeddedServiceSidebarButton,
-.embeddedServiceLiveAgentStateChatMenuMessage .menuItem,
-.embeddedServiceLiveAgentStateChatMenuMessage .chasitorText,
-.embeddedServiceLiveAgentStateChatMenuMessage .slds-grid,
-.embeddedServiceLiveAgentStateChatMenuMessage .slds-grid_vertical,
-.embeddedServiceLiveAgentStateChatMenuMessage .menu,
-.embeddedServiceLiveAgentStateChatMenuMessage .menuItems {
+/* Target all button containers in chat messages */
+.embeddedServiceSidebarDialogState .messageContent,
+.embeddedServiceLiveAgentStateChatItem .messageContent,
+.embeddedServiceSidebarDialogState .uiOutputRichText,
+.embeddedServiceLiveAgentStateChatItem .uiOutputRichText {
 	display: flex !important;
 	flex-direction: column !important;
 	width: 100% !important;
-	flex-wrap: nowrap !important;
 }
 
-/* Force each menu button to full width */
-.embeddedServiceSidebarButton,
-.embeddedServiceLiveAgentStateChatMenuMessage .menuItem button,
-.embeddedServiceLiveAgentStateChatMenuMessage button.uiButton,
-.embeddedServiceLiveAgentStateChatMenuMessage .slds-button {
+/* Force all buttons in chat messages to full width */
+.embeddedServiceSidebarDialogState .messageContent button,
+.embeddedServiceLiveAgentStateChatItem .messageContent button,
+.embeddedServiceSidebarDialogState .uiButton,
+.embeddedServiceLiveAgentStateChatItem .uiButton,
+.embeddedServiceSidebarDialogState .slds-button,
+.embeddedServiceLiveAgentStateChatItem .slds-button {
 	width: 100% !important;
 	max-width: 100% !important;
 	min-width: 100% !important;
 	display: block !important;
 	margin: 4px 0 !important;
 	box-sizing: border-box !important;
-}
-
-/* Remove any grid layouts that might cause multi-column */
-.embeddedServiceLiveAgentStateChatMenuMessage .slds-col,
-.embeddedServiceLiveAgentStateChatMenuMessage [class*="slds-size"] {
-	width: 100% !important;
-	max-width: 100% !important;
 	flex: 0 0 100% !important;
 }
 
-/* Ensure consistent spacing between buttons */
-.embeddedServiceLiveAgentStateChatMenuMessage .menuItem {
-	margin-bottom: 8px !important;
+/* Target the specific bot message buttons */
+.embeddedServiceSidebarDialogState a,
+.embeddedServiceLiveAgentStateChatItem a {
+	width: 100% !important;
+	display: block !important;
+	margin: 4px 0 !important;
 }
 
-.embeddedServiceLiveAgentStateChatMenuMessage .menuItem:last-child {
-	margin-bottom: 0 !important;
-}
-
-/* Apply to all screen sizes including desktop */
-@media screen and (min-width: 769px) {
-	.embeddedServiceLiveAgentStateChatMenuMessage .menuItem button,
-	.embeddedServiceLiveAgentStateChatMenuMessage button.uiButton {
-		width: 100% !important;
-		max-width: 100% !important;
-	}
+/* Remove any inline flex or grid that causes horizontal layout */
+.embeddedServiceSidebarDialogState p,
+.embeddedServiceLiveAgentStateChatItem p {
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: stretch !important;
 }
 
 
@@ -475,7 +464,7 @@
 <script type='text/javascript'>
 	// Function to get device type based on screen width
 	function getDeviceType() {
-		console.log('loading ↻↻↻↻↻↻↻↻↻');
+		console.log('FORCE CHAT MENU');
 		var screenWidth = window.innerWidth;
 		if (screenWidth <= 768) return 'mobile';
 		if (screenWidth <= 1024) return 'tablet';
