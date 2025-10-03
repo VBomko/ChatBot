@@ -497,88 +497,138 @@
 
 	/* ===== BUTTON HOVER STYLES - FORCE EXACT COLOR ===== */
 
-/* Remove any pseudo-elements or overlays */
-.embeddedServiceSidebarDialogState .messageContent button:hover::before,
-.embeddedServiceLiveAgentStateChatItem .messageContent button:hover::before,
-.embeddedServiceSidebarDialogState .uiButton:hover::before,
-.embeddedServiceLiveAgentStateChatItem .uiButton:hover::before,
-.embeddedServiceSidebarDialogState .slds-button:hover::before,
-.embeddedServiceLiveAgentStateChatItem .slds-button:hover::before,
-.embeddedServiceSidebarDialogState .messageContent button:hover::after,
-.embeddedServiceLiveAgentStateChatItem .messageContent button:hover::after,
-.embeddedServiceSidebarDialogState .uiButton:hover::after,
-.embeddedServiceLiveAgentStateChatItem .uiButton:hover::after,
-.embeddedServiceSidebarDialogState .slds-button:hover::after,
-.embeddedServiceLiveAgentStateChatItem .slds-button:hover::after {
-	display: none !important;
-	opacity: 0 !important;
-}
+	/* Remove any pseudo-elements or overlays */
+	.embeddedServiceSidebarDialogState .messageContent button:hover::before,
+	.embeddedServiceLiveAgentStateChatItem .messageContent button:hover::before,
+	.embeddedServiceSidebarDialogState .uiButton:hover::before,
+	.embeddedServiceLiveAgentStateChatItem .uiButton:hover::before,
+	.embeddedServiceSidebarDialogState .slds-button:hover::before,
+	.embeddedServiceLiveAgentStateChatItem .slds-button:hover::before,
+	.embeddedServiceSidebarDialogState .messageContent button:hover::after,
+	.embeddedServiceLiveAgentStateChatItem .messageContent button:hover::after,
+	.embeddedServiceSidebarDialogState .uiButton:hover::after,
+	.embeddedServiceLiveAgentStateChatItem .uiButton:hover::after,
+	.embeddedServiceSidebarDialogState .slds-button:hover::after,
+	.embeddedServiceLiveAgentStateChatItem .slds-button:hover::after {
+		display: none !important;
+		opacity: 0 !important;
+	}
+	
+	/* Hover state for all chat buttons - with exact color */
+	.embeddedServiceSidebarDialogState .messageContent button:hover,
+	.embeddedServiceLiveAgentStateChatItem .messageContent button:hover,
+	.embeddedServiceSidebarDialogState .uiButton:hover,
+	.embeddedServiceLiveAgentStateChatItem .uiButton:hover,
+	.embeddedServiceSidebarDialogState .slds-button:hover,
+	.embeddedServiceLiveAgentStateChatItem .slds-button:hover,
+	button.slds-button:hover {
+		background: rgb(228, 0, 70) !important;
+		background-color: rgb(228, 0, 70) !important;
+		color: white !important;
+		border-color: rgb(228, 0, 70) !important;
+		transition: all 0.2s ease !important;
+		opacity: 1 !important;
+		filter: none !important;
+	}
+	
+	/* Target nested span elements that might affect color */
+	.embeddedServiceSidebarDialogState .messageContent button:hover span,
+	.embeddedServiceLiveAgentStateChatItem .messageContent button:hover span,
+	.embeddedServiceSidebarDialogState .uiButton:hover span,
+	.embeddedServiceLiveAgentStateChatItem .uiButton:hover span,
+	.embeddedServiceSidebarDialogState .slds-button:hover span,
+	.embeddedServiceLiveAgentStateChatItem .slds-button:hover span {
+		color: white !important;
+		opacity: 1 !important;
+	}
+	
+	/* Focus state (for keyboard navigation) */
+	.embeddedServiceSidebarDialogState .messageContent button:focus,
+	.embeddedServiceLiveAgentStateChatItem .messageContent button:focus,
+	.embeddedServiceSidebarDialogState .uiButton:focus,
+	.embeddedServiceLiveAgentStateChatItem .uiButton:focus,
+	.embeddedServiceSidebarDialogState .slds-button:focus,
+	.embeddedServiceLiveAgentStateChatItem .slds-button:focus,
+	button.slds-button:focus {
+		background: rgb(228, 0, 70) !important;
+		background-color: rgb(228, 0, 70) !important;
+		color: white !important;
+		border-color: rgb(228, 0, 70) !important;
+		outline: none !important;
+		box-shadow: 0 0 0 2px rgba(228, 0, 70, 0.3) !important;
+		opacity: 1 !important;
+		filter: none !important;
+	}
+	
+	/* Active state (when clicking) */
+	.embeddedServiceSidebarDialogState .messageContent button:active,
+	.embeddedServiceLiveAgentStateChatItem .messageContent button:active,
+	.embeddedServiceSidebarDialogState .uiButton:active,
+	.embeddedServiceLiveAgentStateChatItem .uiButton:active,
+	.embeddedServiceSidebarDialogState .slds-button:active,
+	.embeddedServiceLiveAgentStateChatItem .slds-button:active,
+	button.slds-button:active {
+		background: rgb(228, 0, 70) !important;
+		background-color: rgb(228, 0, 70) !important;
+		transform: scale(0.98) !important;
+		opacity: 1 !important;
+		filter: none !important;
+	}
+	
+	
+	/* ===== RED BORDER FOR CHAT BUTTONS ===== */
+	
+	/* Normal state - red border */
+	.embeddedServiceSidebarDialogState .messageContent button,
+	.embeddedServiceLiveAgentStateChatItem .messageContent button,
+	.embeddedServiceSidebarDialogState .uiButton,
+	.embeddedServiceLiveAgentStateChatItem .uiButton,
+	.embeddedServiceSidebarDialogState .slds-button,
+	.embeddedServiceLiveAgentStateChatItem .slds-button,
+	button.slds-button {
+		border: 1px solid rgb(228, 0, 70) !important;
+		border-color: rgb(228, 0, 70) !important;
+	}
+	
+	/* Keep red border on hover */
+	.embeddedServiceSidebarDialogState .messageContent button:hover,
+	.embeddedServiceLiveAgentStateChatItem .messageContent button:hover,
+	.embeddedServiceSidebarDialogState .uiButton:hover,
+	.embeddedServiceLiveAgentStateChatItem .uiButton:hover,
+	.embeddedServiceSidebarDialogState .slds-button:hover,
+	.embeddedServiceLiveAgentStateChatItem .slds-button:hover,
+	button.slds-button:hover {
+		border: 1px solid rgb(228, 0, 70) !important;
+		border-color: rgb(228, 0, 70) !important;
+	}
+	
+	/* Keep red border on focus */
+	.embeddedServiceSidebarDialogState .messageContent button:focus,
+	.embeddedServiceLiveAgentStateChatItem .messageContent button:focus,
+	.embeddedServiceSidebarDialogState .uiButton:focus,
+	.embeddedServiceLiveAgentStateChatItem .uiButton:focus,
+	.embeddedServiceSidebarDialogState .slds-button:focus,
+	.embeddedServiceLiveAgentStateChatItem .slds-button:focus,
+	button.slds-button:focus {
+		border: 1px solid rgb(228, 0, 70) !important;
+		border-color: rgb(228, 0, 70) !important;
+	}
+	
+	/* Keep red border on active */
+	.embeddedServiceSidebarDialogState .messageContent button:active,
+	.embeddedServiceLiveAgentStateChatItem .messageContent button:active,
+	.embeddedServiceSidebarDialogState .uiButton:active,
+	.embeddedServiceLiveAgentStateChatItem .uiButton:active,
+	.embeddedServiceSidebarDialogState .slds-button:active,
+	.embeddedServiceLiveAgentStateChatItem .slds-button:active,
+	button.slds-button:active {
+		border: 1px solid rgb(228, 0, 70) !important;
+		border-color: rgb(228, 0, 70) !important;
+	}
 
-/* Hover state for all chat buttons - with exact color */
-.embeddedServiceSidebarDialogState .messageContent button:hover,
-.embeddedServiceLiveAgentStateChatItem .messageContent button:hover,
-.embeddedServiceSidebarDialogState .uiButton:hover,
-.embeddedServiceLiveAgentStateChatItem .uiButton:hover,
-.embeddedServiceSidebarDialogState .slds-button:hover,
-.embeddedServiceLiveAgentStateChatItem .slds-button:hover,
-button.slds-button:hover {
-	background: rgb(228, 0, 70) !important;
-	background-color: rgb(228, 0, 70) !important;
-	color: white !important;
-	border-color: rgb(228, 0, 70) !important;
-	transition: all 0.2s ease !important;
-	opacity: 1 !important;
-	filter: none !important;
-}
+	/* ===== FIX BUTTON HEIGHT TO MATCH CHAT MESSAGES ===== */
 
-/* Target nested span elements that might affect color */
-.embeddedServiceSidebarDialogState .messageContent button:hover span,
-.embeddedServiceLiveAgentStateChatItem .messageContent button:hover span,
-.embeddedServiceSidebarDialogState .uiButton:hover span,
-.embeddedServiceLiveAgentStateChatItem .uiButton:hover span,
-.embeddedServiceSidebarDialogState .slds-button:hover span,
-.embeddedServiceLiveAgentStateChatItem .slds-button:hover span {
-	color: white !important;
-	opacity: 1 !important;
-}
-
-/* Focus state (for keyboard navigation) */
-.embeddedServiceSidebarDialogState .messageContent button:focus,
-.embeddedServiceLiveAgentStateChatItem .messageContent button:focus,
-.embeddedServiceSidebarDialogState .uiButton:focus,
-.embeddedServiceLiveAgentStateChatItem .uiButton:focus,
-.embeddedServiceSidebarDialogState .slds-button:focus,
-.embeddedServiceLiveAgentStateChatItem .slds-button:focus,
-button.slds-button:focus {
-	background: rgb(228, 0, 70) !important;
-	background-color: rgb(228, 0, 70) !important;
-	color: white !important;
-	border-color: rgb(228, 0, 70) !important;
-	outline: none !important;
-	box-shadow: 0 0 0 2px rgba(228, 0, 70, 0.3) !important;
-	opacity: 1 !important;
-	filter: none !important;
-}
-
-/* Active state (when clicking) */
-.embeddedServiceSidebarDialogState .messageContent button:active,
-.embeddedServiceLiveAgentStateChatItem .messageContent button:active,
-.embeddedServiceSidebarDialogState .uiButton:active,
-.embeddedServiceLiveAgentStateChatItem .uiButton:active,
-.embeddedServiceSidebarDialogState .slds-button:active,
-.embeddedServiceLiveAgentStateChatItem .slds-button:active,
-button.slds-button:active {
-	background: rgb(228, 0, 70) !important;
-	background-color: rgb(228, 0, 70) !important;
-	transform: scale(0.98) !important;
-	opacity: 1 !important;
-	filter: none !important;
-}
-
-
-/* ===== RED BORDER FOR CHAT BUTTONS ===== */
-
-/* Normal state - red border */
+/* Match button height to chat message height */
 .embeddedServiceSidebarDialogState .messageContent button,
 .embeddedServiceLiveAgentStateChatItem .messageContent button,
 .embeddedServiceSidebarDialogState .uiButton,
@@ -586,44 +636,25 @@ button.slds-button:active {
 .embeddedServiceSidebarDialogState .slds-button,
 .embeddedServiceLiveAgentStateChatItem .slds-button,
 button.slds-button {
-	border: 1px solid rgb(228, 0, 70) !important;
-	border-color: rgb(228, 0, 70) !important;
+	min-height: 40px !important;
+	max-height: 40px !important;
+	height: 40px !important;
+	line-height: 1.4 !important;
+	padding: 8px 24px !important;
+	vertical-align: middle !important;
 }
 
-/* Keep red border on hover */
-.embeddedServiceSidebarDialogState .messageContent button:hover,
-.embeddedServiceLiveAgentStateChatItem .messageContent button:hover,
-.embeddedServiceSidebarDialogState .uiButton:hover,
-.embeddedServiceLiveAgentStateChatItem .uiButton:hover,
-.embeddedServiceSidebarDialogState .slds-button:hover,
-.embeddedServiceLiveAgentStateChatItem .slds-button:hover,
-button.slds-button:hover {
-	border: 1px solid rgb(228, 0, 70) !important;
-	border-color: rgb(228, 0, 70) !important;
-}
-
-/* Keep red border on focus */
-.embeddedServiceSidebarDialogState .messageContent button:focus,
-.embeddedServiceLiveAgentStateChatItem .messageContent button:focus,
-.embeddedServiceSidebarDialogState .uiButton:focus,
-.embeddedServiceLiveAgentStateChatItem .uiButton:focus,
-.embeddedServiceSidebarDialogState .slds-button:focus,
-.embeddedServiceLiveAgentStateChatItem .slds-button:focus,
-button.slds-button:focus {
-	border: 1px solid rgb(228, 0, 70) !important;
-	border-color: rgb(228, 0, 70) !important;
-}
-
-/* Keep red border on active */
-.embeddedServiceSidebarDialogState .messageContent button:active,
-.embeddedServiceLiveAgentStateChatItem .messageContent button:active,
-.embeddedServiceSidebarDialogState .uiButton:active,
-.embeddedServiceLiveAgentStateChatItem .uiButton:active,
-.embeddedServiceSidebarDialogState .slds-button:active,
-.embeddedServiceLiveAgentStateChatItem .slds-button:active,
-button.slds-button:active {
-	border: 1px solid rgb(228, 0, 70) !important;
-	border-color: rgb(228, 0, 70) !important;
+/* Mobile - slightly smaller height */
+@media screen and (max-width: 768px) {
+	.embeddedServiceSidebarDialogState .messageContent button,
+	.embeddedServiceLiveAgentStateChatItem .messageContent button,
+	.embeddedServiceSidebarDialogState .uiButton,
+	.embeddedServiceLiveAgentStateChatItem .uiButton {
+		min-height: 36px !important;
+		max-height: 36px !important;
+		height: 36px !important;
+		padding: 6px 16px !important;
+	}
 }
 
 
@@ -633,7 +664,7 @@ button.slds-button:active {
 <script type='text/javascript'>
 	// Function to get device type based on screen width
 	function getDeviceType() {
-		console.log('RED BORDER FOR CHAT BUTTONS 1px');
+		console.log('FIX BUTTON HEIGHT TO MATCH CHAT MESSAGES');
 		var screenWidth = window.innerWidth;
 		if (screenWidth <= 768) return 'mobile';
 		if (screenWidth <= 1024) return 'tablet';
