@@ -380,7 +380,9 @@
 		bottom: 10px !important;
 		left: 0 !important;
 		right: 0 !important;
-		padding: 0 10px !important;
+		width: 100% !important;
+		padding: 0 !important;
+		margin: 0 !important;
 		z-index: 1000 !important;
 		display: flex !important;
 		justify-content: center !important;
@@ -672,6 +674,18 @@ button.slds-button {
 	}
 }
 
+/* ===== HIDE FOOTER MENU WRAPPER ===== */
+
+/* Hide the footer menu wrapper completely */
+div.footerMenuWrapper,
+.footerMenuWrapper,
+.embeddedServiceSidebar .footerMenuWrapper,
+.embeddedServiceSidebar div.footerMenuWrapper {
+	display: none !important;
+	visibility: hidden !important;
+}
+	
+
 
 </style>
 
@@ -679,7 +693,7 @@ button.slds-button {
 <script type='text/javascript'>
 	// Function to get device type based on screen width
 	function getDeviceType() {
-		console.log('restart-button-container');
+		console.log('HIDE FOOTER MENU WRAPPER');
 		var screenWidth = window.innerWidth;
 		if (screenWidth <= 768) return 'mobile';
 		if (screenWidth <= 1024) return 'tablet';
