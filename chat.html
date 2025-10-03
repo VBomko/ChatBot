@@ -413,85 +413,129 @@
 	}
 
 
-/* ===== CHAT MENU BUTTONS - RESPONSIVE WIDTH & RIGHT ALIGNED ===== */
-
-/* Force the entire message container to align right */
-.embeddedServiceSidebarDialogState .messageContent,
-.embeddedServiceLiveAgentStateChatItem .messageContent,
-.embeddedServiceSidebarDialogState .uiOutputRichText,
-.embeddedServiceLiveAgentStateChatItem .uiOutputRichText,
-.embeddedServiceLiveAgentStateChatItem.agent .messageContent {
-	display: flex !important;
-	flex-direction: column !important;
-	align-items: flex-end !important;
-	justify-content: flex-end !important;
-	width: 100% !important;
-	text-align: right !important;
-}
-
-/* Target the paragraph/div wrappers */
-.embeddedServiceSidebarDialogState .messageContent p,
-.embeddedServiceLiveAgentStateChatItem .messageContent p,
-.embeddedServiceSidebarDialogState .messageContent div,
-.embeddedServiceLiveAgentStateChatItem .messageContent div {
-	display: flex !important;
-	flex-direction: column !important;
-	align-items: flex-end !important;
-	width: 100% !important;
-	margin-left: auto !important;
-	margin-right: 0 !important;
-}
-
-/* Buttons with auto width based on content - aligned right */
-.embeddedServiceSidebarDialogState .messageContent button,
-.embeddedServiceLiveAgentStateChatItem .messageContent button,
-.embeddedServiceSidebarDialogState .uiButton,
-.embeddedServiceLiveAgentStateChatItem .uiButton,
-.embeddedServiceSidebarDialogState .slds-button,
-.embeddedServiceLiveAgentStateChatItem .slds-button,
-button.slds-button {
-	width: auto !important;
-	max-width: 90% !important;
-	min-width: 120px !important;
-	display: inline-block !important;
-	margin: 4px 0 4px auto !important;
-	padding: 8px 24px !important;
-	box-sizing: border-box !important;
-	text-align: center !important;
-	white-space: nowrap !important;
-	float: right !important;
-	clear: both !important;
-}
-
-/* Links should also align right */
-.embeddedServiceSidebarDialogState a,
-.embeddedServiceLiveAgentStateChatItem a {
-	display: inline-block !important;
-	margin: 4px 0 4px auto !important;
-	width: auto !important;
-	max-width: 90% !important;
-	float: right !important;
-	clear: both !important;
-}
-
-/* Clear floats after button groups */
-.embeddedServiceSidebarDialogState .messageContent:after,
-.embeddedServiceLiveAgentStateChatItem .messageContent:after {
-	content: "" !important;
-	display: table !important;
-	clear: both !important;
-}
-
-/* Mobile responsive - smaller padding */
-@media screen and (max-width: 768px) {
+	/* ===== CHAT MENU BUTTONS - RESPONSIVE WIDTH & RIGHT ALIGNED ===== */
+	
+	/* Force the entire message container to align right */
+	.embeddedServiceSidebarDialogState .messageContent,
+	.embeddedServiceLiveAgentStateChatItem .messageContent,
+	.embeddedServiceSidebarDialogState .uiOutputRichText,
+	.embeddedServiceLiveAgentStateChatItem .uiOutputRichText,
+	.embeddedServiceLiveAgentStateChatItem.agent .messageContent {
+		display: flex !important;
+		flex-direction: column !important;
+		align-items: flex-end !important;
+		justify-content: flex-end !important;
+		width: 100% !important;
+		text-align: right !important;
+	}
+	
+	/* Target the paragraph/div wrappers */
+	.embeddedServiceSidebarDialogState .messageContent p,
+	.embeddedServiceLiveAgentStateChatItem .messageContent p,
+	.embeddedServiceSidebarDialogState .messageContent div,
+	.embeddedServiceLiveAgentStateChatItem .messageContent div {
+		display: flex !important;
+		flex-direction: column !important;
+		align-items: flex-end !important;
+		width: 100% !important;
+		margin-left: auto !important;
+		margin-right: 0 !important;
+	}
+	
+	/* Buttons with auto width based on content - aligned right */
 	.embeddedServiceSidebarDialogState .messageContent button,
 	.embeddedServiceLiveAgentStateChatItem .messageContent button,
 	.embeddedServiceSidebarDialogState .uiButton,
-	.embeddedServiceLiveAgentStateChatItem .uiButton {
-		padding: 6px 16px !important;
-		min-width: 100px !important;
-		font-size: 14px !important;
+	.embeddedServiceLiveAgentStateChatItem .uiButton,
+	.embeddedServiceSidebarDialogState .slds-button,
+	.embeddedServiceLiveAgentStateChatItem .slds-button,
+	button.slds-button {
+		width: auto !important;
+		max-width: 90% !important;
+		min-width: 120px !important;
+		display: inline-block !important;
+		margin: 4px 0 4px auto !important;
+		padding: 8px 24px !important;
+		box-sizing: border-box !important;
+		text-align: center !important;
+		white-space: nowrap !important;
+		float: right !important;
+		clear: both !important;
 	}
+	
+	/* Links should also align right */
+	.embeddedServiceSidebarDialogState a,
+	.embeddedServiceLiveAgentStateChatItem a {
+		display: inline-block !important;
+		margin: 4px 0 4px auto !important;
+		width: auto !important;
+		max-width: 90% !important;
+		float: right !important;
+		clear: both !important;
+	}
+	
+	/* Clear floats after button groups */
+	.embeddedServiceSidebarDialogState .messageContent:after,
+	.embeddedServiceLiveAgentStateChatItem .messageContent:after {
+		content: "" !important;
+		display: table !important;
+		clear: both !important;
+	}
+	
+	/* Mobile responsive - smaller padding */
+	@media screen and (max-width: 768px) {
+		.embeddedServiceSidebarDialogState .messageContent button,
+		.embeddedServiceLiveAgentStateChatItem .messageContent button,
+		.embeddedServiceSidebarDialogState .uiButton,
+		.embeddedServiceLiveAgentStateChatItem .uiButton {
+			padding: 6px 16px !important;
+			min-width: 100px !important;
+			font-size: 14px !important;
+		}
+	}
+
+
+	/* ===== BUTTON HOVER STYLES ===== */
+
+/* Hover state for all chat buttons */
+.embeddedServiceSidebarDialogState .messageContent button:hover,
+.embeddedServiceLiveAgentStateChatItem .messageContent button:hover,
+.embeddedServiceSidebarDialogState .uiButton:hover,
+.embeddedServiceLiveAgentStateChatItem .uiButton:hover,
+.embeddedServiceSidebarDialogState .slds-button:hover,
+.embeddedServiceLiveAgentStateChatItem .slds-button:hover,
+button.slds-button:hover {
+	background-color: rgb(228, 0, 70) !important;
+	color: white !important;
+	border-color: rgb(228, 0, 70) !important;
+	transition: all 0.2s ease !important;
+}
+
+/* Focus state (for keyboard navigation) */
+.embeddedServiceSidebarDialogState .messageContent button:focus,
+.embeddedServiceLiveAgentStateChatItem .messageContent button:focus,
+.embeddedServiceSidebarDialogState .uiButton:focus,
+.embeddedServiceLiveAgentStateChatItem .uiButton:focus,
+.embeddedServiceSidebarDialogState .slds-button:focus,
+.embeddedServiceLiveAgentStateChatItem .slds-button:focus,
+button.slds-button:focus {
+	background-color: rgb(228, 0, 70) !important;
+	color: white !important;
+	border-color: rgb(228, 0, 70) !important;
+	outline: none !important;
+	box-shadow: 0 0 0 2px rgba(228, 0, 70, 0.3) !important;
+}
+
+/* Active state (when clicking) */
+.embeddedServiceSidebarDialogState .messageContent button:active,
+.embeddedServiceLiveAgentStateChatItem .messageContent button:active,
+.embeddedServiceSidebarDialogState .uiButton:active,
+.embeddedServiceLiveAgentStateChatItem .uiButton:active,
+.embeddedServiceSidebarDialogState .slds-button:active,
+.embeddedServiceLiveAgentStateChatItem .slds-button:active,
+button.slds-button:active {
+	background-color: rgb(200, 0, 60) !important;
+	transform: scale(0.98) !important;
 }
 
 
@@ -501,7 +545,7 @@ button.slds-button {
 <script type='text/javascript'>
 	// Function to get device type based on screen width
 	function getDeviceType() {
-		console.log('CHAT MENU BUTTONS - RESPONSIVE WIDTH & RIGHT ALIGNED');
+		console.log('BUTTON HOVER STYLES');
 		var screenWidth = window.innerWidth;
 		if (screenWidth <= 768) return 'mobile';
 		if (screenWidth <= 1024) return 'tablet';
