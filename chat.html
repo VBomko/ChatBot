@@ -509,9 +509,13 @@
 	            
 	            buttonContainer.appendChild(restartButton);
 	            footer.appendChild(buttonContainer);
+	            console.log('Restart button added successfully');
+	        } else if (footer) {
+	            console.log('Restart button already exists');
 	        }
 	    }, 500);
 	}
+
 
 	
 	// Function to set widget dimensions based on device type
@@ -674,6 +678,24 @@
 		// Add orientation change listener for mobile devices
 		window.addEventListener('orientationchange', function() {
 			setTimeout(handleResize, 100); // Small delay to let orientation change complete
+		});
+
+				// ADD THIS NEW EVENT HANDLER - fires when chat window is maximized (including resumed chats)
+		embedded_svc.addEventHandler("afterMaximize", function(data) {
+			console.log('Chat maximized - adding restart button if needed');
+			addRestartButton();
+			// Also show the input if chat is active
+			setTimeout(function() {
+				var chasitorText = document.querySelector('.chasitorText');
+				if (chasitorText) {
+					chasitorText.style.display = "block";
+				}
+			}, 300);
+		});
+
+		// ADD THIS NEW EVENT HANDLER - fires when chat is minimized
+		embedded_svc.addEventHandler("afterMinimize", function(data) {
+			console.log('Chat minimized');
 		});
 
 		embedded_svc.addEventHandler("onHelpButtonClick", function(data) {
