@@ -415,51 +415,71 @@
 
 /* ===== CHAT MENU BUTTONS - RESPONSIVE WIDTH & RIGHT ALIGNED ===== */
 
-/* Container should align items to the right */
+/* Force the entire message container to align right */
 .embeddedServiceSidebarDialogState .messageContent,
 .embeddedServiceLiveAgentStateChatItem .messageContent,
 .embeddedServiceSidebarDialogState .uiOutputRichText,
-.embeddedServiceLiveAgentStateChatItem .uiOutputRichText {
+.embeddedServiceLiveAgentStateChatItem .uiOutputRichText,
+.embeddedServiceLiveAgentStateChatItem.agent .messageContent {
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: flex-end !important;
+	justify-content: flex-end !important;
+	width: 100% !important;
+	text-align: right !important;
+}
+
+/* Target the paragraph/div wrappers */
+.embeddedServiceSidebarDialogState .messageContent p,
+.embeddedServiceLiveAgentStateChatItem .messageContent p,
+.embeddedServiceSidebarDialogState .messageContent div,
+.embeddedServiceLiveAgentStateChatItem .messageContent div {
 	display: flex !important;
 	flex-direction: column !important;
 	align-items: flex-end !important;
 	width: 100% !important;
+	margin-left: auto !important;
+	margin-right: 0 !important;
 }
 
-/* Buttons with auto width based on content */
+/* Buttons with auto width based on content - aligned right */
 .embeddedServiceSidebarDialogState .messageContent button,
 .embeddedServiceLiveAgentStateChatItem .messageContent button,
 .embeddedServiceSidebarDialogState .uiButton,
 .embeddedServiceLiveAgentStateChatItem .uiButton,
 .embeddedServiceSidebarDialogState .slds-button,
-.embeddedServiceLiveAgentStateChatItem .slds-button {
+.embeddedServiceLiveAgentStateChatItem .slds-button,
+button.slds-button {
 	width: auto !important;
 	max-width: 90% !important;
 	min-width: 120px !important;
 	display: inline-block !important;
-	margin: 4px 0 !important;
+	margin: 4px 0 4px auto !important;
 	padding: 8px 24px !important;
 	box-sizing: border-box !important;
 	text-align: center !important;
 	white-space: nowrap !important;
+	float: right !important;
+	clear: both !important;
 }
 
 /* Links should also align right */
 .embeddedServiceSidebarDialogState a,
 .embeddedServiceLiveAgentStateChatItem a {
 	display: inline-block !important;
-	margin: 4px 0 !important;
+	margin: 4px 0 4px auto !important;
 	width: auto !important;
 	max-width: 90% !important;
+	float: right !important;
+	clear: both !important;
 }
 
-/* Paragraph containers should align content to right */
-.embeddedServiceSidebarDialogState p,
-.embeddedServiceLiveAgentStateChatItem p {
-	display: flex !important;
-	flex-direction: column !important;
-	align-items: flex-end !important;
-	text-align: right !important;
+/* Clear floats after button groups */
+.embeddedServiceSidebarDialogState .messageContent:after,
+.embeddedServiceLiveAgentStateChatItem .messageContent:after {
+	content: "" !important;
+	display: table !important;
+	clear: both !important;
 }
 
 /* Mobile responsive - smaller padding */
@@ -481,7 +501,7 @@
 <script type='text/javascript'>
 	// Function to get device type based on screen width
 	function getDeviceType() {
-		console.log('CHAT MENU BUTTONS');
+		console.log('CHAT MENU BUTTONS - RESPONSIVE WIDTH & RIGHT ALIGNED');
 		var screenWidth = window.innerWidth;
 		if (screenWidth <= 768) return 'mobile';
 		if (screenWidth <= 1024) return 'tablet';
