@@ -443,6 +443,108 @@
 	svg.slds-icon path {
 		fill: white !important;
 	}
+
+
+
+		/* ===== QUICK REPLY BUTTONS - COLUMN LAYOUT ALIGNED RIGHT ===== */
+	/* Container for quick reply buttons */
+	.embeddedServiceLiveAgentStateChatItem .quickReplyOptions,
+	.embeddedServiceLiveAgentStateChatItem .choiceList,
+	.embeddedServiceLiveAgentStateChatItem .optionsList,
+	ul.quickReplyOptions,
+	ul.choiceList,
+	ul.optionsList,
+	.messagearea .quickReplyOptions,
+	.messagearea .choiceList {
+		display: flex !important;
+		flex-direction: column !important;
+		align-items: flex-end !important;
+		justify-content: flex-start !important;
+		gap: 8px !important;
+		padding: 8px 0 !important;
+		margin: 0 !important;
+		width: 100% !important;
+		list-style: none !important;
+	}
+
+	/* Individual button styling */
+	.embeddedServiceLiveAgentStateChatQuickReplyButton,
+	.embeddedServiceLiveAgentStateChatItem .choiceListOption,
+	.embeddedServiceLiveAgentStateChatItem button,
+	.quickReplyOptions li,
+	.choiceList li,
+	.optionsList li button,
+	.messagearea button.quickReply {
+		display: block !important;
+		width: auto !important;
+		max-width: 100% !important;
+		min-width: 200px !important;
+		margin: 0 !important;
+		text-align: right !important;
+		padding: 10px 16px !important;
+		border-radius: 8px !important;
+		background-color: #E91E63 !important;
+		color: white !important;
+		border: none !important;
+		cursor: pointer !important;
+		font-size: 14px !important;
+		font-weight: 500 !important;
+		transition: all 0.2s ease !important;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+		white-space: normal !important;
+		word-wrap: break-word !important;
+	}
+
+	/* Button hover state */
+	.embeddedServiceLiveAgentStateChatQuickReplyButton:hover,
+	.embeddedServiceLiveAgentStateChatItem .choiceListOption:hover,
+	.embeddedServiceLiveAgentStateChatItem button:hover,
+	.quickReplyOptions li:hover,
+	.choiceList li:hover,
+	.optionsList li button:hover,
+	.messagearea button.quickReply:hover {
+		background-color:  rgb(228, 0, 70) !important;
+		transform: translateX(-4px) !important;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+	}
+
+	/* Button active state */
+	.embeddedServiceLiveAgentStateChatQuickReplyButton:active,
+	.embeddedServiceLiveAgentStateChatItem .choiceListOption:active,
+	.embeddedServiceLiveAgentStateChatItem button:active,
+	.quickReplyOptions li:active,
+	.choiceList li:active,
+	.optionsList li button:active,
+	.messagearea button.quickReply:active {
+		transform: translateX(-2px) scale(0.98) !important;
+	}
+
+	/* Ensure list items have no default styling */
+	.quickReplyOptions li,
+	.choiceList li,
+	.optionsList li {
+		list-style: none !important;
+		margin: 0 !important;
+		padding: 0 !important;
+		width: 100% !important;
+		display: flex !important;
+		justify-content: flex-end !important;
+	}
+
+	/* Mobile responsive */
+	@media screen and (max-width: 768px) {
+		.embeddedServiceLiveAgentStateChatQuickReplyButton,
+		.embeddedServiceLiveAgentStateChatItem .choiceListOption,
+		.embeddedServiceLiveAgentStateChatItem button,
+		.quickReplyOptions li,
+		.choiceList li,
+		.optionsList li button,
+		.messagearea button.quickReply {
+			min-width: 150px !important;
+			font-size: 13px !important;
+			padding: 8px 12px !important;
+		}
+	}
 </style>
 
 <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
