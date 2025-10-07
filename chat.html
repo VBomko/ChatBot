@@ -1,4 +1,9 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Megaport Chat Support</title>
 <style type='text/css'>
 	/* ===== INITIAL HELP BUTTON STYLES ===== */
 	.embeddedServiceHelpButton .helpButton .uiButton { 
@@ -685,18 +690,240 @@ div.footerMenuWrapper,
 	visibility: hidden !important;
 }
 
+/* ===== ALIGN AGENT MESSAGES TO THE LEFT ===== */
+
+/* Override right alignment for agent messages only */
+.chat-content.agent,
+div.chat-content.agent,
+.embeddedServiceLiveAgentStateChatItem.agent .chat-content,
+.embeddedServiceLiveAgentStateChatItem.agent .messageContent {
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: flex-start !important;
+	justify-content: flex-start !important;
+	text-align: left !important;
+}
+
+/* Align agent message paragraphs and divs to the left */
+.chat-content.agent p,
+.chat-content.agent div,
+.embeddedServiceLiveAgentStateChatItem.agent .chat-content p,
+.embeddedServiceLiveAgentStateChatItem.agent .chat-content div,
+.embeddedServiceLiveAgentStateChatItem.agent .messageContent p,
+.embeddedServiceLiveAgentStateChatItem.agent .messageContent div {
+	align-items: flex-start !important;
+	text-align: left !important;
+	margin-left: 0 !important;
+	margin-right: auto !important;
+}
+
+/* Fix links in agent messages - override the right-aligned link styles */
+.chat-content.agent a,
+.embeddedServiceLiveAgentStateChatItem.agent .chat-content a,
+.embeddedServiceLiveAgentStateChatItem.agent .messageContent a,
+.embeddedServiceLiveAgentStateChatItem.agent a {
+	display: inline !important;
+	float: none !important;
+	margin: 0 !important;
+	width: auto !important;
+	max-width: none !important;
+	text-align: left !important;
+	clear: none !important;
+	word-break: break-word !important;
+	overflow-wrap: break-word !important;
+}
+
+/* ===== CENTER BUTTONS IN DIALOG BUTTON CONTAINER ===== */
+
+.dialogButtonContainer,
+div.dialogButtonContainer,
+.embeddedServiceSidebar .dialogButtonContainer {
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: center !important;
+	justify-content: center !important;
+	text-align: center !important;
+	width: 100% !important;
+}
+
+.dialogButtonContainer button,
+div.dialogButtonContainer button,
+.embeddedServiceSidebar .dialogButtonContainer button {
+	margin-left: auto !important;
+	margin-right: auto !important;
+	float: none !important;
+}
+
+/* ===== DIALOG BUTTON COLOR OVERRIDE ===== */
+
+/* Target dialog buttons - black text by default */
+.dialogButton.dialog-button-0.uiButton.embeddedServiceSidebarButton,
+button.dialogButton.dialog-button-0.uiButton.embeddedServiceSidebarButton {
+	color: black !important;
+    background-color: white !important;
+    border: 1px solid rgb(228, 0, 70) !important;
+    border-color: rgb(228, 0, 70) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+}
+
+.dialogButton.dialog-button-0.uiButton.embeddedServiceSidebarButton span,
+button.dialogButton.dialog-button-0.uiButton.embeddedServiceSidebarButton span {
+	color: black !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+/* White text on hover */
+.dialogButton.dialog-button-0.uiButton.embeddedServiceSidebarButton:hover,
+button.dialogButton.dialog-button-0.uiButton.embeddedServiceSidebarButton:hover {
+	color: white !important;
+    background-color: rgb(228, 0, 70) !important;
+    border: 1px solid rgb(228, 0, 70) !important;
+    border-color: rgb(228, 0, 70) !important;
+}
+
+.dialogButton.dialog-button-0.uiButton.embeddedServiceSidebarButton:hover span,
+button.dialogButton.dialog-button-0.uiButton.embeddedServiceSidebarButton:hover span {
+	color: white !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+/* ===== END CHAT / SAVE TRANSCRIPT BUTTON COLOR OVERRIDE ===== */
+
+/* Target end chat and save transcript buttons - black text and white background by default */
+.endChatButton.saveTranscriptButton.uiButton--inverse.uiButton.embeddedServiceSidebarButton,
+button.endChatButton.saveTranscriptButton.uiButton--inverse.uiButton.embeddedServiceSidebarButton {
+	color: black !important;
+    background-color: white !important;
+    border: 1px solid rgb(228, 0, 70) !important;
+    border-color: rgb(228, 0, 70) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+}
+
+.endChatButton.saveTranscriptButton.uiButton--inverse.uiButton.embeddedServiceSidebarButton span,
+button.endChatButton.saveTranscriptButton.uiButton--inverse.uiButton.embeddedServiceSidebarButton span {
+	color: black !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+/* White text and pink background on hover */
+.endChatButton.saveTranscriptButton.uiButton--inverse.uiButton.embeddedServiceSidebarButton:hover,
+button.endChatButton.saveTranscriptButton.uiButton--inverse.uiButton.embeddedServiceSidebarButton:hover {
+	color: white !important;
+    background-color: rgb(228, 0, 70) !important;
+    border: 1px solid rgb(228, 0, 70) !important;
+    border-color: rgb(228, 0, 70) !important;
+}
+
+.endChatButton.saveTranscriptButton.uiButton--inverse.uiButton.embeddedServiceSidebarButton:hover span,
+button.endChatButton.saveTranscriptButton.uiButton--inverse.uiButton.embeddedServiceSidebarButton:hover span {
+	color: white !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+/* ===== CLOSE CHAT BUTTON COLOR OVERRIDE ===== */
+
+/* Target close chat button - black text and white background by default */
+.endChatButton.closeChatButton.uiButton--default.uiButton.embeddedServiceSidebarButton,
+button.endChatButton.closeChatButton.uiButton--default.uiButton.embeddedServiceSidebarButton {
+	color: black !important;
+    background-color: white !important;
+    border: 1px solid rgb(228, 0, 70) !important;
+    border-color: rgb(228, 0, 70) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+}
+
+.endChatButton.closeChatButton.uiButton--default.uiButton.embeddedServiceSidebarButton span,
+button.endChatButton.closeChatButton.uiButton--default.uiButton.embeddedServiceSidebarButton span {
+	color: black !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+/* White text and pink background on hover */
+.endChatButton.closeChatButton.uiButton--default.uiButton.embeddedServiceSidebarButton:hover,
+button.endChatButton.closeChatButton.uiButton--default.uiButton.embeddedServiceSidebarButton:hover {
+	color: white !important;
+    background-color: rgb(228, 0, 70) !important;
+    border: 1px solid rgb(228, 0, 70) !important;
+    border-color: rgb(228, 0, 70) !important;
+}
+
+.endChatButton.closeChatButton.uiButton--default.uiButton.embeddedServiceSidebarButton:hover span,
+button.endChatButton.closeChatButton.uiButton--default.uiButton.embeddedServiceSidebarButton:hover span {
+	color: white !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+/* ===== ADJUST SPAN TAGS TO FILL FULL BUTTON WIDTH AND HEIGHT ===== */
+
+/* Make span tags fill the full button area for all dialog/end chat buttons */
+.dialogButton.dialog-button-0.uiButton.embeddedServiceSidebarButton span,
+button.dialogButton.dialog-button-0.uiButton.embeddedServiceSidebarButton span,
+.endChatButton.saveTranscriptButton.uiButton--inverse.uiButton.embeddedServiceSidebarButton span,
+button.endChatButton.saveTranscriptButton.uiButton--inverse.uiButton.embeddedServiceSidebarButton span,
+.endChatButton.closeChatButton.uiButton--default.uiButton.embeddedServiceSidebarButton span,
+button.endChatButton.closeChatButton.uiButton--default.uiButton.embeddedServiceSidebarButton span {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	width: 100% !important;
+	height: 100% !important;
+	padding: inherit !important;
+	line-height: inherit !important;
+	box-sizing: border-box !important;
+	text-align: center !important;
+}
+
+/* ===== ADD VERTICAL SPACING IN END CHAT CONTAINER ===== */
+
+/* Add vertical spacing between buttons in end chat container */
+.endChatContainer,
+div.endChatContainer {
+	display: flex !important;
+	flex-direction: column !important;
+	gap: 10px !important;
+	padding: 16px !important;
+}
+
+/* Add margin between buttons as fallback for browsers that don't support gap */
+.endChatContainer button,
+div.endChatContainer button {
+	margin-bottom: 12px !important;
+}
+
+.endChatContainer button:last-child,
+div.endChatContainer button:last-child {
+	margin-bottom: 0 !important;
+}
 
 
-	
+ 
+
 
 
 </style>
+</head>
+<body>
 
 <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
 <script type='text/javascript'>
 	// Function to get device type based on screen width
 	function getDeviceType() {
-		console.log('BOT/AGENT MESSAGES ');
+		console.log('style changes applied');
 		var screenWidth = window.innerWidth;
 		if (screenWidth <= 768) return 'mobile';
 		if (screenWidth <= 1024) return 'tablet';
@@ -1046,4 +1273,6 @@ div.footerMenuWrapper,
 		initESW('https://service.force.com');
 	}
 </script>
+
+</body>
 </html>
