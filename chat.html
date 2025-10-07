@@ -688,14 +688,10 @@ div.footerMenuWrapper,
 /* ===== ALIGN AGENT MESSAGES TO THE LEFT ===== */
 
 /* Override right alignment for agent messages only */
-.chat-content.agent,
+chat-content.agent,
 div.chat-content.agent,
 .embeddedServiceLiveAgentStateChatItem.agent .chat-content,
 .embeddedServiceLiveAgentStateChatItem.agent .messageContent {
-	display: flex !important;
-	flex-direction: column !important;
-	align-items: flex-start !important;
-	justify-content: flex-start !important;
 	text-align: left !important;
 }
 
@@ -727,7 +723,6 @@ div.chat-content.agent,
 	word-break: break-word !important;
 	overflow-wrap: break-word !important;
 }
-
 /* ===== CENTER BUTTONS IN DIALOG BUTTON CONTAINER ===== */
 
 .dialogButtonContainer,
@@ -905,18 +900,14 @@ div.endChatContainer button:last-child {
 	margin-bottom: 0 !important;
 }
 
-
- 
-
-
-
 </style>
 
+	
 <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
 <script type='text/javascript'>
 	// Function to get device type based on screen width
 	function getDeviceType() {
-		console.log('style changes applied v2');
+		console.log('style changes applied');
 		var screenWidth = window.innerWidth;
 		if (screenWidth <= 768) return 'mobile';
 		if (screenWidth <= 1024) return 'tablet';
@@ -981,6 +972,47 @@ div.endChatContainer button:last-child {
 	            console.log('Restart button already exists');
 	        }
 	    }, 500);
+	}
+
+	// Track if observer is already set up
+	var footerObserverActive = false;
+
+	// Function to set up MutationObserver for chat footer
+	function setupFooterObserver() {
+	    // Prevent duplicate observers
+	    if (footerObserverActive) {
+	        console.log('Footer observer already active');
+	        return;
+	    }
+	    
+	    var observer = new MutationObserver(function(mutations) {
+	        // Check if footer exists and restart button doesn't
+	        var footer = document.querySelector('.chasitorControls');
+	        var restartButtonExists = document.querySelector('.restart-button-container');
+	        var endChatDialog = document.querySelector('.dialogState');
+	        
+	        // If footer exists, button doesn't exist, and end chat dialog is not visible
+	        if (footer && !restartButtonExists && !endChatDialog) {
+	            console.log('Footer found without restart button - adding it now');
+	            addRestartButton();
+	        }
+	    });
+	    
+	    // Start observing the entire chat sidebar for changes
+	    var chatSidebar = document.querySelector('.embeddedServiceSidebar');
+	    if (chatSidebar) {
+	        observer.observe(chatSidebar, {
+	            childList: true,
+	            subtree: true,
+	            attributes: true,
+	            attributeFilter: ['class', 'style']
+	        });
+	        footerObserverActive = true;
+	        console.log('Footer observer setup complete');
+	    } else {
+	        // If sidebar doesn't exist yet, try again after a delay
+	        setTimeout(setupFooterObserver, 500);
+	    }
 	}
 
 
@@ -1151,6 +1183,7 @@ div.endChatContainer button:last-child {
 		embedded_svc.addEventHandler("afterMaximize", function(data) {
 			console.log('Chat maximized - adding restart button if needed');
 			addRestartButton();
+			setupFooterObserver(); // Ensure observer is running
 			// Also show the input if chat is active
 			setTimeout(function() {
 				var chasitorText = document.querySelector('.chasitorText');
@@ -1183,6 +1216,7 @@ div.endChatContainer button:last-child {
 		    	applyCSSChanges(getDeviceType());
 		    }, 100);
 			addRestartButton();
+			setupFooterObserver(); // Set up observer to monitor footer changes
 		});
 		
 		embedded_svc.addEventHandler("onChatEnded", function(data) {
@@ -1199,6 +1233,7 @@ div.endChatContainer button:last-child {
 			setTimeout(function() {
 				applyCSSChanges(getDeviceType());
 				addRestartButton();
+				setupFooterObserver(); // Set up observer to monitor footer changes
 			}, 100);
 		});
 
