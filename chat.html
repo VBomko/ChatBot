@@ -422,8 +422,6 @@
 	/* Force the entire message container to align right */
 	.embeddedServiceSidebarDialogState .messageContent,
 	.embeddedServiceLiveAgentStateChatItem .messageContent,
-	.embeddedServiceSidebarDialogState .uiOutputRichText,
-	.embeddedServiceLiveAgentStateChatItem .uiOutputRichText,
 	.embeddedServiceLiveAgentStateChatItem.agent .messageContent {
 		display: flex !important;
 		flex-direction: column !important;
@@ -900,6 +898,11 @@ div.endChatContainer button:last-child {
 	margin-bottom: 0 !important;
 }
 
+
+ 
+
+
+
 </style>
 
 	
@@ -912,6 +915,58 @@ div.endChatContainer button:last-child {
 		if (screenWidth <= 768) return 'mobile';
 		if (screenWidth <= 1024) return 'tablet';
 		return 'desktop';
+	}
+
+	// Function to set up click listeners for chat menu buttons
+	function setupButtonClickLogging() {
+		// Use event delegation on the document to catch dynamically added buttons
+		document.addEventListener('click', function(event) {
+			var target = event.target;
+			
+			// Check if clicked element is a button or inside a button
+			var button = target.closest('button.embeddedServiceLiveAgentStateChatButtonItem');
+			
+			if (!button) {
+				// Also check for the specific class combination
+				button = target.closest('button.rich-button-item');
+			}
+			
+			if (!button) {
+				// Check if target itself is a button with uiButton class
+				if (target.tagName === 'BUTTON' && target.classList.contains('uiButton')) {
+					button = target;
+				}
+			}
+			
+			if (button) {
+				// Get button text from span or direct text content
+				var buttonText = button.textContent.trim();
+				
+				console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+				console.log('🔘 BUTTON CLICKED');
+				console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+				console.log('📝 Button Text:', buttonText);
+				console.log('🔍 Button Element:', button);
+				console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+				localStorage.setItem('clickedButton', buttonText);
+
+				var customEvent = new CustomEvent('chatButtonClicked', {
+					detail: { buttonText: buttonText },
+					bubbles: true,
+					composed: true
+				});
+				document.dispatchEvent(customEvent);
+			}
+		}, true); // Use capture phase to ensure we catch it early
+		
+		console.log('✅ Button click logging initialized');
+	}
+
+	// Initialize button logging when DOM is ready
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', setupButtonClickLogging);
+	} else {
+		setupButtonClickLogging();
 	}
 
 	// Function to add restart button to chat footer
