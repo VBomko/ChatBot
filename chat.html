@@ -376,12 +376,12 @@
 
 	/* Underline effect on hover */
 	.restart-button-container {
-		position: absolute !important;
-		bottom: 10px !important;
+		position: relative !important;
+		bottom: auto !important;
 		left: 0 !important;
 		right: 0 !important;
 		width: 100% !important;
-		padding: 0 !important;
+		padding: 8px 0 !important;
 		margin: 0 !important;
 		z-index: 1000 !important;
 		display: flex !important;
@@ -409,7 +409,13 @@
 	/* Position restart button in footer */
 	.embeddedServiceSidebarFooter {
 		position: relative !important;
-		padding-bottom: 60px !important;
+		padding-bottom: 0 !important;
+	}
+	
+	/* Ensure footer content flows properly */
+	.chasitorControls {
+		display: flex !important;
+		flex-direction: column !important;
 	}
 
 	.embeddedServiceLiveAgentStateChatInputFooter {
@@ -908,6 +914,8 @@ div.endChatContainer button:last-child {
 	
 <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
 <script type='text/javascript'>
+
+
 	// Function to get device type based on screen width
 	function getDeviceType() {
 		console.log('style changes applied');
@@ -916,6 +924,9 @@ div.endChatContainer button:last-child {
 		if (screenWidth <= 1024) return 'tablet';
 		return 'desktop';
 	}
+
+	const liveChatButtonsNames = ['Live chat'];
+
 
 	// Function to set up click listeners for chat menu buttons
 	function setupButtonClickLogging() {
@@ -956,6 +967,21 @@ div.endChatContainer button:last-child {
 					composed: true
 				});
 				document.dispatchEvent(customEvent);
+				if (liveChatButtonsNames.includes(buttonText)) {
+					console.log('liveChatButtonsNames includes', buttonText);
+					
+					// Show the input field when live agent is connected
+					var chasitorText = document.querySelector('.chasitorText');
+					if (chasitorText) {
+						chasitorText.style.setProperty('display', 'block', 'important');
+						console.log('chasitorText shown', chasitorText);
+					}
+					
+					// Keep the restart button visible - user can still restart if needed
+					const restartButtonContainer = document.querySelector('.restart-button-container');
+					restartButtonContainer.style.setProperty('padding-top', '0px', 'important');
+					console.log('restartButtonContainer remains visible', restartButtonContainer);
+				}
 			}
 		}, true); // Use capture phase to ensure we catch it early
 		
@@ -1229,6 +1255,8 @@ div.endChatContainer button:last-child {
 		// Add resize event listener
 		window.addEventListener('resize', handleResize);
 
+
+
 		// Add orientation change listener for mobile devices
 		window.addEventListener('orientationchange', function() {
 			setTimeout(handleResize, 100); // Small delay to let orientation change complete
@@ -1236,7 +1264,7 @@ div.endChatContainer button:last-child {
 
 				// ADD THIS NEW EVENT HANDLER - fires when chat window is maximized (including resumed chats)
 		embedded_svc.addEventHandler("afterMaximize", function(data) {
-			console.log('Chat maximized - adding restart button if needed');
+			console.log('Chat maximized - adding restart button if needed', data);
 			addRestartButton();
 			setupFooterObserver(); // Ensure observer is running
 			// Also show the input if chat is active
@@ -1250,15 +1278,17 @@ div.endChatContainer button:last-child {
 
 		// ADD THIS NEW EVENT HANDLER - fires when chat is minimized
 		embedded_svc.addEventHandler("afterMinimize", function(data) {
-			console.log('Chat minimized');
+			console.log('Chat minimized', data);
 		});
 
 		embedded_svc.addEventHandler("onHelpButtonClick", function(data) {
+			console.log('Help button clicked', data);
 			startLoadingAnimation();
 			fixButtonStyling();
 		});
 		
 		embedded_svc.addEventHandler("onChatEstablished", function(data) {
+			console.log('Chat established', data);
 			stopLoadingAnimation();
 
 		    // Live agent connected → show input
@@ -1273,41 +1303,34 @@ div.endChatContainer button:last-child {
 			addRestartButton();
 			setupFooterObserver(); // Set up observer to monitor footer changes
 		});
+
 		
-		embedded_svc.addEventHandler("onChatEnded", function(data) {
-		    // Chat ended → hide input
-		    var chasitorText = document.querySelector('.chasitorText');
-		    if (chasitorText) {
-		        chasitorText.style.display = "none";
-		    }
-		});
+		//embedded_svc.addEventHandler("onChatEnded", function(data) {
+			//console.log('Chat ended', data);
+		    //var chasitorText = document.querySelector('.chasitorText');
+		    //if (chasitorText) {
+		        //chasitorText.style.display = "none";
+		    //}
+		//});
 
 		// Apply responsive styling when sidebar loads
-		embedded_svc.addEventHandler("onSidebarLoaded", function(data) {
-			stopLoadingAnimation();
-			setTimeout(function() {
-				applyCSSChanges(getDeviceType());
-				addRestartButton();
-				setupFooterObserver(); // Set up observer to monitor footer changes
-			}, 100);
-		});
+		//embedded_svc.addEventHandler("onSidebarLoaded", function(data) {
+			//console.log('Sidebar loaded', data);
+			//stopLoadingAnimation();
+			//setTimeout(function() {
+				//applyCSSChanges(getDeviceType());
+				//addRestartButton();
+				//setupFooterObserver(); // Set up observer to monitor footer changes
+			//}, 100);
+		//});
 
 		// Fix button styling when it first loads
-		embedded_svc.addEventHandler("onHelpButtonLoaded", function(data) {
-			fixButtonStyling();
-		});
+		//embedded_svc.addEventHandler("onHelpButtonLoaded", function(data) {
+			//console.log('Help button loaded', data);
+			//fixButtonStyling();
+		//});
 
-		// Additional event handlers to ensure animation stops
-		embedded_svc.addEventHandler("onChatStarted", function(data) {
-			console.log('Chat started - stopping animation');
-			stopLoadingAnimation();
-			addRestartButton();
-		});
 
-		embedded_svc.addEventHandler("onAgentJoined", function(data) {
-			console.log('Agent joined - stopping animation');
-			stopLoadingAnimation();
-		});
 		
 		//embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
 		//embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
@@ -1342,6 +1365,7 @@ div.endChatContainer button:last-child {
 				isOfflineSupportEnabled: true
 			}
 		);
+
 
 	};
 
