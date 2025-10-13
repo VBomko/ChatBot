@@ -918,15 +918,12 @@ div.endChatContainer button:last-child {
 
 	// Function to get device type based on screen width
 	function getDeviceType() {
-		console.log('style changes applied');
+		console.log('event handlers');
 		var screenWidth = window.innerWidth;
 		if (screenWidth <= 768) return 'mobile';
 		if (screenWidth <= 1024) return 'tablet';
 		return 'desktop';
 	}
-
-	const liveChatButtonsNames = ['Live chat'];
-
 
 	// Function to set up click listeners for chat menu buttons
 	function setupButtonClickLogging() {
@@ -959,7 +956,6 @@ div.endChatContainer button:last-child {
 				console.log('📝 Button Text:', buttonText);
 				console.log('🔍 Button Element:', button);
 				console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-				localStorage.setItem('clickedButton', buttonText);
 
 				var customEvent = new CustomEvent('chatButtonClicked', {
 					detail: { buttonText: buttonText },
@@ -967,21 +963,7 @@ div.endChatContainer button:last-child {
 					composed: true
 				});
 				document.dispatchEvent(customEvent);
-				if (liveChatButtonsNames.includes(buttonText)) {
-					console.log('liveChatButtonsNames includes', buttonText);
-					
-					// Show the input field when live agent is connected
-					var chasitorText = document.querySelector('.chasitorText');
-					if (chasitorText) {
-						chasitorText.style.setProperty('display', 'block', 'important');
-						console.log('chasitorText shown', chasitorText);
-					}
-					
-					// Keep the restart button visible - user can still restart if needed
-					const restartButtonContainer = document.querySelector('.restart-button-container');
-					restartButtonContainer.style.setProperty('padding-top', '0px', 'important');
-					console.log('restartButtonContainer remains visible', restartButtonContainer);
-				}
+
 			}
 		}, true); // Use capture phase to ensure we catch it early
 		
@@ -1202,6 +1184,14 @@ div.endChatContainer button:last-child {
 		}
 	}
 	
+	function addChasitorText() {
+		var chasitorText = document.querySelector('.chasitorText');
+		if (chasitorText) {
+			chasitorText.style.setProperty('display', 'block', 'important');
+			console.log('chasitorText shown', chasitorText);
+		}
+	}
+
 	var initESW = function(gslbBaseURL) { 
 		embedded_svc.settings.displayHelpButton = true; //Or false
 		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
@@ -1215,6 +1205,7 @@ div.endChatContainer button:last-child {
 
 		// Store current device type for comparison
 		var lastDeviceType = currentDeviceType;
+
 
 		// Resize event handler with debouncing
 		var resizeTimeout;
@@ -1267,13 +1258,19 @@ div.endChatContainer button:last-child {
 			console.log('Chat maximized - adding restart button if needed', data);
 			addRestartButton();
 			setupFooterObserver(); // Ensure observer is running
-			// Also show the input if chat is active
-			setTimeout(function() {
-				var chasitorText = document.querySelector('.chasitorText');
-				if (chasitorText) {
-					chasitorText.style.display = "block";
-				}
-			}, 300);
+			
+			// Check if it's a live agent session (resumed or active) and show input
+			//setTimeout(function() {
+				//var liveAgentFooter = document.querySelector('.embeddedServiceLiveAgentStateChatInputFooter');
+				//var chasitorText = document.querySelector('.chasitorText');
+				
+				//if (liveAgentFooter && chasitorText) {
+					//console.log('Live agent session detected on maximize - showing input');
+					//addChasitorText();
+				//} else {
+					//console.log('Not a live agent session - keeping input hidden');
+				//}
+			//}, 300);	
 		});
 
 		// ADD THIS NEW EVENT HANDLER - fires when chat is minimized
@@ -1292,10 +1289,7 @@ div.endChatContainer button:last-child {
 			stopLoadingAnimation();
 
 		    // Live agent connected → show input
-		    var chasitorText = document.querySelector('.chasitorText');
-		    if (chasitorText) {
-		        chasitorText.style.display = "block";
-		    }
+		    //addChasitorText();
 			// Apply responsive styling when chat opens
 		    setTimeout(function() {
 		    	applyCSSChanges(getDeviceType());
@@ -1304,7 +1298,29 @@ div.endChatContainer button:last-child {
 			setupFooterObserver(); // Set up observer to monitor footer changes
 		});
 
+		embedded_svc.addEventHandler("onAvailability", function(data) {
+			console.log("onAvailability event was fired. Agent availability status is " + data.isAgentAvailable ? "online": "offline");
+		});
+			
+
+		embedded_svc.addEventHandler("onChatTransferSuccessful", function(data) {
+			console.log("onChatTransferSuccessful event was fired. liveAgentSessionKey was " +
+			data.liveAgentSessionKey);
+					
+			// Show the input field when live agent is connected
+			addChasitorText();
+
+			// Keep the restart button visible - user can still restart if needed
+			const restartButtonContainer = document.querySelector('.restart-button-container');
+			restartButtonContainer.style.setProperty('padding-top', '0px', 'important');
+			console.log('restartButtonContainer remains visible', restartButtonContainer);
+				
+		});
+			
+
 		
+			
+			
 		//embedded_svc.addEventHandler("onChatEnded", function(data) {
 			//console.log('Chat ended', data);
 		    //var chasitorText = document.querySelector('.chasitorText');
