@@ -918,7 +918,7 @@ div.endChatContainer button:last-child {
 
 	// Function to get device type based on screen width
 	function getDeviceType() {
-		console.log('style changes applied');
+		console.log('chatLiveAgentUnavailable');
 		var screenWidth = window.innerWidth;
 		if (screenWidth <= 768) return 'mobile';
 		if (screenWidth <= 1024) return 'tablet';
@@ -1257,52 +1257,52 @@ div.endChatContainer button:last-child {
 			setTimeout(handleResize, 100); // Small delay to let orientation change complete
 		});
 
-		// ADD THIS NEW EVENT HANDLER - fires when chat window is maximized (including resumed chats)
-	embedded_svc.addEventHandler("afterMaximize", function(data) {
-		console.log('Chat maximized - adding restart button if needed', data);
-		addRestartButton();
-		setupFooterObserver(); // Ensure observer is running
-		
-		// Check if there was a successful transfer before page refresh
-		setTimeout(function() {
-			var chatTransferred = localStorage.getItem('chatTransferSuccessful');
-			var storedSessionKey = localStorage.getItem('chatSessionKey');
-			var liveAgentFooter = document.querySelector('.embeddedServiceLiveAgentStateChatInputFooter');
+			// ADD THIS NEW EVENT HANDLER - fires when chat window is maximized (including resumed chats)
+		embedded_svc.addEventHandler("afterMaximize", function(data) {
+			console.log('Chat maximized - adding restart button if needed', data);
+			addRestartButton();
+			setupFooterObserver(); // Ensure observer is running
 			
-			if (chatTransferred === 'true' && storedSessionKey && liveAgentFooter) {
-				// Try to get current session key from embedded service
-				try {
-					var currentSessionKey = embedded_svc.liveAgentAPI.sessionId || 
-					                       embedded_svc.liveAgentAPI.getSessionId?.() ||
-					                       data?.liveAgentSessionKey;
-					
-					console.log('Stored session key:', storedSessionKey);
-					console.log('Current session key:', currentSessionKey);
-					
-					// Verify session keys match before showing input
-					if (currentSessionKey && currentSessionKey === storedSessionKey) {
-						console.log('Session keys match - showing input field');
+			// Check if there was a successful transfer before page refresh
+			setTimeout(function() {
+				var chatTransferred = localStorage.getItem('chatTransferSuccessful');
+				var storedSessionKey = localStorage.getItem('chatSessionKey');
+				var liveAgentFooter = document.querySelector('.embeddedServiceLiveAgentStateChatInputFooter');
+				
+				if (chatTransferred === 'true' && storedSessionKey && liveAgentFooter) {
+					// Try to get current session key from embedded service
+					try {
+						var currentSessionKey = embedded_svc.liveAgentAPI.sessionId || 
+											embedded_svc.liveAgentAPI.getSessionId?.() ||
+											data?.liveAgentSessionKey;
+						
+						console.log('Stored session key:', storedSessionKey);
+						console.log('Current session key:', currentSessionKey);
+						
+						// Verify session keys match before showing input
+						if (currentSessionKey && currentSessionKey === storedSessionKey) {
+							console.log('Session keys match - showing input field');
+							addChasitorText();
+						} else if (!currentSessionKey) {
+							// If we can't get current session key but chat is active, show input anyway
+							console.log('Cannot verify session key, but live agent footer exists - showing input field');
+							addChasitorText();
+						} else {
+							console.log('Session keys do not match - clearing old state');
+							localStorage.removeItem('chatTransferSuccessful');
+							localStorage.removeItem('chatSessionKey');
+						}
+					} catch (error) {
+						console.error('Error checking session key:', error);
+						// Fallback: if live agent footer exists, show input
+						console.log('Error occurred, showing input as fallback');
 						addChasitorText();
-					} else if (!currentSessionKey) {
-						// If we can't get current session key but chat is active, show input anyway
-						console.log('Cannot verify session key, but live agent footer exists - showing input field');
-						addChasitorText();
-					} else {
-						console.log('Session keys do not match - clearing old state');
-						localStorage.removeItem('chatTransferSuccessful');
-						localStorage.removeItem('chatSessionKey');
 					}
-				} catch (error) {
-					console.error('Error checking session key:', error);
-					// Fallback: if live agent footer exists, show input
-					console.log('Error occurred, showing input as fallback');
-					addChasitorText();
+				} else {
+					console.log('No transfer state or not a live agent session - keeping input hidden');
 				}
-			} else {
-				console.log('No transfer state or not a live agent session - keeping input hidden');
-			}
-		}, 300);	
-	});
+			}, 300);	
+		});
 
 		// ADD THIS NEW EVENT HANDLER - fires when chat is minimized
 		embedded_svc.addEventHandler("afterMinimize", function(data) {
@@ -1330,27 +1330,60 @@ div.endChatContainer button:last-child {
 		});
 
 			
-	embedded_svc.addEventHandler("onChatTransferSuccessful", function(data) {
-		console.log("onChatTransferSuccessful event was fired. liveAgentSessionKey was " +
-		data.liveAgentSessionKey);
+		embedded_svc.addEventHandler("onChatTransferSuccessful", function(data) {
+			console.log("onChatTransferSuccessful event was fired. liveAgentSessionKey was " +
+			data.liveAgentSessionKey);
+					
+			// Store transfer state in localStorage
+			localStorage.setItem('chatTransferSuccessful', 'true');
+			localStorage.setItem('chatSessionKey', data.liveAgentSessionKey);
+			
+			// Show the input field when live agent is connected
+			addChasitorText();
+
+			// Keep the restart button visible - user can still restart if needed
+			const restartButtonContainer = document.querySelector('.restart-button-container');
+			restartButtonContainer.style.setProperty('padding-top', '0px', 'important');
+			console.log('restartButtonContainer remains visible', restartButtonContainer);
 				
-		// Store transfer state in localStorage
-		localStorage.setItem('chatTransferSuccessful', 'true');
-		localStorage.setItem('chatSessionKey', data.liveAgentSessionKey);
-		
-		// Show the input field when live agent is connected
-		addChasitorText();
-
-		// Keep the restart button visible - user can still restart if needed
-		const restartButtonContainer = document.querySelector('.restart-button-container');
-		restartButtonContainer.style.setProperty('padding-top', '0px', 'important');
-		console.log('restartButtonContainer remains visible', restartButtonContainer);
-			
-	});
+		});
 			
 
-		
+		embedded_svc.addEventHandler("onAgentMessage", function(data) {
+			console.log("onAgentMessage", data);
 			
+			setTimeout(function() {
+				const agentMessages = document.querySelectorAll('.embeddedServiceLiveAgentStateChatItem.agent');
+				if (agentMessages.length > 0) {
+					const lastMessage = agentMessages[agentMessages.length - 1];
+					
+					// Try to find just the message content, not the agent name
+					const messageContent = lastMessage.querySelector('.chatContent') || 
+										   lastMessage.querySelector('.messageContent') ||
+										   lastMessage.querySelector('.embeddedServiceLiveAgentStateChatMessage') ||
+										   lastMessage;
+					
+					const messageText = messageContent.textContent.trim();
+					const unavailableMessageText = 'Unfortunately, there are no agents available at the moment';
+					console.log("✅ Agent message text:", messageText);
+					
+					// Also log the element structure to see what's inside
+					console.log("Message element structure:", lastMessage);
+
+					if (messageText === unavailableMessageText) {
+						console.log("Unavailable message text found:", messageText);
+						var customEvent = new CustomEvent('chatLiveAgentUnavailable', {
+							detail: {},
+							bubbles: true,
+							composed: true
+						});
+						document.dispatchEvent(customEvent);
+					}
+				}
+			}, 200);
+		});
+
+
 		//embedded_svc.addEventHandler("onChatEnded", function(data) {
 			//console.log('Chat ended', data);
 		    //var chasitorText = document.querySelector('.chasitorText');
