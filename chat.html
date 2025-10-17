@@ -1,3 +1,4 @@
+
 <html>
 <style type='text/css'>
 	/* ===== INITIAL HELP BUTTON STYLES ===== */
@@ -944,7 +945,7 @@ div.endChatContainer button:last-child {
 
 	// Function to get device type based on screen width
 	function getDeviceType() {
-		console.log('remove mobile css');
+		console.log('mobile css');
 		var screenWidth = window.innerWidth;
 		if (screenWidth <= 768) return 'mobile';
 		if (screenWidth <= 1024) return 'tablet';
@@ -1123,14 +1124,14 @@ div.endChatContainer button:last-child {
 		var heightPx;
 
 			switch(deviceType) {
-			//case 'mobile':
-					//widthPx = Math.min(vw - 16, vw); // small side padding
-					//heightPx = Math.min(Math.floor(vh * 0.92), vh - 16); // avoid toolbars/home bar
-				//break;
-			//case 'tablet':
-				//widthPx = Math.min(380, vw - 40);
-				//heightPx = Math.min(Math.floor(vh * 0.85), 620, vh - 40);
-				//break;
+			case 'mobile':
+					widthPx = Math.min(vw - 16, vw); // small side padding
+					heightPx = Math.min(Math.floor(vh * 0.92), vh - 16); // avoid toolbars/home bar
+				break;
+			case 'tablet':
+				widthPx = Math.min(380, vw - 40);
+				heightPx = Math.min(Math.floor(vh * 0.85), 620, vh - 40);
+				break;
 			case 'desktop':
 			default:
 				widthPx = Math.min(420, vw - 40);
@@ -1155,14 +1156,14 @@ div.endChatContainer button:last-child {
 			var heightPx;
 
 			switch(deviceType) {
-				//case 'mobile':
-					//widthPx = Math.min(vw - 16, vw);
-					//heightPx = Math.min(Math.floor(vh * 0.92), vh - 16);
-					//break;
-				//case 'tablet':
-					//widthPx = Math.min(380, vw - 40);
-					//heightPx = Math.min(Math.floor(vh * 0.85), 620, vh - 40);
-					//break;
+				case 'mobile':
+					widthPx = Math.min(vw - 16, vw);
+					heightPx = Math.min(Math.floor(vh * 0.92), vh - 16);
+					break;
+				case 'tablet':
+					widthPx = Math.min(380, vw - 40);
+					heightPx = Math.min(Math.floor(vh * 0.85), 620, vh - 40);
+					break;
 				case 'desktop':
 				default:
 					widthPx = Math.min(420, vw - 40);
