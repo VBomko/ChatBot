@@ -422,6 +422,14 @@
 		background-color:  rgb(228, 0, 70) !important;
 	}
 
+		/* ===== PREVENT OVERFLOW ON LAPTOP/DESKTOP VIEWPORTS ===== */
+		/* Cap the chat widget to the visible viewport minus 40px for margins */
+		.embeddedServiceSidebar .dockableContainer {
+			max-height: calc(100vh - 40px) !important;
+			max-width: calc(100vw - 40px) !important;
+			box-sizing: border-box !important;
+		}
+
 
 	/* ===== CHAT MENU BUTTONS - RESPONSIVE WIDTH & RIGHT ALIGNED ===== */
 	
@@ -918,7 +926,7 @@ div.endChatContainer button:last-child {
 
 	// Function to get device type based on screen width
 	function getDeviceType() {
-		console.log('chatLiveAgentUnavailable');
+		console.log('style changes applied');
 		var screenWidth = window.innerWidth;
 		if (screenWidth <= 768) return 'mobile';
 		if (screenWidth <= 1024) return 'tablet';
@@ -1088,21 +1096,31 @@ div.endChatContainer button:last-child {
 	function setWidgetDimensions(deviceType) {
 		if (!embedded_svc || !embedded_svc.settings) return;
 
+		// Compute sizes relative to viewport with sensible caps
+		var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+		var vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+
+		var widthPx;
+		var heightPx;
+
 		switch(deviceType) {
 			case 'mobile':
-				embedded_svc.settings.widgetWidth = "100%";
-				embedded_svc.settings.widgetHeight = "90%";
+				widthPx = Math.min(vw - 20, vw); // edge-to-edge with small padding
+				heightPx = Math.min(Math.floor(vh * 0.9), vh - 20);
 				break;
 			case 'tablet':
-				embedded_svc.settings.widgetWidth = "350px";
-				embedded_svc.settings.widgetHeight = "500px";
+				widthPx = Math.min(380, vw - 40);
+				heightPx = Math.min(Math.floor(vh * 0.85), 620, vh - 40);
 				break;
 			case 'desktop':
 			default:
-				embedded_svc.settings.widgetWidth = "400px";
-				embedded_svc.settings.widgetHeight = "800px";
+				widthPx = Math.min(420, vw - 40);
+				heightPx = Math.min(Math.floor(vh * 0.85), 720, vh - 40);
 				break;
 		}
+
+		embedded_svc.settings.widgetWidth = widthPx + 'px';
+		embedded_svc.settings.widgetHeight = heightPx + 'px';
 	}
 
 	// Function to apply CSS changes for responsive behavior
@@ -1110,27 +1128,32 @@ div.endChatContainer button:last-child {
 		var chatContainer = document.querySelector('.embeddedServiceSidebar .dockableContainer');
 		
 		if (chatContainer) {
+			var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+			var vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+
+			var widthPx;
+			var heightPx;
+
 			switch(deviceType) {
 				case 'mobile':
-					chatContainer.style.width = '100vw';
-					chatContainer.style.height = '90vh';
-					chatContainer.style.left = '0';
-					chatContainer.style.bottom = '0';
+					widthPx = Math.min(vw - 20, vw);
+					heightPx = Math.min(Math.floor(vh * 0.9), vh - 20);
 					break;
 				case 'tablet':
-					chatContainer.style.width = '350px';
-					chatContainer.style.height = '500px';
-					chatContainer.style.left = '';
-					chatContainer.style.bottom = '';
+					widthPx = Math.min(380, vw - 40);
+					heightPx = Math.min(Math.floor(vh * 0.85), 620, vh - 40);
 					break;
 				case 'desktop':
 				default:
-					chatContainer.style.width = '400px';
-					chatContainer.style.height = '800px';
-					chatContainer.style.left = '';
-					chatContainer.style.bottom = '';
+					widthPx = Math.min(420, vw - 40);
+					heightPx = Math.min(Math.floor(vh * 0.85), 720, vh - 40);
 					break;
 			}
+
+			chatContainer.style.width = widthPx + 'px';
+			chatContainer.style.height = heightPx + 'px';
+			chatContainer.style.left = '';
+			chatContainer.style.bottom = '';
 		}
 	}
 
