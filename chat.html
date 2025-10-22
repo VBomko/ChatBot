@@ -941,11 +941,10 @@ div.endChatContainer button:last-child {
 	
 <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
 <script type='text/javascript'>
-
-
+	
 	// Function to get device type based on screen width
 	function getDeviceType() {
-		console.log('mobile css');
+		console.log('custom label');
 		var screenWidth = window.innerWidth;
 		if (screenWidth <= 768) return 'mobile';
 		if (screenWidth <= 1024) return 'tablet';
@@ -1003,6 +1002,13 @@ div.endChatContainer button:last-child {
 	} else {
 		setupButtonClickLogging();
 	}
+
+	// Add event listener for transferredNoAgentAvailableMessage
+	var noAgentMessage = '';
+	document.addEventListener('transferredNoAgentAvailableMessage', function(event) {
+		noAgentMessage = event.detail.noAgentAvailableMessage;
+		console.log('No Agent Message:', noAgentMessage);
+	});
 
 	// Function to add restart button to chat footer
 	function addRestartButton() {
@@ -1135,7 +1141,7 @@ div.endChatContainer button:last-child {
 			case 'desktop':
 			default:
 				widthPx = Math.min(420, vw - 40);
-				heightPx = Math.min(Math.floor(vh * 0.85), 720, vh - 40);
+				heightPx = Math.min(Math.floor(vh * 0.92), 860, vh - 40);
 				break;
 		}
 
@@ -1167,7 +1173,7 @@ div.endChatContainer button:last-child {
 				case 'desktop':
 				default:
 					widthPx = Math.min(420, vw - 40);
-					heightPx = Math.min(Math.floor(vh * 0.85), 720, vh - 40);
+					heightPx = Math.min(Math.floor(vh * 0.92), 860, vh - 40);
 					break;
 			}
 
@@ -1395,7 +1401,6 @@ div.endChatContainer button:last-child {
 
 		embedded_svc.addEventHandler("onAgentMessage", function(data) {
 			console.log("onAgentMessage", data);
-			
 			setTimeout(function() {
 				const agentMessages = document.querySelectorAll('.embeddedServiceLiveAgentStateChatItem.agent');
 				if (agentMessages.length > 0) {
@@ -1408,13 +1413,12 @@ div.endChatContainer button:last-child {
 										   lastMessage;
 					
 					const messageText = messageContent.textContent.trim();
-					const unavailableMessageText = 'Unfortunately, there are no agents available at the moment';
 					console.log("✅ Agent message text:", messageText);
 					
 					// Also log the element structure to see what's inside
 					console.log("Message element structure:", lastMessage);
 
-					if (messageText === unavailableMessageText) {
+					if (messageText === noAgentMessage) {
 						console.log("Unavailable message text found:", messageText);
 						var customEvent = new CustomEvent('chatLiveAgentUnavailable', {
 							detail: {},
