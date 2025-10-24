@@ -719,7 +719,7 @@ div.footerMenuWrapper,
 /* ===== ALIGN AGENT MESSAGES TO THE LEFT ===== */
 
 /* Override right alignment for agent messages only */
-chat-content.agent,
+.chat-content.agent,
 div.chat-content.agent,
 .embeddedServiceLiveAgentStateChatItem.agent .chat-content,
 .embeddedServiceLiveAgentStateChatItem.agent .messageContent {
@@ -728,15 +728,9 @@ div.chat-content.agent,
 
 /* Align agent message paragraphs and divs to the left */
 .chat-content.agent p,
-.chat-content.agent div,
 .embeddedServiceLiveAgentStateChatItem.agent .chat-content p,
-.embeddedServiceLiveAgentStateChatItem.agent .chat-content div,
-.embeddedServiceLiveAgentStateChatItem.agent .messageContent p,
-.embeddedServiceLiveAgentStateChatItem.agent .messageContent div {
-	align-items: flex-start !important;
+.embeddedServiceLiveAgentStateChatItem.agent .messageContent p {
 	text-align: left !important;
-	margin-left: 0 !important;
-	margin-right: auto !important;
 }
 
 /* Fix links in agent messages - override the right-aligned link styles */
@@ -944,7 +938,7 @@ div.endChatContainer button:last-child {
 	
 	// Function to get device type based on screen width
 	function getDeviceType() {
-		console.log('custom label');
+		console.log('fixed styles');
 		var screenWidth = window.innerWidth;
 		if (screenWidth <= 768) return 'mobile';
 		if (screenWidth <= 1024) return 'tablet';
