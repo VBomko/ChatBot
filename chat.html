@@ -530,8 +530,6 @@
 	}
 
 
-	/* ===== BUTTON HOVER STYLES - FORCE EXACT COLOR ===== */
-
 	/* Remove any pseudo-elements or overlays */
 	.embeddedServiceSidebarDialogState .messageContent button:hover::before,
 	.embeddedServiceLiveAgentStateChatItem .messageContent button:hover::before,
@@ -925,20 +923,26 @@ div.endChatContainer button:last-child {
 	margin-bottom: 0 !important;
 }
 
-
- 
-
-
-
 </style>
-
 	
 <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
 <script type='text/javascript'>
-	
+	if (!window.insent) {
+		window.insent = {};
+	}
+	// Greeting Message Closed Event
+	window.insent.greetingMessageClosed = function (event) {
+		window.dataLayer = window.dataLayer || [];
+		window.dataLayer.push({
+			'event': 'greetingMessageClosed',
+			'eventCategory': 'Chat',
+			'eventAction': 'Greeting Message Closed',
+			'eventLabel': 'Chat Greeting'
+		});
+	};
 	// Function to get device type based on screen width
 	function getDeviceType() {
-		console.log('fixed styles');
+		console.log('added greetingMessageClosed');
 		var screenWidth = window.innerWidth;
 		if (screenWidth <= 768) return 'mobile';
 		if (screenWidth <= 1024) return 'tablet';
@@ -1425,48 +1429,13 @@ div.endChatContainer button:last-child {
 			}, 200);
 		});
 
+		// Event handler for when chat is closed/ended
+		embedded_svc.addEventHandler("onChatEndedByChasitor", function(data) {
+			console.log('Chat ended', data);
+			window.insent.greetingMessageClosed(event);
+			console.log('Chat closed - state cleared');
+		});
 
-		//embedded_svc.addEventHandler("onChatEnded", function(data) {
-			//console.log('Chat ended', data);
-		    //var chasitorText = document.querySelector('.chasitorText');
-		    //if (chasitorText) {
-		        //chasitorText.style.display = "none";
-		    //}
-		//});
-
-		// Apply responsive styling when sidebar loads
-		//embedded_svc.addEventHandler("onSidebarLoaded", function(data) {
-			//console.log('Sidebar loaded', data);
-			//stopLoadingAnimation();
-			//setTimeout(function() {
-				//applyCSSChanges(getDeviceType());
-				//addRestartButton();
-				//setupFooterObserver(); // Set up observer to monitor footer changes
-			//}, 100);
-		//});
-
-		// Fix button styling when it first loads
-		//embedded_svc.addEventHandler("onHelpButtonLoaded", function(data) {
-			//console.log('Help button loaded', data);
-			//fixButtonStyling();
-		//});
-
-
-		
-		//embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
-		//embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
-
-		//embedded_svc.settings.loadingText = ''; //(Defaults to Loading)
-		//embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
-
-		// Settings for Chat
-		//embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
-			// Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
-			// Returns a valid button ID.
-		//};
-		//embedded_svc.settings.prepopulatedPrechatFields = {}; //Sets the auto-population of pre-chat form fields
-		//embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
-		//embedded_svc.settings.offlineSupportMinimizedText = '...'; //(Defaults to Contact Us)
 
 		embedded_svc.settings.enabledFeatures = ['LiveAgent'];
 		embedded_svc.settings.entryFeature = 'LiveAgent';
