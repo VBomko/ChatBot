@@ -1,2 +1,70 @@
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+	</head>
+	<body>
+		<div>Test</div>
+		
+		<!-- Global error handler -->
+		<script>
+			window.onerror = function(e) {
+				console.log('Global error:', e);
+			}
+		</script>
+		
+		<!-- Init function -->
+		<script type='text/javascript'>
+			function initEmbeddedMessaging() {
+				console.log(':white_check_mark: initEmbeddedMessaging called');
+				console.log('embeddedservice_bootstrap exists?', typeof embeddedservice_bootstrap !== 'undefined');
+				
+				try {
+					if (typeof embeddedservice_bootstrap === 'undefined') {
+						console.error(':x: embeddedservice_bootstrap is not defined');
+						return;
+					}
+					
+					embeddedservice_bootstrap.settings.language = 'en_US';
+					
+					embeddedservice_bootstrap.init(
+						'00DH30000000naQ',
+						'Enhanced_Sales_Chat',
+						'https://megaport--peeklogicd.sandbox.my.site.com/ESWEnhancedSalesChat1762432248649',
+						{
+							scrt2URL: 'https://megaport--peeklogicd.sandbox.my.salesforce-scrt.com'
+						}
+					);
+					
+					console.log(':white_check_mark: Embedded Messaging initialized');
+				} catch (err) {
+					console.error(':x: Error loading Embedded Messaging:', err);
+				}
+			}
+		</script>
+		
+		<!-- Bootstrap script with better error handling -->
+		<script
+			type='text/javascript'
+			src='https://megaport--peeklogicd.sandbox.my.site.com/ESWEnhancedSalesChat1762432248649/assets/js/bootstrap.min.js'
+			onload='console.log(":white_check_mark: Bootstrap script loaded"); initEmbeddedMessaging();'
+			onerror='console.error(":x: Failed to load bootstrap script");'
+		></script>
+		
+		<!-- Additional debugging -->
+		<script>
+			// Check after a delay to see what scripts are loaded
+			setTimeout(() => {
+				const scripts = document.querySelectorAll('script[src*="salesforce"]');
+				console.log(`Found ${scripts.length} Salesforce-related scripts`);
+				scripts.forEach((script, index) => {
+					console.log(`Script ${index + 1}:`, script.src);
+				});
+			}, 2000);
+		</script>
+	</body>
+</html>
 
-<html><head><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"></head><body><div>Test</div><!-- Global error handler --><script>  window.onerror = function(e) {  console.log('Global error:', e);  }  </script><!-- Init function --><script type='text/javascript'>  function initEmbeddedMessaging() {  console.log(':white_check_mark: initEmbeddedMessaging called');  console.log('embeddedservice_bootstrap exists?', typeof embeddedservice_bootstrap !== 'undefined');  try {  if (typeof embeddedservice_bootstrap === 'undefined') {  console.error(':x: embeddedservice_bootstrap is not defined');  return;  }  embeddedservice_bootstrap.settings.language = 'en_US';  embeddedservice_bootstrap.init(  '00DH30000000naQ',  'Enhanced_Sales_Chat',  'https://megaport--peeklogicd.sandbox.my.site.com/ESWEnhancedSalesChat1762432248649',  {  scrt2URL: 'https://megaport--peeklogicd.sandbox.my.salesforce-scrt.com'  }  );  console.log(':white_check_mark: Embedded Messaging initialized');  } catch (err) {  console.error(':x: Error loading Embedded Messaging:', err);  }  }  </script><!-- Bootstrap script with better error handling --><script  type='text/javascript'  src='https://megaport--peeklogicd.sandbox.my.site.com/ESWEnhancedSalesChat1762432248649/assets/js/bootstrap.min.js'  onload='console.log(":white_check_mark: Bootstrap script loaded"); initEmbeddedMessaging();'  onerror='console.error(":x: Failed to load bootstrap script");'  ></script><!-- Additional debugging --><script>  // Check after a delay to see what scripts are loaded  setTimeout(() => {  const scripts = document.querySelectorAll('script[src*="salesforce"]');  console.log(`Found ${scripts.length} Salesforce-related scripts`);  scripts.forEach((script, index) => {  console.log(`Script ${index + 1}:`, script.src);  });  }, 2000);  </script></body></html>
+
+
+
+
