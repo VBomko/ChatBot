@@ -7,7 +7,7 @@
 	<body>
 		<div>Test</div>
 		<script>
-			console.log('test script');
+			console.log('test script onerror');
 		</script>
 		<script type='text/javascript'>
 			function initEmbeddedMessaging() {
@@ -28,7 +28,7 @@
 				}
 			};
 		</script>
-		<script type='text/javascript' src='https://megaport--peeklogicd.sandbox.my.site.com/ESWEnhancedSalesChat1762432248649/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
+		<script type='text/javascript' src='https://megaport--peeklogicd.sandbox.my.site.com/ESWEnhancedSalesChat1762432248649/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()' onerror='console.error("Failed to load bootstrap.min.js")'></script>
 	</body>
 	
 
